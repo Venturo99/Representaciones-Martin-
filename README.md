@@ -1,6 +1,3 @@
 # Representaciones-Martin-
-Frontend del Sistema Web de Gestión de Inventario para "Representaciones Martín"
 
-# Requerimientos Funcionales Implementados
-
-
+## Frontend del Sistema Web de Gestión de Inventario para ## "Representaciones Martín"
