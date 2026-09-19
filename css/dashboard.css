@@ -1,0 +1,412 @@
+/* =========================================
+   DASHBOARD - ESTILOS EXCLUSIVOS
+   Sistema web sobre inventarios para Representaciones Martin S.A.C.
+   ========================================= */
+
+/* =========================================
+   LAYOUT GENERAL DEL DASHBOARD
+   ========================================= */
+.dashboard-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f4f7f6;
+}
+
+/* =========================================
+   SIDEBAR LATERAL
+   ========================================= */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #008744 0%, #005a2b 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.sidebar-header {
+  padding: 0 20px 25px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  margin-bottom: 20px;
+}
+.sidebar-logo {
+  max-width: 130px;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 15px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+.nav-item.active {
+  background-color: #f37021;
+  color: white;
+  box-shadow: 0 5px 15px rgba(243, 112, 33, 0.4);
+}
+
+.sidebar-footer {
+  padding: 20px 15px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+.logout-btn {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+.logout-btn:hover {
+  background-color: #e74c3c;
+}
+
+/* =========================================
+   CONTENIDO PRINCIPAL
+   ========================================= */
+.main-content {
+  margin-left: 260px;
+  flex: 1;
+  padding: 25px 30px;
+  min-height: 100vh;
+}
+
+/* HEADER SUPERIOR */
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dddddd;
+}
+.header-title h1 {
+  font-size: 1.6rem;
+  color: #008744;
+  margin-bottom: 4px;
+}
+.header-title p {
+  font-size: 0.85rem;
+  color: #666666;
+}
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.user-info {
+  text-align: right;
+}
+.user-role {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f37021;
+}
+.user-email {
+  display: block;
+  font-size: 0.75rem;
+  color: #666666;
+}
+.user-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f37021, #008744);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  box-shadow: 0 5px 15px rgba(243, 112, 33, 0.3);
+}
+
+/* =========================================
+   TARJETAS DE MÉTRICAS
+   ========================================= */
+.metrics-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.metric-card {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  border-left: 5px solid transparent;
+}
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+.metric-primary {
+  border-left-color: #f37021;
+}
+.metric-danger {
+  border-left-color: #e74c3c;
+}
+.metric-success {
+  border-left-color: #008744;
+}
+
+.metric-icon {
+  width: 55px;
+  height: 55px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.metric-primary .metric-icon {
+  background-color: rgba(243, 112, 33, 0.15);
+  color: #f37021;
+}
+.metric-danger .metric-icon {
+  background-color: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+}
+.metric-success .metric-icon {
+  background-color: rgba(0, 135, 68, 0.15);
+  color: #008744;
+}
+
+.metric-info {
+  flex: 1;
+}
+.metric-info h3 {
+  font-size: 0.8rem;
+  color: #666666;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.metric-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333333;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.metric-value-small {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 4px;
+}
+.metric-label {
+  font-size: 0.75rem;
+  color: #666666;
+}
+
+/* =========================================
+   SECCIÓN DE GRÁFICOS
+   ========================================= */
+.charts-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.chart-card {
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+.chart-card h3 {
+  font-size: 1rem;
+  color: #333333;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chart-card h3 i {
+  color: #f37021;
+}
+
+/* Gráfico de Barras */
+.chart-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 220px;
+  padding-top: 20px;
+}
+.bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+}
+.bar {
+  width: 60%;
+  max-width: 40px;
+  background: linear-gradient(180deg, #f37021, #d65a15);
+  border-radius: 6px 6px 0 0;
+  transition: all 0.3s ease;
+  min-height: 10px;
+}
+.bar-wrapper:hover .bar {
+  background: linear-gradient(180deg, #008744, #005a2b);
+}
+.bar-value {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666666;
+}
+.bar-label {
+  font-size: 0.75rem;
+  color: #666666;
+}
+
+/* Gráfico Circular */
+.pie-chart-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.pie-chart {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+.pie-chart::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.pie-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+}
+.legend-color {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.legend-label {
+  flex: 1;
+  color: #333333;
+}
+.legend-value {
+  font-weight: 600;
+  color: #666666;
+}
+
+/* Loader */
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+  color: #008744;
+  font-weight: 600;
+}
+
+/* =========================================
+   RESPONSIVIDAD DEL DASHBOARD
+   ========================================= */
+@media (max-width: 1024px) {
+  .charts-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+    padding: 15px 0;
+  }
+  .sidebar-logo {
+    max-width: 40px;
+  }
+  .nav-item span,
+  .logout-btn span,
+  .sidebar-header {
+    display: none;
+  }
+  .nav-item {
+    justify-content: center;
+    padding: 12px;
+  }
+  .main-content {
+    margin-left: 70px;
+    padding: 20px 15px;
+  }
+  .top-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .user-info {
+    text-align: left;
+  }
+}

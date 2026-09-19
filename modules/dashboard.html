@@ -1,0 +1,109 @@
+<div class="dashboard-layout">
+  <!-- SIDEBAR LATERAL -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/logo.png" alt="Martín" class="sidebar-logo" />
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active">
+        <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fas fa-boxes"></i> <span>Inventario</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fas fa-exchange-alt"></i> <span>Movimientos</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fas fa-users"></i> <span>Usuarios</span>
+      </a>
+      <a href="#" class="nav-item">
+        <i class="fas fa-cog"></i> <span>Configuración</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <button id="logout-btn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+    <!-- HEADER SUPERIOR -->
+    <header class="top-header">
+      <div class="header-title">
+        <h1>Dashboard Ejecutivo</h1>
+        <p>Resumen general del inventario</p>
+      </div>
+      <div class="header-user">
+        <div class="user-info">
+          <span class="user-role" id="user-role-display">Cargando...</span>
+          <span class="user-email" id="user-email-display">...</span>
+        </div>
+        <div class="user-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- TARJETAS DE MÉTRICAS -->
+    <section class="metrics-section">
+      <!-- Tarjeta 1: Total de Códigos de Artículo -->
+      <div class="metric-card metric-primary">
+        <div class="metric-icon">
+          <i class="fas fa-barcode"></i>
+        </div>
+        <div class="metric-info">
+          <h3>Total de Códigos de Artículo</h3>
+          <p class="metric-value" id="metric-total-products">0</p>
+          <span class="metric-label">Productos activos</span>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Alertas de Stock Mínimo -->
+      <div class="metric-card metric-danger">
+        <div class="metric-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="metric-info">
+          <h3>Alertas de Stock Mínimo</h3>
+          <p class="metric-value" id="metric-low-stock">0</p>
+          <span class="metric-label">Productos por reabastecer</span>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3: Producto con Mayor Rotación -->
+      <div class="metric-card metric-success">
+        <div class="metric-icon">
+          <i class="fas fa-fire"></i>
+        </div>
+        <div class="metric-info">
+          <h3>Mayor Rotación</h3>
+          <p class="metric-value-small" id="metric-top-product">-</p>
+          <span class="metric-label">Producto más vendido</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DE GRÁFICOS -->
+    <section class="charts-section">
+      <div class="chart-card">
+        <h3>
+          <i class="fas fa-chart-bar"></i> Movimientos de los últimos 7 días
+        </h3>
+        <div class="chart-container" id="bar-chart">
+          <!-- El gráfico se genera con JS -->
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h3><i class="fas fa-chart-pie"></i> Distribución por Categoría</h3>
+        <div class="pie-chart-container">
+          <div class="pie-chart" id="pie-chart"></div>
+          <div class="pie-legend" id="pie-legend"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
