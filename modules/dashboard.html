@@ -1,25 +1,73 @@
 <div class="dashboard-layout">
-  <!-- SIDEBAR LATERAL -->
+  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
       <img src="../assets/logo.png" alt="Martín" class="sidebar-logo" />
+      <h3 class="sidebar-title">Control de Inventario</h3>
     </div>
     <nav class="sidebar-nav">
-      <a href="#" class="nav-item active">
-        <i class="fas fa-chart-line"></i> <span>Dashboard</span>
-      </a>
-      <a href="#" class="nav-item">
-        <i class="fas fa-boxes"></i> <span>Inventario</span>
-      </a>
-      <a href="#" class="nav-item">
-        <i class="fas fa-exchange-alt"></i> <span>Movimientos</span>
-      </a>
-      <a href="#" class="nav-item">
-        <i class="fas fa-users"></i> <span>Usuarios</span>
-      </a>
-      <a href="#" class="nav-item">
-        <i class="fas fa-cog"></i> <span>Configuración</span>
-      </a>
+      <div class="nav-section">
+        <span class="nav-section-title">Principal</span>
+        <button class="nav-item active" data-route="dashboard">
+          <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Operaciones</span>
+        <button class="nav-item" data-route="catalogo">
+          <i class="fas fa-th-large"></i> <span>Catálogo de Productos</span>
+        </button>
+        <button class="nav-item" data-route="inventario">
+          <i class="fas fa-boxes"></i> <span>Inventario</span>
+        </button>
+        <button class="nav-item" data-route="consulta-stock">
+          <i class="fas fa-search"></i> <span>Consulta Rápida</span>
+        </button>
+        <button class="nav-item" data-route="movimientos">
+          <i class="fas fa-exchange-alt"></i> <span>Entradas y Salidas</span>
+        </button>
+        <button class="nav-item" data-route="historico">
+          <i class="fas fa-history"></i> <span>Historial Movimientos</span>
+        </button>
+        <button class="nav-item" data-route="cortes">
+          <i class="fas fa-cut"></i> <span>Cortes de Tableros</span>
+        </button>
+        <button class="nav-item" data-route="mermas">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>Ajustes de Mermas</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Análisis</span>
+        <button class="nav-item" data-route="rotacion">
+          <i class="fas fa-chart-bar"></i> <span>Rotación Productos</span>
+        </button>
+        <button class="nav-item" data-route="corte-inventario">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Cortes de Inventario</span>
+        </button>
+        <button class="nav-item" data-route="reportes">
+          <i class="fas fa-file-alt"></i> <span>Reportes</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Administración</span>
+        <button class="nav-item" data-route="clientes">
+          <i class="fas fa-users"></i> <span>Clientes</span>
+        </button>
+        <button class="nav-item" data-route="proveedores">
+          <i class="fas fa-truck"></i> <span>Proveedores y Compras</span>
+        </button>
+        <button class="nav-item" data-route="usuarios">
+          <i class="fas fa-user-shield"></i> <span>Usuarios y Accesos</span>
+        </button>
+        <button class="nav-item" data-route="bitacora">
+          <i class="fas fa-clipboard-list"></i> <span>Bitácora Auditoría</span>
+        </button>
+        <button class="nav-item" data-route="cierre">
+          <i class="fas fa-lock"></i> <span>Cierre Diario</span>
+        </button>
+      </div>
     </nav>
     <div class="sidebar-footer">
       <button id="logout-btn" class="logout-btn">
@@ -30,79 +78,150 @@
 
   <!-- CONTENIDO PRINCIPAL -->
   <main class="main-content">
-    <!-- HEADER SUPERIOR -->
+    <!-- HEADER -->
     <header class="top-header">
       <div class="header-title">
         <h1>Dashboard Ejecutivo</h1>
         <p>Resumen general del inventario</p>
       </div>
       <div class="header-user">
+        <div class="notifications-container">
+          <button
+            id="btn-notifications"
+            class="btn-icon-header"
+            title="Notificaciones"
+          >
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+          </button>
+          <div id="notifications-panel" class="notifications-panel hidden">
+            <div class="notifications-header">
+              <h4><i class="fas fa-bell"></i> Alertas de Stock</h4>
+              <span class="notif-count">3 nuevas</span>
+            </div>
+            <div class="notifications-list"></div>
+          </div>
+        </div>
+        <button id="theme-toggle" class="btn-icon-header" title="Modo Oscuro">
+          <i class="fas fa-moon"></i>
+        </button>
         <div class="user-info">
-          <span class="user-role" id="user-role-display">Cargando...</span>
-          <span class="user-email" id="user-email-display">...</span>
+          <span class="user-name" id="user-name-display">Cargando...</span>
+          <span class="user-role" id="user-role-display">...</span>
         </div>
-        <div class="user-avatar">
-          <i class="fas fa-user"></i>
-        </div>
+        <div class="user-avatar" id="user-avatar-display">U</div>
       </div>
     </header>
 
-    <!-- TARJETAS DE MÉTRICAS -->
-    <section class="metrics-section">
-      <!-- Tarjeta 1: Total de Códigos de Artículo -->
+    <!-- 5 KPIs -->
+    <section class="metrics-grid">
       <div class="metric-card metric-primary">
-        <div class="metric-icon">
-          <i class="fas fa-barcode"></i>
-        </div>
+        <div class="metric-icon"><i class="fas fa-layer-group"></i></div>
         <div class="metric-info">
-          <h3>Total de Códigos de Artículo</h3>
-          <p class="metric-value" id="metric-total-products">0</p>
-          <span class="metric-label">Productos activos</span>
+          <h3>Total Tableros</h3>
+          <p class="metric-value" id="metric-tableros">0</p>
+          <span class="metric-label">Unidades en stock</span>
         </div>
       </div>
-
-      <!-- Tarjeta 2: Alertas de Stock Mínimo -->
+      <div class="metric-card metric-info-card">
+        <div class="metric-icon"><i class="fas fa-palette"></i></div>
+        <div class="metric-info">
+          <h3>Melaminas</h3>
+          <p class="metric-value" id="metric-melaminas">0</p>
+          <span class="metric-label">Diseños disponibles</span>
+        </div>
+      </div>
       <div class="metric-card metric-danger">
         <div class="metric-icon">
           <i class="fas fa-exclamation-triangle"></i>
         </div>
         <div class="metric-info">
-          <h3>Alertas de Stock Mínimo</h3>
-          <p class="metric-value" id="metric-low-stock">0</p>
-          <span class="metric-label">Productos por reabastecer</span>
+          <h3>Alertas Stock</h3>
+          <p class="metric-value" id="metric-alertas">0</p>
+          <span class="metric-label">Por reponer</span>
         </div>
       </div>
-
-      <!-- Tarjeta 3: Producto con Mayor Rotación -->
       <div class="metric-card metric-success">
-        <div class="metric-icon">
-          <i class="fas fa-fire"></i>
-        </div>
+        <div class="metric-icon"><i class="fas fa-truck"></i></div>
         <div class="metric-info">
-          <h3>Mayor Rotación</h3>
-          <p class="metric-value-small" id="metric-top-product">-</p>
-          <span class="metric-label">Producto más vendido</span>
+          <h3>Pedidos Tránsito</h3>
+          <p class="metric-value" id="metric-pedidos">0</p>
+          <span class="metric-label">Esta semana</span>
+        </div>
+      </div>
+      <div class="metric-card metric-warning">
+        <div class="metric-icon"><i class="fas fa-cut"></i></div>
+        <div class="metric-info">
+          <h3>Cortes Hoy</h3>
+          <p class="metric-value" id="metric-cortes">0</p>
+          <span class="metric-label">Tableros procesados</span>
         </div>
       </div>
     </section>
 
-    <!-- SECCIÓN DE GRÁFICOS -->
-    <section class="charts-section">
+    <!-- GRÁFICOS -->
+    <section class="charts-grid">
       <div class="chart-card">
-        <h3>
-          <i class="fas fa-chart-bar"></i> Movimientos de los últimos 7 días
-        </h3>
-        <div class="chart-container" id="bar-chart">
-          <!-- El gráfico se genera con JS -->
+        <div class="chart-header">
+          <h3><i class="fas fa-chart-bar"></i> Movimientos por Semana</h3>
+          <select class="chart-filter" id="period-filter">
+            <option value="diario">Diario</option>
+            <option value="semanal" selected>Semanal</option>
+            <option value="mensual">Mensual</option>
+            <option value="anual">Anual</option>
+          </select>
         </div>
+        <div class="chart-container" id="bar-chart"></div>
       </div>
-
       <div class="chart-card">
-        <h3><i class="fas fa-chart-pie"></i> Distribución por Categoría</h3>
+        <div class="chart-header">
+          <h3><i class="fas fa-chart-pie"></i> Stock por Categoría</h3>
+        </div>
         <div class="pie-chart-container">
           <div class="pie-chart" id="pie-chart"></div>
           <div class="pie-legend" id="pie-legend"></div>
         </div>
+      </div>
+    </section>
+
+    <section class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3><i class="fas fa-chart-line"></i> Tendencia de Ventas</h3>
+        </div>
+        <div class="line-chart" id="line-chart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <h3><i class="fas fa-trophy"></i> Top 5 Productos</h3>
+        </div>
+        <div class="top-products-list" id="top-products"></div>
+      </div>
+    </section>
+
+    <!-- TABLA -->
+    <section class="table-card">
+      <div class="table-header-actions">
+        <h3><i class="fas fa-history"></i> Últimos Movimientos</h3>
+        <button class="btn-link">
+          Ver todos <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Tipo</th>
+              <th>Cantidad</th>
+              <th>Usuario</th>
+            </tr>
+          </thead>
+          <tbody id="movimientos-tbody"></tbody>
+        </table>
       </div>
     </section>
   </main>

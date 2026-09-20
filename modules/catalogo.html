@@ -1,0 +1,386 @@
+<div class="dashboard-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/logo.png" alt="Martín" class="sidebar-logo" />
+      <h3 class="sidebar-title">Control de Inventario</h3>
+      <p class="sidebar-subtitle">Representaciones Martín S.A.C.</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Principal</span>
+        <button class="nav-item" data-route="dashboard">
+          <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Operaciones</span>
+        <button class="nav-item active" data-route="catalogo">
+          <i class="fas fa-th-large"></i> <span>Catálogo de Productos</span>
+        </button>
+        <button class="nav-item" data-route="inventario">
+          <i class="fas fa-boxes"></i> <span>Inventario</span>
+        </button>
+        <button class="nav-item" data-route="consulta-stock">
+          <i class="fas fa-search"></i> <span>Consulta Rápida</span>
+        </button>
+        <button class="nav-item" data-route="movimientos">
+          <i class="fas fa-exchange-alt"></i> <span>Entradas y Salidas</span>
+        </button>
+        <button class="nav-item" data-route="historico">
+          <i class="fas fa-history"></i> <span>Historial Movimientos</span>
+        </button>
+        <button class="nav-item" data-route="cortes">
+          <i class="fas fa-cut"></i> <span>Cortes de Tableros</span>
+        </button>
+        <button class="nav-item" data-route="mermas">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>Ajustes de Mermas</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Análisis</span>
+        <button class="nav-item" data-route="rotacion">
+          <i class="fas fa-chart-bar"></i> <span>Rotación Productos</span>
+        </button>
+        <button class="nav-item" data-route="corte-inventario">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Cortes de Inventario</span>
+        </button>
+        <button class="nav-item" data-route="reportes">
+          <i class="fas fa-file-alt"></i> <span>Reportes</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Administración</span>
+        <button class="nav-item" data-route="clientes">
+          <i class="fas fa-users"></i> <span>Clientes</span>
+        </button>
+        <button class="nav-item" data-route="proveedores">
+          <i class="fas fa-truck"></i> <span>Proveedores y Compras</span>
+        </button>
+        <button class="nav-item" data-route="usuarios">
+          <i class="fas fa-user-shield"></i> <span>Usuarios y Accesos</span>
+        </button>
+        <button class="nav-item" data-route="bitacora">
+          <i class="fas fa-clipboard-list"></i> <span>Bitácora Auditoría</span>
+        </button>
+        <button class="nav-item" data-route="cierre">
+          <i class="fas fa-lock"></i> <span>Cierre Diario</span>
+        </button>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button id="logout-btn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+    <header class="top-header">
+      <div class="header-title">
+        <h1>Catálogo de Productos</h1>
+        <p>Gestión completa de productos y su ubicación física</p>
+      </div>
+      <div class="header-user">
+        <div class="notifications-container">
+          <button
+            id="btn-notifications"
+            class="btn-icon-header"
+            title="Notificaciones"
+          >
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+          </button>
+          <div id="notifications-panel" class="notifications-panel hidden">
+            <div class="notifications-header">
+              <h4><i class="fas fa-bell"></i> Alertas de Stock</h4>
+              <span class="notif-count">3 nuevas</span>
+            </div>
+            <div class="notifications-list"></div>
+          </div>
+        </div>
+        <button id="theme-toggle" class="btn-icon-header" title="Modo Oscuro">
+          <i class="fas fa-moon"></i>
+        </button>
+        <div class="user-info">
+          <span class="user-name" id="user-name-display">Cargando...</span>
+          <span class="user-role" id="user-role-display">...</span>
+        </div>
+        <div class="user-avatar" id="user-avatar-display">U</div>
+      </div>
+    </header>
+
+    <!-- BARRA DE HERRAMIENTAS -->
+    <section class="toolbar-card">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Buscar por código, nombre o categoría..."
+          autocomplete="off"
+        />
+      </div>
+      <div class="toolbar-actions">
+        <select id="filter-category" class="filter-select">
+          <option value="">Todas las categorías</option>
+          <option value="Maderas y Tableros">Maderas y Tableros</option>
+          <option value="Ferretería">Ferretería</option>
+          <option value="Herramientas y Maquinaria">
+            Herramientas y Maquinaria
+          </option>
+          <option value="Drywall">Drywall</option>
+          <option value="Pisos">Pisos</option>
+        </select>
+        <select id="filter-subcategory" class="filter-select">
+          <option value="">Todas las subcategorías</option>
+        </select>
+        <button id="btn-add-product" class="btn-add">
+          <i class="fas fa-plus"></i> Nuevo Producto
+        </button>
+      </div>
+    </section>
+
+    <!-- RESUMEN -->
+    <section class="inventory-summary">
+      <div class="summary-item">
+        <span class="summary-label">Total Productos</span>
+        <span class="summary-value" id="summary-total">0</span>
+      </div>
+      <div class="summary-item summary-ok">
+        <span class="summary-label">Stock Adecuado</span>
+        <span class="summary-value" id="summary-ok">0</span>
+      </div>
+      <div class="summary-item summary-warning">
+        <span class="summary-label">Stock Bajo</span>
+        <span class="summary-value" id="summary-warning">0</span>
+      </div>
+      <div class="summary-item summary-danger">
+        <span class="summary-label">Sin Stock</span>
+        <span class="summary-value" id="summary-danger">0</span>
+      </div>
+    </section>
+
+    <!-- TABLA -->
+    <section class="table-card">
+      <div class="table-header-actions">
+        <h3><i class="fas fa-list"></i> Lista de Productos</h3>
+        <span class="results-count" id="results-count">0 resultados</span>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table" id="catalogo-table">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Subcategoría</th>
+              <th>Stock</th>
+              <th>Mínimo</th>
+              <th>Precio</th>
+              <th>Ubicación</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="catalogo-tbody"></tbody>
+        </table>
+      </div>
+      <div id="empty-state" class="empty-state hidden">
+        <i class="fas fa-search"></i>
+        <p>No se encontraron productos</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: CREAR/EDITAR PRODUCTO -->
+  <div id="product-modal" class="modal-overlay hidden">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h3 id="modal-title">
+          <i class="fas fa-plus-circle"></i> Nuevo Producto
+        </h3>
+        <button class="modal-close" id="close-product-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <form id="product-form">
+        <input type="hidden" id="product-id" />
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="product-codigo">Código *</label>
+            <input
+              type="text"
+              id="product-codigo"
+              placeholder="Ej: MAD-MEL-001"
+              required
+            />
+            <span class="error-message" id="codigo-error"></span>
+          </div>
+          <div class="form-field">
+            <label for="product-nombre">Nombre del Producto *</label>
+            <input
+              type="text"
+              id="product-nombre"
+              placeholder="Ej: Melamina Blanca 18mm"
+              required
+            />
+            <span class="error-message" id="nombre-error"></span>
+          </div>
+          <div class="form-field">
+            <label for="product-categoria">Categoría *</label>
+            <select id="product-categoria" required>
+              <option value="">Seleccionar...</option>
+              <option value="Maderas y Tableros">Maderas y Tableros</option>
+              <option value="Ferretería">Ferretería</option>
+              <option value="Herramientas y Maquinaria">
+                Herramientas y Maquinaria
+              </option>
+              <option value="Drywall">Drywall</option>
+              <option value="Pisos">Pisos</option>
+            </select>
+            <span class="error-message" id="categoria-error"></span>
+          </div>
+          <div class="form-field">
+            <label for="product-subcategoria">Subcategoría *</label>
+            <select id="product-subcategoria" required>
+              <option value="">Seleccionar categoría primero...</option>
+            </select>
+            <span class="error-message" id="subcategoria-error"></span>
+          </div>
+          <div class="form-field">
+            <label for="product-stock">Stock Actual *</label>
+            <input
+              type="number"
+              id="product-stock"
+              min="0"
+              placeholder="0"
+              required
+            />
+            <span class="error-message" id="stock-error"></span>
+          </div>
+          <div class="form-field">
+            <label for="product-minimo">Stock Mínimo *</label>
+            <input
+              type="number"
+              id="product-minimo"
+              min="0"
+              placeholder="0"
+              required
+            />
+            <span class="error-message" id="minimo-error"></span>
+          </div>
+          <div class="form-field">
+            <label for="product-precio">Precio Unitario (S/) *</label>
+            <input
+              type="number"
+              id="product-precio"
+              min="0"
+              step="0.01"
+              placeholder="0.00"
+              required
+            />
+            <span class="error-message" id="precio-error"></span>
+          </div>
+          <div class="form-field">
+            <label for="product-unidad">Unidad de Medida *</label>
+            <select id="product-unidad" required>
+              <option value="Unidad">Unidad</option>
+              <option value="Plancha">Plancha</option>
+              <option value="Metro">Metro</option>
+              <option value="Caja">Caja</option>
+              <option value="Paquete">Paquete</option>
+              <option value="Rollo">Rollo</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- UBICACIÓN FÍSICA -->
+        <div class="form-section-title">
+          <i class="fas fa-map-marker-alt"></i> Ubicación Física en Almacén
+        </div>
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="product-zona">Zona *</label>
+            <select id="product-zona" required>
+              <option value="A">Zona A</option>
+              <option value="B">Zona B</option>
+              <option value="C">Zona C</option>
+              <option value="D">Zona D</option>
+              <option value="E">Zona E</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="product-pasillo">Pasillo *</label>
+            <input
+              type="text"
+              id="product-pasillo"
+              placeholder="Ej: 01"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label for="product-rack">Rack *</label>
+            <input
+              type="text"
+              id="product-rack"
+              placeholder="Ej: R1"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label for="product-nivel">Nivel *</label>
+            <input
+              type="text"
+              id="product-nivel"
+              placeholder="Ej: N1"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancel-product">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+          <button type="submit" class="btn-primary" id="save-product">
+            <i class="fas fa-save"></i> Guardar Producto
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CONFIRMAR ELIMINACIÓN -->
+  <div id="delete-modal" class="modal-overlay hidden">
+    <div class="modal-content modal-small">
+      <div class="modal-header-danger">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h3>¿Eliminar producto?</h3>
+      </div>
+      <p class="delete-message">
+        ¿Estás seguro de que deseas eliminar el producto
+        <strong id="delete-product-name"></strong>? <br /><small
+          >Esta acción no se puede deshacer.</small
+        >
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="cancel-delete">
+          Cancelar
+        </button>
+        <button type="button" class="btn-danger" id="confirm-delete">
+          <i class="fas fa-trash"></i> Sí, eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast hidden">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-message">Operación exitosa</span>
+  </div>
+</div>

@@ -1,41 +1,48 @@
 /**
- * Módulo de Gestión de Tema (Modo Claro / Oscuro)
- * Usa delegación de eventos para funcionar incluso con HTML dinámico.
+ * Módulo de Modo Oscuro - Con protección anti-múltiple-init
  */
-const ThemeManager = (() => {
-  const getCurrentTheme = () => localStorage.getItem("theme") || "light";
+const ThemeModule = (() => {
+  const STORAGE_KEY = "martin-theme";
+  let isInitialized = false;
+
+  const getTheme = () => localStorage.getItem(STORAGE_KEY) || "light";
 
   const applyTheme = (theme) => {
-    document.documentElement.setAttribute("data-theme", theme);
+    document.body.classList.remove("theme-light", "theme-dark");
+    document.body.classList.add(
+      theme === "dark" ? "theme-dark" : "theme-light",
+    );
 
-    // Actualizar icono si existe
-    const icon = document.querySelector("#theme-toggle i");
-    if (icon) {
-      icon.className = theme === "dark" ? "fas fa-sun" : "fas fa-moon";
+    const toggle = document.getElementById("theme-toggle");
+    if (toggle) {
+      const icon = toggle.querySelector("i");
+      if (icon)
+        icon.className = theme === "dark" ? "fas fa-sun" : "fas fa-moon";
     }
-    localStorage.setItem("theme", theme);
-    console.log("🎨 Tema aplicado:", theme);
+    localStorage.setItem(STORAGE_KEY, theme);
+    console.log(`🎨 Tema aplicado: ${theme}`);
   };
 
-  const toggleTheme = () => {
-    const current = getCurrentTheme();
-    applyTheme(current === "light" ? "dark" : "light");
+  const toggle = () => {
+    const current = getTheme();
+    applyTheme(current === "dark" ? "light" : "dark");
   };
 
   const init = () => {
-    // Aplicar tema guardado
-    applyTheme(getCurrentTheme());
+    console.log("🌙 Inicializando ThemeModule...");
+    applyTheme(getTheme());
+  };
 
-    // DELEGACIÓN DE EVENTOS: Escucha clics en todo el documento
+  // ⭐ Delegación de eventos global (SOLO UNA VEZ)
+  if (!isInitialized) {
     document.addEventListener("click", (e) => {
       if (e.target.closest("#theme-toggle")) {
         e.preventDefault();
-        toggleTheme();
+        toggle();
       }
     });
-
-    console.log("✅ ThemeManager inicializado");
-  };
+    isInitialized = true;
+  }
 
   return { init };
 })();

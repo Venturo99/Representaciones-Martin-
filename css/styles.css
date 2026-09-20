@@ -1,27 +1,18 @@
 /* =========================================
-   VARIABLES Y PALETA INSTITUCIONAL
+   VARIABLES GLOBALES Y PALETA INSTITUCIONAL
    ========================================= */
 :root {
   --color-primary: #f37021;
-  --color-secondary: #04b75d;
+  --color-secondary: #008744;
   --color-bg: #f4f7f6;
   --color-card-bg: #ffffff;
   --color-text: #333333;
   --color-text-light: #666666;
   --color-border: #dddddd;
   --color-error: #e74c3c;
-  --color-success: #15c45d;
+  --color-success: #2ecc71;
   --shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   --transition: all 0.3s ease;
-}
-
-[data-theme="dark"] {
-  --color-bg: #121212;
-  --color-card-bg: #1e1e1e;
-  --color-text: #f0f0f0;
-  --color-text-light: #aaaaaa;
-  --color-border: #444444;
-  --shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -29,22 +20,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  transition: var(--transition);
-  padding: 20px;
 }
 
 /* =========================================
@@ -80,13 +55,18 @@ body {
 .login-container {
   width: 100%;
   max-width: 1000px;
-  min-height: 600px; /* CAMBIO: min-height en vez de height */
+  min-height: 600px;
   display: flex;
   background-color: var(--color-card-bg);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: var(--shadow);
   transition: var(--transition);
+  /* Centrado vertical y horizontal */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Panel Izquierdo (Branding Verde) */
@@ -131,8 +111,7 @@ body {
   margin-bottom: 25px;
   position: relative;
   z-index: 1;
-  /* ELIMINADO el filter: brightness(0) invert(1); para que se vea el logo real */
-  background-color: #ffffff; /* Fondo blanco para que resalte sobre el verde */
+  background-color: #ffffff;
   padding: 15px;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -159,7 +138,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* ELIMINADO overflow-y: auto; para quitar la barra de scroll */
 }
 
 .login-form-panel h1 {
@@ -215,12 +193,12 @@ body {
   color: var(--color-text-light);
 }
 
-/* Captcha - AHORA ES NARANJA PURO */
+/* Captcha - NARANJA PURO */
 .captcha-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--color-primary); /* Naranja puro */
+  background: var(--color-primary);
   color: white;
   padding: 10px 15px;
   border-radius: 8px;
@@ -262,10 +240,10 @@ body {
   box-shadow: 0 8px 20px rgba(243, 112, 33, 0.3);
 }
 
-/* Enlace olvidé contraseña - AHORA CENTRADO */
+/* Enlace olvidé contraseña - CENTRADO */
 .forgot-link {
   display: block;
-  text-align: center; /* CAMBIO: centrado */
+  text-align: center;
   color: var(--color-primary);
   text-decoration: none;
   font-size: 0.8rem;
@@ -358,13 +336,18 @@ body {
 }
 
 /* =========================================
-   RESPONSIVIDAD (MÓVIL / TABLET)
+   RESPONSIVIDAD
    ========================================= */
 @media (max-width: 850px) {
   .login-container {
     flex-direction: column;
     min-height: auto;
     max-width: 450px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: 20px auto;
   }
   .login-branding {
     padding: 30px 20px;

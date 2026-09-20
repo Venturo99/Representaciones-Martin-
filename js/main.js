@@ -1,13 +1,16 @@
 /**
- * Main.js - Punto de entrada simplificado
+ * Main.js - Enrutador principal
  */
 const App = {
   container: null,
+  VERSION: Date.now(), // ⭐ Caché busting
 
   loadModule: async (path, initCallback) => {
     try {
-      console.log(`📥 Cargando módulo: ${path}`);
-      const response = await fetch(path);
+      // ⭐ Añadir versión para romper caché
+      const url = `${path}?v=${App.VERSION}`;
+      console.log(`📥 Cargando módulo: ${url}`);
+      const response = await fetch(url);
       if (!response.ok) throw new Error(`No se pudo cargar ${path}`);
 
       const html = await response.text();
@@ -25,19 +28,31 @@ const App = {
 
   goToLogin: () => {
     console.log("➡️ Navegando al LOGIN...");
+    document.body.classList.remove("dashboard-active");
     App.loadModule("./modules/login.html", () => {
-      if (typeof AuthModule !== "undefined") {
-        AuthModule.init();
-      }
+      if (typeof AuthModule !== "undefined") AuthModule.init();
     });
   },
 
   goToDashboard: () => {
     console.log("➡️ Navegando al DASHBOARD...");
+    document.body.classList.add("dashboard-active");
     App.loadModule("./modules/dashboard.html", () => {
-      if (typeof DashboardModule !== "undefined") {
-        DashboardModule.init();
-      }
+      if (typeof DashboardModule !== "undefined") DashboardModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+
+  goToCatalogo: () => {
+    console.log("➡️ Navegando al CATÁLOGO...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/catalogo.html", () => {
+      if (typeof CatalogoModule !== "undefined") CatalogoModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
     });
   },
 
@@ -48,7 +63,7 @@ const App = {
 
   init: () => {
     App.container = document.getElementById("app-container");
-    console.log("🚀 Iniciando Sistema de Inventarios Martín...");
+    console.log("🚀 Iniciando Sistema Martín...");
 
     if (sessionStorage.getItem("userRole")) {
       App.goToDashboard();
@@ -59,9 +74,3 @@ const App = {
 };
 
 document.addEventListener("DOMContentLoaded", App.init);
-
-console.log("🔐 Roles disponibles para prueba:");
-console.log("   - superadmin@martin.com / Admin123!");
-console.log("   - almacen@martin.com / Almacen123!");
-console.log("   - vendedor@martin.com / Vendedor123!");
-console.log("   - gerente@martin.com / Gerente123!");
