@@ -1,0 +1,438 @@
+/* =========================================
+   INVENTARIO - Estilos específicos
+   ========================================= */
+
+/* =========================================
+   QUICK ACTIONS BAR - PRIORIDAD MÁXIMA
+   ========================================= */
+.dashboard-layout .quick-actions-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 12px !important;
+  margin-bottom: 18px !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  padding: 0 !important;
+}
+
+.dashboard-layout .quick-actions-bar .quick-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  padding: 10px 18px !important;
+  background: #ffffff !important;
+  border: 2px solid #e8eef5 !important;
+  border-radius: 10px !important;
+  font-size: 0.83rem !important;
+  font-weight: 600 !important;
+  color: #0a2540 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05) !important;
+  font-family: inherit !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  min-height: 40px !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  outline: none !important;
+}
+
+.dashboard-layout .quick-actions-bar .quick-btn i {
+  font-size: 0.9rem !important;
+  line-height: 1 !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.dashboard-layout .quick-actions-bar .quick-btn span:not(.quick-badge) {
+  font-size: 0.83rem !important;
+  line-height: 1 !important;
+}
+
+.dashboard-layout .quick-actions-bar .quick-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ===== Ver Todos (activo por defecto) ===== */
+.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all.active {
+  background: linear-gradient(135deg, #f37021, #d65a15) !important;
+  color: #ffffff !important;
+  border-color: #d65a15 !important;
+  box-shadow: 0 6px 18px rgba(243, 112, 33, 0.35) !important;
+}
+.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all.active i,
+.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all.active span {
+  color: #ffffff !important;
+}
+
+/* ===== Stock Crítico (Rojo) ===== */
+.dashboard-layout .quick-actions-bar .quick-btn.quick-danger {
+  color: #e74c3c !important;
+  border-color: #ffd5d0 !important;
+  background: #fff5f4 !important;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-danger i {
+  color: #e74c3c !important;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-danger.active {
+  background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+  color: #ffffff !important;
+  border-color: #c0392b !important;
+  box-shadow: 0 6px 18px rgba(231, 76, 60, 0.35) !important;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-danger.active i,
+.dashboard-layout .quick-actions-bar .quick-btn.quick-danger.active span {
+  color: #ffffff !important;
+}
+
+/* ===== Por Reabastecer (Naranja) ===== */
+.dashboard-layout .quick-actions-bar .quick-btn.quick-warning {
+  color: #f37021 !important;
+  border-color: #ffe0cc !important;
+  background: #fff9f5 !important;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-warning i {
+  color: #f37021 !important;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-warning.active {
+  background: linear-gradient(135deg, #f37021, #d65a15) !important;
+  color: #ffffff !important;
+  border-color: #d65a15 !important;
+  box-shadow: 0 6px 18px rgba(243, 112, 33, 0.35) !important;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-warning.active i,
+.dashboard-layout .quick-actions-bar .quick-btn.quick-warning.active span {
+  color: #ffffff !important;
+}
+
+/* ===== Disponibles (Verde) ===== */
+.dashboard-layout .quick-actions-bar .quick-btn.quick-success {
+  color: #008744 !important;
+  border-color: #c8e6d4 !important;
+  background: #f4faf6 !important;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-success i {
+  color: #008744 !important;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-success.active {
+  background: linear-gradient(135deg, #008744, #005a2b) !important;
+  color: #ffffff !important;
+  border-color: #005a2b !important;
+  box-shadow: 0 6px 18px rgba(0, 135, 68, 0.35) !important;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-success.active i,
+.dashboard-layout .quick-actions-bar .quick-btn.quick-success.active span {
+  color: #ffffff !important;
+}
+
+/* ===== BADGE de contador ===== */
+.dashboard-layout .quick-actions-bar .quick-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 22px !important;
+  height: 20px !important;
+  padding: 0 6px !important;
+  border-radius: 10px !important;
+  font-size: 0.7rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  margin-left: 4px !important;
+  line-height: 1 !important;
+}
+
+/* Badge cuando NO está activo */
+.dashboard-layout
+  .quick-actions-bar
+  .quick-btn.quick-danger:not(.active)
+  .quick-badge {
+  background: #e74c3c !important;
+}
+.dashboard-layout
+  .quick-actions-bar
+  .quick-btn.quick-warning:not(.active)
+  .quick-badge {
+  background: #f37021 !important;
+}
+.dashboard-layout
+  .quick-actions-bar
+  .quick-btn.quick-success:not(.active)
+  .quick-badge {
+  background: #008744 !important;
+}
+
+/* Badge cuando SÍ está activo */
+.dashboard-layout .quick-actions-bar .quick-btn.active .quick-badge {
+  background: rgba(255, 255, 255, 0.35) !important;
+  color: #ffffff !important;
+}
+
+/* =========================================
+   FILTRO DE STOCK RESALTADO
+   ========================================= */
+.dashboard-layout .filter-stock {
+  border: 2px solid #f37021 !important;
+  background: rgba(243, 112, 33, 0.03) !important;
+  font-weight: 600 !important;
+}
+
+/* =========================================
+   BOTONES DE LA TABLA (movimiento y editar)
+   ========================================= */
+.dashboard-layout .btn-movimiento {
+  background: rgba(52, 152, 219, 0.12) !important;
+  color: #3498db !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s !important;
+  font-size: 0.85rem !important;
+  margin-right: 4px !important;
+}
+.dashboard-layout .btn-movimiento:hover {
+  background: #3498db !important;
+  color: white !important;
+  transform: scale(1.1) !important;
+}
+
+.dashboard-layout .btn-edit {
+  background: rgba(243, 112, 33, 0.12) !important;
+  color: #f37021 !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s !important;
+  font-size: 0.85rem !important;
+}
+.dashboard-layout .btn-edit:hover {
+  background: #f37021 !important;
+  color: white !important;
+  transform: scale(1.1) !important;
+}
+
+/* =========================================
+   MODAL MOVIMIENTO
+   ========================================= */
+.dashboard-layout .modal-medium {
+  max-width: 550px;
+}
+
+.dashboard-layout .mov-product-info {
+  background: linear-gradient(135deg, #f8fafc, #eef2f7);
+  padding: 16px 22px;
+  border-bottom: 1px solid #e8eef5;
+}
+.dashboard-layout .mov-product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.dashboard-layout .mov-code {
+  background: #f37021;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: "Courier New", monospace;
+}
+.dashboard-layout .mov-stock {
+  background: #008744;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.dashboard-layout .mov-product-info h4 {
+  font-size: 1rem;
+  color: #0a2540;
+  margin: 0 0 6px 0;
+  font-weight: 700;
+}
+.dashboard-layout .mov-location {
+  font-size: 0.78rem;
+  color: #7a8699;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.dashboard-layout .mov-location i {
+  color: #f37021;
+}
+
+/* TIPO DE MOVIMIENTO (radio cards) */
+.dashboard-layout .mov-type-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 6px;
+}
+.dashboard-layout .mov-type-option {
+  cursor: pointer;
+}
+.dashboard-layout .mov-type-option input[type="radio"] {
+  display: none;
+}
+.dashboard-layout .mov-type-card {
+  padding: 14px 10px;
+  border: 2px solid #e8eef5;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.2s;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.dashboard-layout .mov-type-card i {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+.dashboard-layout .mov-type-card span {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0a2540;
+}
+.dashboard-layout .mov-type-card small {
+  font-size: 0.68rem;
+  color: #7a8699;
+}
+
+.dashboard-layout .mov-type-entrada .mov-type-card i {
+  color: #008744;
+}
+.dashboard-layout .mov-type-entrada input:checked + .mov-type-card {
+  border-color: #008744;
+  background: rgba(0, 135, 68, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 135, 68, 0.15);
+}
+.dashboard-layout .mov-type-salida .mov-type-card i {
+  color: #e74c3c;
+}
+.dashboard-layout .mov-type-salida input:checked + .mov-type-card {
+  border-color: #e74c3c;
+  background: rgba(231, 76, 60, 0.05);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.15);
+}
+.dashboard-layout .mov-type-ajuste .mov-type-card i {
+  color: #f37021;
+}
+.dashboard-layout .mov-type-ajuste input:checked + .mov-type-card {
+  border-color: #f37021;
+  background: rgba(243, 112, 33, 0.05);
+  box-shadow: 0 4px 12px rgba(243, 112, 33, 0.15);
+}
+
+/* PREVIEW DE STOCK */
+.dashboard-layout .mov-preview {
+  margin: 14px 22px 0;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #f8fafc, #eef2f7);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid #f37021;
+}
+.dashboard-layout .mov-preview-label {
+  font-size: 0.8rem;
+  color: #7a8699;
+  font-weight: 600;
+}
+.dashboard-layout .mov-preview-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0a2540;
+}
+.dashboard-layout .mov-preview-value.preview-success {
+  color: #008744;
+}
+.dashboard-layout .mov-preview-value.preview-warning {
+  color: #f37021;
+}
+.dashboard-layout .mov-preview-value.preview-danger {
+  color: #e74c3c;
+}
+
+/* =========================================
+   MODO OSCURO
+   ========================================= */
+body.theme-dark .dashboard-layout .quick-actions-bar .quick-btn {
+  background: #1a2029 !important;
+  border-color: #2a3441 !important;
+  color: #e8eef5 !important;
+}
+body.theme-dark .dashboard-layout .quick-actions-bar .quick-btn.quick-danger {
+  background: rgba(231, 76, 60, 0.1) !important;
+}
+body.theme-dark .dashboard-layout .quick-actions-bar .quick-btn.quick-warning {
+  background: rgba(243, 112, 33, 0.1) !important;
+}
+body.theme-dark .dashboard-layout .quick-actions-bar .quick-btn.quick-success {
+  background: rgba(0, 135, 68, 0.1) !important;
+}
+
+body.theme-dark .dashboard-layout .filter-stock {
+  background: rgba(243, 112, 33, 0.1) !important;
+  color: #e8eef5 !important;
+}
+body.theme-dark .dashboard-layout .mov-product-info {
+  background: linear-gradient(135deg, #1a2029, #252d38);
+  border-color: #2a3441;
+}
+body.theme-dark .dashboard-layout .mov-product-info h4 {
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .mov-type-card {
+  background: #1a2029;
+  border-color: #2a3441;
+}
+body.theme-dark .dashboard-layout .mov-type-card span {
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .mov-preview {
+  background: linear-gradient(135deg, #1a2029, #252d38);
+}
+body.theme-dark .dashboard-layout .mov-preview-value {
+  color: #e8eef5;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 1024px) {
+  .dashboard-layout .quick-actions-bar {
+    justify-content: flex-start !important;
+  }
+}
+@media (max-width: 768px) {
+  .dashboard-layout .mov-type-selector {
+    grid-template-columns: 1fr !important;
+  }
+  .dashboard-layout .mov-type-card {
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    padding: 12px 16px !important;
+  }
+}

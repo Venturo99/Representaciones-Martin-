@@ -911,3 +911,198 @@ body.theme-dark .dashboard-layout .main-content::-webkit-scrollbar-thumb {
     grid-template-columns: 1fr;
   }
 }
+/* =========================================
+   INVENTARIO - QUICK ACTIONS (agregado aquí para asegurar carga)
+   ========================================= */
+
+.dashboard-layout .quick-actions-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.dashboard-layout .quick-actions-bar .quick-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #ffffff;
+  border: 2px solid #e8eef5;
+  border-radius: 10px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: #0a2540;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  font-family: inherit;
+  line-height: 1;
+  min-height: 40px;
+}
+
+.dashboard-layout .quick-actions-bar .quick-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Ver Todos */
+.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all {
+  color: #0a2540;
+  background: #ffffff;
+  border-color: #e8eef5;
+}
+.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all.active {
+  background: linear-gradient(135deg, #f37021, #d65a15);
+  color: #ffffff;
+  border-color: #d65a15;
+  box-shadow: 0 6px 18px rgba(243, 112, 33, 0.35);
+}
+.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all.active i,
+.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all.active span {
+  color: #ffffff;
+}
+
+/* Stock Crítico */
+.dashboard-layout .quick-actions-bar .quick-btn.quick-danger {
+  color: #e74c3c;
+  border-color: #ffd5d0;
+  background: #fff5f4;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-danger i {
+  color: #e74c3c;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-danger.active {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: #ffffff;
+  border-color: #c0392b;
+  box-shadow: 0 6px 18px rgba(231, 76, 60, 0.35);
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-danger.active i,
+.dashboard-layout .quick-actions-bar .quick-btn.quick-danger.active span {
+  color: #ffffff;
+}
+
+/* Por Reabastecer */
+.dashboard-layout .quick-actions-bar .quick-btn.quick-warning {
+  color: #f37021;
+  border-color: #ffe0cc;
+  background: #fff9f5;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-warning i {
+  color: #f37021;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-warning.active {
+  background: linear-gradient(135deg, #f37021, #d65a15);
+  color: #ffffff;
+  border-color: #d65a15;
+  box-shadow: 0 6px 18px rgba(243, 112, 33, 0.35);
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-warning.active i,
+.dashboard-layout .quick-actions-bar .quick-btn.quick-warning.active span {
+  color: #ffffff;
+}
+
+/* Disponibles */
+.dashboard-layout .quick-actions-bar .quick-btn.quick-success {
+  color: #008744;
+  border-color: #c8e6d4;
+  background: #f4faf6;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-success i {
+  color: #008744;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-success.active {
+  background: linear-gradient(135deg, #008744, #005a2b);
+  color: #ffffff;
+  border-color: #005a2b;
+  box-shadow: 0 6px 18px rgba(0, 135, 68, 0.35);
+}
+.dashboard-layout .quick-actions-bar .quick-btn.quick-success.active i,
+.dashboard-layout .quick-actions-bar .quick-btn.quick-success.active span {
+  color: #ffffff;
+}
+
+/* Badge del contador */
+.dashboard-layout .quick-actions-bar .quick-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-left: 4px;
+  line-height: 1;
+}
+.dashboard-layout
+  .quick-actions-bar
+  .quick-btn.quick-danger:not(.active)
+  .quick-badge {
+  background: #e74c3c;
+}
+.dashboard-layout
+  .quick-actions-bar
+  .quick-btn.quick-warning:not(.active)
+  .quick-badge {
+  background: #f37021;
+}
+.dashboard-layout
+  .quick-actions-bar
+  .quick-btn.quick-success:not(.active)
+  .quick-badge {
+  background: #008744;
+}
+.dashboard-layout .quick-actions-bar .quick-btn.active .quick-badge {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Botones de la tabla */
+.dashboard-layout .btn-movimiento {
+  background: rgba(52, 152, 219, 0.12);
+  color: #3498db;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+  margin-right: 4px;
+}
+.dashboard-layout .btn-movimiento:hover {
+  background: #3498db;
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Filtro de stock */
+.dashboard-layout .filter-stock {
+  border: 2px solid #f37021;
+  background: rgba(243, 112, 33, 0.03);
+  font-weight: 600;
+}
+.dashboard-layout .filter-stock:hover {
+  background: rgba(243, 112, 33, 0.1);
+}
+/* =========================================
+   COLUMNA DE ACCIONES - INVENTARIO
+   ========================================= */
+.dashboard-layout .actions-cell {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: flex-start;
+  white-space: nowrap;
+}
+
+.dashboard-layout .actions-cell .btn-icon {
+  flex-shrink: 0;
+}

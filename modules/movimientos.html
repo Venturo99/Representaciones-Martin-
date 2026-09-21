@@ -1,0 +1,396 @@
+<div class="dashboard-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/logo.png" alt="Martín" class="sidebar-logo" />
+      <h3 class="sidebar-title">Control de Inventario</h3>
+      <p class="sidebar-subtitle">Representaciones Martín S.A.C.</p>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Principal</span>
+        <button class="nav-item" data-route="dashboard">
+          <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Operaciones</span>
+        <button class="nav-item" data-route="catalogo">
+          <i class="fas fa-th-large"></i> <span>Catálogo de Productos</span>
+        </button>
+        <button class="nav-item" data-route="inventario">
+          <i class="fas fa-boxes"></i> <span>Inventario</span>
+        </button>
+        <button class="nav-item" data-route="consulta-stock">
+          <i class="fas fa-search"></i> <span>Consulta Rápida</span>
+        </button>
+        <button class="nav-item active" data-route="movimientos">
+          <i class="fas fa-exchange-alt"></i> <span>Entradas y Salidas</span>
+        </button>
+        <button class="nav-item" data-route="historico">
+          <i class="fas fa-history"></i> <span>Historial Movimientos</span>
+        </button>
+        <button class="nav-item" data-route="cortes">
+          <i class="fas fa-cut"></i> <span>Cortes de Tableros</span>
+        </button>
+        <button class="nav-item" data-route="mermas">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>Ajustes de Mermas</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Análisis</span>
+        <button class="nav-item" data-route="rotacion">
+          <i class="fas fa-chart-bar"></i> <span>Rotación Productos</span>
+        </button>
+        <button class="nav-item" data-route="corte-inventario">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Cortes de Inventario</span>
+        </button>
+        <button class="nav-item" data-route="reportes">
+          <i class="fas fa-file-alt"></i> <span>Reportes</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Administración</span>
+        <button class="nav-item" data-route="clientes">
+          <i class="fas fa-users"></i> <span>Clientes</span>
+        </button>
+        <button class="nav-item" data-route="proveedores">
+          <i class="fas fa-truck"></i> <span>Proveedores y Compras</span>
+        </button>
+        <button class="nav-item" data-route="usuarios">
+          <i class="fas fa-user-shield"></i> <span>Usuarios y Accesos</span>
+        </button>
+        <button class="nav-item" data-route="bitacora">
+          <i class="fas fa-clipboard-list"></i> <span>Bitácora Auditoría</span>
+        </button>
+        <button class="nav-item" data-route="cierre">
+          <i class="fas fa-lock"></i> <span>Cierre Diario</span>
+        </button>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button id="logout-btn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <!-- HEADER -->
+    <header class="top-header">
+      <div class="header-title">
+        <h1>Registro de Entradas y Salidas</h1>
+        <p>Historial completo de movimientos del almacén</p>
+      </div>
+      <div class="header-user">
+        <div class="notifications-container">
+          <button id="btn-notifications" class="btn-icon-header">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+          </button>
+          <div id="notifications-panel" class="notifications-panel hidden">
+            <div class="notifications-header">
+              <h4><i class="fas fa-bell"></i> Alertas de Stock</h4>
+              <span class="notif-count">3 nuevas</span>
+            </div>
+            <div class="notifications-list"></div>
+          </div>
+        </div>
+        <button id="theme-toggle" class="btn-icon-header">
+          <i class="fas fa-moon"></i>
+        </button>
+        <div class="user-info">
+          <span class="user-name" id="user-name-display">Cargando...</span>
+          <span class="user-role" id="user-role-display">...</span>
+        </div>
+        <div class="user-avatar" id="user-avatar-display">U</div>
+      </div>
+    </header>
+
+    <!-- KPIs DE MOVIMIENTOS -->
+    <section class="mov-kpis">
+      <div class="mov-kpi mov-kpi-entrada">
+        <div class="mov-kpi-icon"><i class="fas fa-arrow-down"></i></div>
+        <div class="mov-kpi-info">
+          <h3>Entradas Hoy</h3>
+          <p class="mov-kpi-value" id="kpi-entradas">0</p>
+          <span class="mov-kpi-label">unidades ingresadas</span>
+        </div>
+      </div>
+      <div class="mov-kpi mov-kpi-salida">
+        <div class="mov-kpi-icon"><i class="fas fa-arrow-up"></i></div>
+        <div class="mov-kpi-info">
+          <h3>Salidas Hoy</h3>
+          <p class="mov-kpi-value" id="kpi-salidas">0</p>
+          <span class="mov-kpi-label">unidades despachadas</span>
+        </div>
+      </div>
+      <div class="mov-kpi mov-kpi-ajuste">
+        <div class="mov-kpi-icon"><i class="fas fa-balance-scale"></i></div>
+        <div class="mov-kpi-info">
+          <h3>Ajustes Hoy</h3>
+          <p class="mov-kpi-value" id="kpi-ajustes">0</p>
+          <span class="mov-kpi-label">correcciones realizadas</span>
+        </div>
+      </div>
+      <div class="mov-kpi mov-kpi-total">
+        <div class="mov-kpi-icon"><i class="fas fa-list"></i></div>
+        <div class="mov-kpi-info">
+          <h3>Total Movimientos</h3>
+          <p class="mov-kpi-value" id="kpi-total">0</p>
+          <span class="mov-kpi-label">registros en el día</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BARRA DE HERRAMIENTAS -->
+    <section class="toolbar-card">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Buscar por código o producto..."
+          autocomplete="off"
+        />
+      </div>
+      <div class="toolbar-actions">
+        <select id="filter-type" class="filter-select">
+          <option value="">Todos los tipos</option>
+          <option value="entrada">📥 Entradas</option>
+          <option value="salida">📤 Salidas</option>
+          <option value="ajuste">⚖️ Ajustes</option>
+        </select>
+        <select id="filter-date" class="filter-select">
+          <option value="all">Todas las fechas</option>
+          <option value="today" selected>Hoy</option>
+          <option value="week">Última semana</option>
+          <option value="month">Último mes</option>
+        </select>
+        <button id="btn-new-movement" class="btn-add">
+          <i class="fas fa-plus"></i> Nuevo Movimiento
+        </button>
+      </div>
+    </section>
+
+    <!-- TABLA DE MOVIMIENTOS -->
+    <section class="table-card">
+      <div class="table-header-actions">
+        <h3><i class="fas fa-history"></i> Historial de Movimientos</h3>
+        <div class="table-actions-right">
+          <span class="results-count" id="results-count">0 resultados</span>
+          <button id="btn-export" class="btn-export">
+            <i class="fas fa-file-excel"></i> Exportar
+          </button>
+        </div>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table" id="movimientos-table">
+          <thead>
+            <tr>
+              <th>Fecha/Hora</th>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Tipo</th>
+              <th>Cantidad</th>
+              <th>Motivo</th>
+              <th>Usuario</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="movimientos-tbody"></tbody>
+        </table>
+      </div>
+      <div id="empty-state" class="empty-state hidden">
+        <i class="fas fa-inbox"></i>
+        <p>No hay movimientos registrados</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: NUEVO MOVIMIENTO -->
+  <div id="movimiento-modal" class="modal-overlay hidden">
+    <div class="modal-content modal-medium">
+      <div class="modal-header modal-header-gradient-mov">
+        <h3><i class="fas fa-exchange-alt"></i> Registrar Movimiento</h3>
+        <button class="modal-close" id="close-movimiento-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <form id="movimiento-form">
+        <div class="mov-form-body">
+          <!-- 1. SELECCIONAR PRODUCTO -->
+          <div class="mov-step">
+            <span class="mov-step-number">1</span>
+            <div class="mov-step-content">
+              <label class="mov-step-title">Seleccionar Producto *</label>
+              <div class="product-selector">
+                <i class="fas fa-search product-selector-icon"></i>
+                <input
+                  type="text"
+                  id="product-search"
+                  placeholder="Buscar por código o nombre..."
+                  autocomplete="off"
+                />
+              </div>
+              <div id="product-results" class="product-results hidden">
+                <!-- Resultados de búsqueda -->
+              </div>
+              <div id="selected-product" class="selected-product hidden">
+                <!-- Producto seleccionado -->
+              </div>
+              <span class="error-message" id="producto-error"></span>
+            </div>
+          </div>
+
+          <!-- 2. TIPO DE MOVIMIENTO -->
+          <div class="mov-step">
+            <span class="mov-step-number">2</span>
+            <div class="mov-step-content">
+              <label class="mov-step-title">Tipo de Movimiento *</label>
+              <div class="mov-type-selector">
+                <label class="mov-type-option mov-type-entrada">
+                  <input type="radio" name="mov-tipo" value="entrada" checked />
+                  <div class="mov-type-card">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>Entrada</span>
+                    <small>Ingresa stock</small>
+                  </div>
+                </label>
+                <label class="mov-type-option mov-type-salida">
+                  <input type="radio" name="mov-tipo" value="salida" />
+                  <div class="mov-type-card">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Salida</span>
+                    <small>Sale stock</small>
+                  </div>
+                </label>
+                <label class="mov-type-option mov-type-ajuste">
+                  <input type="radio" name="mov-tipo" value="ajuste" />
+                  <div class="mov-type-card">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>Ajuste</span>
+                    <small>Corregir stock</small>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. CANTIDAD -->
+          <div class="mov-step">
+            <span class="mov-step-number">3</span>
+            <div class="mov-step-content">
+              <label class="mov-step-title">Cantidad *</label>
+              <div class="quantity-input-wrapper">
+                <button type="button" class="qty-btn qty-minus" id="qty-minus">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input
+                  type="number"
+                  id="mov-cantidad"
+                  min="1"
+                  placeholder="0"
+                  required
+                />
+                <button type="button" class="qty-btn qty-plus" id="qty-plus">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <span class="error-message" id="cantidad-error"></span>
+            </div>
+          </div>
+
+          <!-- 4. MOTIVO / OBSERVACIÓN (OBLIGATORIO) -->
+          <div class="mov-step">
+            <span class="mov-step-number">4</span>
+            <div class="mov-step-content">
+              <label class="mov-step-title">
+                Motivo / Observación *
+                <span class="required-badge">OBLIGATORIO</span>
+              </label>
+              <select id="mov-motivo-tipo" class="motivo-select" required>
+                <option value="">Seleccionar motivo...</option>
+                <option value="Compra a proveedor">Compra a proveedor</option>
+                <option value="Venta según Boleta/Factura">
+                  Venta según Boleta/Factura
+                </option>
+                <option value="Devolución de cliente">
+                  Devolución de cliente
+                </option>
+                <option value="Devolución a proveedor">
+                  Devolución a proveedor
+                </option>
+                <option value="Ajuste por merma">Ajuste por merma</option>
+                <option value="Ajuste por daño">Ajuste por daño</option>
+                <option value="Traslado entre zonas">
+                  Traslado entre zonas
+                </option>
+                <option value="Inventario físico">Inventario físico</option>
+                <option value="Otro">Otro</option>
+              </select>
+              <textarea
+                id="mov-observaciones"
+                class="motivo-textarea"
+                placeholder="Escribe el detalle del movimiento. Ejemplo: Venta según Boleta N° 102, Ajuste por tabla dañada, etc."
+                rows="2"
+                required
+              ></textarea>
+              <span class="error-message" id="motivo-error"></span>
+            </div>
+          </div>
+
+          <!-- VALIDACIÓN VISUAL DE STOCK INSUFICIENTE (RN-03) -->
+          <div id="stock-warning" class="stock-warning hidden">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="stock-warning-content">
+              <strong>⚠️ Stock Insuficiente</strong>
+              <p id="stock-warning-message">
+                No hay suficiente stock para esta operación.
+              </p>
+            </div>
+          </div>
+
+          <!-- PREVIEW DEL STOCK RESULTANTE -->
+          <div id="mov-preview" class="mov-preview">
+            <span class="mov-preview-label">Stock después del movimiento:</span>
+            <span class="mov-preview-value" id="mov-preview-value">0</span>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancel-movimiento">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+          <button type="submit" class="btn-primary" id="btn-save-movement">
+            <i class="fas fa-save"></i> Registrar Movimiento
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: VER DETALLE DE MOVIMIENTO -->
+  <div id="detail-modal" class="modal-overlay hidden">
+    <div class="modal-content modal-small">
+      <div class="modal-header modal-header-info">
+        <h3><i class="fas fa-info-circle"></i> Detalle del Movimiento</h3>
+        <button class="modal-close" id="close-detail-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="detail-mov-body" id="detail-mov-body">
+        <!-- Contenido generado por JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-message">Operación exitosa</span>
+  </div>
+</div>

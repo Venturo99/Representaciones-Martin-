@@ -55,7 +55,57 @@ const App = {
       if (typeof ThemeModule !== "undefined") ThemeModule.init();
     });
   },
-
+  goToInventario: () => {
+    console.log("➡️ Navegando al INVENTARIO...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/inventario.html", () => {
+      if (typeof InventarioModule !== "undefined") InventarioModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToConsultaRapida: () => {
+    console.log("➡️ Navegando a CONSULTA RÁPIDA...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/consulta-rapida.html", () => {
+      if (typeof ConsultaRapidaModule !== "undefined")
+        ConsultaRapidaModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToMovimientos: () => {
+    console.log("➡️ Navegando a ENTRADAS Y SALIDAS...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/movimientos.html", () => {
+      if (typeof MovimientosModule !== "undefined") MovimientosModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToReportes: () => {
+    console.log("➡️ Navegando a REPORTES...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/reportes.html", () => {
+      if (typeof ReportesModule !== "undefined") ReportesModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToUsuarios: () => {
+    console.log("➡️ Navegando a USUARIOS...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/usuarios.html", () => {
+      if (typeof UsuariosModule !== "undefined") UsuariosModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
   logout: () => {
     sessionStorage.clear();
     App.goToLogin();

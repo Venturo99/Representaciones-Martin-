@@ -443,3 +443,129 @@ body.theme-dark .modal-close:hover {
     max-height: 95vh;
   }
 }
+
+/* =========================================
+   MÉTRICAS DEL CATÁLOGO (Reemplaza inventory-summary)
+   ========================================= */
+.dashboard-layout .metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.dashboard-layout .metric-card {
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e8eef5;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+.dashboard-layout .metric-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+.dashboard-layout .metric-info-card::before {
+  background: #3498db;
+}
+.dashboard-layout .metric-success::before {
+  background: #008744;
+}
+.dashboard-layout .metric-warning::before {
+  background: #f39c12;
+}
+.dashboard-layout .metric-danger::before {
+  background: #e74c3c;
+}
+
+.dashboard-layout .metric-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+.dashboard-layout .metric-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.dashboard-layout .metric-info-card .metric-icon {
+  background: rgba(52, 152, 219, 0.12);
+  color: #3498db;
+}
+.dashboard-layout .metric-success .metric-icon {
+  background: rgba(0, 135, 68, 0.12);
+  color: #008744;
+}
+.dashboard-layout .metric-warning .metric-icon {
+  background: rgba(243, 156, 18, 0.12);
+  color: #f39c12;
+}
+.dashboard-layout .metric-danger .metric-icon {
+  background: rgba(231, 76, 60, 0.12);
+  color: #e74c3c;
+}
+
+.dashboard-layout .metric-info {
+  flex: 1;
+  min-width: 0;
+}
+.dashboard-layout .metric-info h3 {
+  font-size: 0.66rem;
+  color: #7a8699;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dashboard-layout .metric-value {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #0a2540;
+  line-height: 1;
+  margin-bottom: 3px;
+}
+.dashboard-layout .metric-label {
+  font-size: 0.66rem;
+  color: #7a8699;
+}
+
+/* MODO OSCURO */
+body.theme-dark .dashboard-layout .metric-card {
+  background: #1a2029;
+  border-color: #2a3441;
+}
+body.theme-dark .dashboard-layout .metric-value {
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .metric-info h3,
+body.theme-dark .dashboard-layout .metric-label {
+  color: #8a95a5;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .dashboard-layout .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .dashboard-layout .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}

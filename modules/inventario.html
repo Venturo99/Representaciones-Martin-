@@ -15,10 +15,10 @@
       </div>
       <div class="nav-section">
         <span class="nav-section-title">Operaciones</span>
-        <button class="nav-item active" data-route="catalogo">
+        <button class="nav-item" data-route="catalogo">
           <i class="fas fa-th-large"></i> <span>Catálogo de Productos</span>
         </button>
-        <button class="nav-item" data-route="inventario">
+        <button class="nav-item active" data-route="inventario">
           <i class="fas fa-boxes"></i> <span>Inventario</span>
         </button>
         <button class="nav-item" data-route="consulta-stock">
@@ -77,20 +77,16 @@
     </div>
   </aside>
 
-  <!-- CONTENIDO PRINCIPAL -->
   <main class="main-content">
+    <!-- HEADER -->
     <header class="top-header">
       <div class="header-title">
-        <h1>Catálogo de Productos</h1>
-        <p>Gestión completa de productos y su ubicación física</p>
+        <h1>Inventario General</h1>
+        <p>Control completo del stock y ubicación física</p>
       </div>
       <div class="header-user">
         <div class="notifications-container">
-          <button
-            id="btn-notifications"
-            class="btn-icon-header"
-            title="Notificaciones"
-          >
+          <button id="btn-notifications" class="btn-icon-header">
             <i class="fas fa-bell"></i>
             <span class="notification-badge">3</span>
           </button>
@@ -102,7 +98,7 @@
             <div class="notifications-list"></div>
           </div>
         </div>
-        <button id="theme-toggle" class="btn-icon-header" title="Modo Oscuro">
+        <button id="theme-toggle" class="btn-icon-header">
           <i class="fas fa-moon"></i>
         </button>
         <div class="user-info">
@@ -113,45 +109,78 @@
       </div>
     </header>
 
-    <!-- BARRA DE HERRAMIENTAS -->
+    <!-- BARRA DE HERRAMIENTAS CON FILTRO RÁPIDO -->
     <section class="toolbar-card">
       <div class="search-box">
         <i class="fas fa-search"></i>
         <input
           type="text"
           id="search-input"
-          placeholder="Buscar por código, nombre o categoría..."
+          placeholder="Buscar por código, nombre, categoría o ubicación..."
           autocomplete="off"
         />
       </div>
       <div class="toolbar-actions">
         <select id="filter-category" class="filter-select">
           <option value="">Todas las categorías</option>
-          <option value="Maderas y Tableros">Maderas y Tableros</option>
-          <option value="Ferretería">Ferretería</option>
-          <option value="Herramientas y Maquinaria">
-            Herramientas y Maquinaria
-          </option>
-          <option value="Drywall">Drywall</option>
-          <option value="Pisos">Pisos</option>
         </select>
-        <select id="filter-subcategory" class="filter-select">
-          <option value="">Todas las subcategorías</option>
+        <!-- ⭐ FILTRO RÁPIDO POR ESTADO DE STOCK -->
+        <select id="filter-stock-status" class="filter-select filter-stock">
+          <option value="">Todos los estados</option>
+          <option value="ok">✅ Stock Adecuado</option>
+          <option value="low">⚠️ Stock Bajo</option>
+          <option value="zero">❌ Sin Stock</option>
+          <option value="critical">🚨 Stock Crítico</option>
         </select>
-        <button id="btn-add-product" class="btn-add">
-          <i class="fas fa-plus"></i> Nuevo Producto
+        <button
+          id="btn-export"
+          class="btn-add"
+          style="background: linear-gradient(135deg, #008744, #005a2b)"
+        >
+          <i class="fas fa-file-excel"></i> Exportar
         </button>
       </div>
     </section>
 
-    <!-- RESUMEN CON TARJETAS -->
+    <!-- BOTONES DE ACCIÓN RÁPIDA -->
+    <section class="quick-actions-bar">
+      <button class="quick-btn active" id="btn-show-all" data-filter="">
+        <i class="fas fa-list"></i>
+        <span>Ver Todos</span>
+      </button>
+      <button
+        class="quick-btn quick-danger"
+        id="btn-show-critical"
+        data-filter="critical"
+      >
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>Stock Crítico</span>
+        <span class="quick-badge" id="critical-count">0</span>
+      </button>
+      <button
+        class="quick-btn quick-warning"
+        id="btn-show-low"
+        data-filter="low"
+      >
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Por Reabastecer</span>
+        <span class="quick-badge" id="low-count">0</span>
+      </button>
+      <button class="quick-btn quick-success" id="btn-show-ok" data-filter="ok">
+        <i class="fas fa-check-circle"></i>
+        <span>Disponibles</span>
+        <span class="quick-badge" id="ok-count">0</span>
+      </button>
+    </section>
+
+    <!-- RESUMEN -->
     <section class="metrics-grid">
       <div class="metric-card metric-info-card">
         <div class="metric-icon"><i class="fas fa-box"></i></div>
         <div class="metric-info">
           <h3>Total Productos</h3>
           <p class="metric-value" id="summary-total">0</p>
-          <span class="metric-label">Registrados</span>
+          <span class="metric-label">En inventario</span>
         </div>
       </div>
       <div class="metric-card metric-success">
@@ -180,29 +209,28 @@
       </div>
     </section>
 
-    <!-- TABLA -->
+    <!-- TABLA DE INVENTARIO -->
     <section class="table-card">
       <div class="table-header-actions">
-        <h3><i class="fas fa-list"></i> Lista de Productos</h3>
+        <h3><i class="fas fa-boxes"></i> Stock por Producto</h3>
         <span class="results-count" id="results-count">0 resultados</span>
       </div>
       <div class="table-scroll">
-        <table class="data-table" id="catalogo-table">
+        <table class="data-table" id="inventario-table">
           <thead>
             <tr>
               <th>Código</th>
               <th>Producto</th>
               <th>Categoría</th>
-              <th>Subcategoría</th>
               <th>Stock</th>
-              <th>Mínimo</th>
-              <th>Precio</th>
+              <th>Mín.</th>
+              <th>Disponible</th>
               <th>Ubicación</th>
               <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>
-          <tbody id="catalogo-tbody"></tbody>
+          <tbody id="inventario-tbody"></tbody>
         </table>
       </div>
       <div id="empty-state" class="empty-state hidden">
@@ -212,189 +240,114 @@
     </section>
   </main>
 
-  <!-- MODAL: CREAR/EDITAR PRODUCTO -->
-  <div id="product-modal" class="modal-overlay hidden">
-    <div class="modal-content modal-large">
+  <!-- MODAL: REGISTRAR MOVIMIENTO (RF-FE-06) -->
+  <div id="movimiento-modal" class="modal-overlay hidden">
+    <div class="modal-content modal-medium">
       <div class="modal-header">
-        <h3 id="modal-title">
-          <i class="fas fa-plus-circle"></i> Nuevo Producto
-        </h3>
-        <button class="modal-close" id="close-product-modal">
+        <h3><i class="fas fa-exchange-alt"></i> Registrar Movimiento</h3>
+        <button class="modal-close" id="close-movimiento-modal">
           <i class="fas fa-times"></i>
         </button>
       </div>
-      <form id="product-form">
-        <input type="hidden" id="product-id" />
+      <form id="movimiento-form">
+        <input type="hidden" id="mov-product-id" />
+        <input type="hidden" id="mov-stock-actual" />
+
+        <!-- Info del producto -->
+        <div class="mov-product-info">
+          <div class="mov-product-header">
+            <span class="mov-code" id="mov-codigo">-</span>
+            <span class="mov-stock" id="mov-stock-display">Stock: 0</span>
+          </div>
+          <h4 id="mov-nombre">-</h4>
+          <p class="mov-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span id="mov-ubicacion">-</span>
+          </p>
+        </div>
+
+        <!-- TIPO DE MOVIMIENTO (radio buttons) -->
+        <div class="form-field">
+          <label>Tipo de Movimiento *</label>
+          <div class="mov-type-selector">
+            <label class="mov-type-option mov-type-entrada">
+              <input type="radio" name="mov-tipo" value="entrada" checked />
+              <div class="mov-type-card">
+                <i class="fas fa-arrow-down"></i>
+                <span>Entrada</span>
+                <small>Ingresa stock</small>
+              </div>
+            </label>
+            <label class="mov-type-option mov-type-salida">
+              <input type="radio" name="mov-tipo" value="salida" />
+              <div class="mov-type-card">
+                <i class="fas fa-arrow-up"></i>
+                <span>Salida</span>
+                <small>Sale stock</small>
+              </div>
+            </label>
+            <label class="mov-type-option mov-type-ajuste">
+              <input type="radio" name="mov-tipo" value="ajuste" />
+              <div class="mov-type-card">
+                <i class="fas fa-balance-scale"></i>
+                <span>Ajuste</span>
+                <small>Corregir stock</small>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Cantidad -->
         <div class="form-grid">
           <div class="form-field">
-            <label for="product-codigo">Código *</label>
-            <input
-              type="text"
-              id="product-codigo"
-              placeholder="Ej: MAD-MEL-001"
-              required
-            />
-            <span class="error-message" id="codigo-error"></span>
-          </div>
-          <div class="form-field">
-            <label for="product-nombre">Nombre del Producto *</label>
-            <input
-              type="text"
-              id="product-nombre"
-              placeholder="Ej: Melamina Blanca 18mm"
-              required
-            />
-            <span class="error-message" id="nombre-error"></span>
-          </div>
-          <div class="form-field">
-            <label for="product-categoria">Categoría *</label>
-            <select id="product-categoria" required>
-              <option value="">Seleccionar...</option>
-              <option value="Maderas y Tableros">Maderas y Tableros</option>
-              <option value="Ferretería">Ferretería</option>
-              <option value="Herramientas y Maquinaria">
-                Herramientas y Maquinaria
-              </option>
-              <option value="Drywall">Drywall</option>
-              <option value="Pisos">Pisos</option>
-            </select>
-            <span class="error-message" id="categoria-error"></span>
-          </div>
-          <div class="form-field">
-            <label for="product-subcategoria">Subcategoría *</label>
-            <select id="product-subcategoria" required>
-              <option value="">Seleccionar categoría primero...</option>
-            </select>
-            <span class="error-message" id="subcategoria-error"></span>
-          </div>
-          <div class="form-field">
-            <label for="product-stock">Stock Actual *</label>
+            <label for="mov-cantidad">Cantidad *</label>
             <input
               type="number"
-              id="product-stock"
-              min="0"
+              id="mov-cantidad"
+              min="1"
               placeholder="0"
               required
             />
-            <span class="error-message" id="stock-error"></span>
+            <span class="error-message" id="cantidad-error"></span>
           </div>
           <div class="form-field">
-            <label for="product-minimo">Stock Mínimo *</label>
-            <input
-              type="number"
-              id="product-minimo"
-              min="0"
-              placeholder="0"
-              required
-            />
-            <span class="error-message" id="minimo-error"></span>
-          </div>
-          <div class="form-field">
-            <label for="product-precio">Precio Unitario (S/) *</label>
-            <input
-              type="number"
-              id="product-precio"
-              min="0"
-              step="0.01"
-              placeholder="0.00"
-              required
-            />
-            <span class="error-message" id="precio-error"></span>
-          </div>
-          <div class="form-field">
-            <label for="product-unidad">Unidad de Medida *</label>
-            <select id="product-unidad" required>
-              <option value="Unidad">Unidad</option>
-              <option value="Plancha">Plancha</option>
-              <option value="Metro">Metro</option>
-              <option value="Caja">Caja</option>
-              <option value="Paquete">Paquete</option>
-              <option value="Rollo">Rollo</option>
+            <label for="mov-motivo">Motivo</label>
+            <select id="mov-motivo">
+              <option value="Compra a proveedor">Compra a proveedor</option>
+              <option value="Venta a cliente">Venta a cliente</option>
+              <option value="Devolución">Devolución</option>
+              <option value="Merma">Merma</option>
+              <option value="Ajuste de inventario">Ajuste de inventario</option>
+              <option value="Traslado">Traslado</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
         </div>
 
-        <!-- UBICACIÓN FÍSICA -->
-        <div class="form-section-title">
-          <i class="fas fa-map-marker-alt"></i> Ubicación Física en Almacén
+        <div class="form-field">
+          <label for="mov-observaciones">Observaciones</label>
+          <input type="text" id="mov-observaciones" placeholder="Opcional..." />
         </div>
-        <div class="form-grid">
-          <div class="form-field">
-            <label for="product-zona">Zona *</label>
-            <select id="product-zona" required>
-              <option value="A">Zona A</option>
-              <option value="B">Zona B</option>
-              <option value="C">Zona C</option>
-              <option value="D">Zona D</option>
-              <option value="E">Zona E</option>
-            </select>
-          </div>
-          <div class="form-field">
-            <label for="product-pasillo">Pasillo *</label>
-            <input
-              type="text"
-              id="product-pasillo"
-              placeholder="Ej: 01"
-              required
-            />
-          </div>
-          <div class="form-field">
-            <label for="product-rack">Rack *</label>
-            <input
-              type="text"
-              id="product-rack"
-              placeholder="Ej: R1"
-              required
-            />
-          </div>
-          <div class="form-field">
-            <label for="product-nivel">Nivel *</label>
-            <input
-              type="text"
-              id="product-nivel"
-              placeholder="Ej: N1"
-              required
-            />
-          </div>
+
+        <!-- Preview del stock resultante -->
+        <div class="mov-preview">
+          <span class="mov-preview-label">Stock después del movimiento:</span>
+          <span class="mov-preview-value" id="mov-preview-value">0</span>
         </div>
 
         <div class="modal-actions">
-          <button type="button" class="btn-secondary" id="cancel-product">
+          <button type="button" class="btn-secondary" id="cancel-movimiento">
             <i class="fas fa-times"></i> Cancelar
           </button>
-          <button type="submit" class="btn-primary" id="save-product">
-            <i class="fas fa-save"></i> Guardar Producto
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-save"></i> Registrar Movimiento
           </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL: CONFIRMAR ELIMINACIÓN -->
-  <div id="delete-modal" class="modal-overlay hidden">
-    <div class="modal-content modal-small">
-      <div class="modal-header-danger">
-        <i class="fas fa-exclamation-triangle"></i>
-        <h3>¿Eliminar producto?</h3>
-      </div>
-      <p class="delete-message">
-        ¿Estás seguro de que deseas eliminar el producto
-        <strong id="delete-product-name"></strong>? <br /><small
-          >Esta acción no se puede deshacer.</small
-        >
-      </p>
-      <div class="modal-actions">
-        <button type="button" class="btn-secondary" id="cancel-delete">
-          Cancelar
-        </button>
-        <button type="button" class="btn-danger" id="confirm-delete">
-          <i class="fas fa-trash"></i> Sí, eliminar
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TOAST NOTIFICATION -->
+  <!-- TOAST -->
   <div id="toast" class="toast hidden">
     <i class="fas fa-check-circle"></i>
     <span id="toast-message">Operación exitosa</span>

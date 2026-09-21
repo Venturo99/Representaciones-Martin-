@@ -1,5 +1,5 @@
 /**
- * Módulo de Catálogo de Productos con CRUD completo
+ * Módulo de Catálogo de Productos
  */
 const CatalogoModule = (() => {
   const CATEGORIAS = {
@@ -319,15 +319,15 @@ const CatalogoModule = (() => {
                     <td>${p.minimo}</td>
                     <td>S/ ${p.precio.toFixed(2)}</td>
                     <td>
-                        <span class="location-tag" title="Zona ${p.zona}, Pasillo ${p.pasillo}, Rack ${p.rack}, Nivel ${p.nivel}">
+                        <span class="location-tag">
                             <i class="fas fa-map-marker-alt"></i>
                             ${p.zona}-${p.pasillo}-${p.rack}-${p.nivel}
                         </span>
                     </td>
                     <td><span class="badge ${status.class}">${status.label}</span></td>
                     <td class="actions-cell">
-                        <button class="btn-icon btn-edit" data-id="${p.id}" title="Editar"><i class="fas fa-edit"></i></button>
-                        <button class="btn-icon btn-delete" data-id="${p.id}" title="Eliminar"><i class="fas fa-trash"></i></button>
+                        <button class="btn-icon btn-edit" data-id="${p.id}"><i class="fas fa-edit"></i></button>
+                        <button class="btn-icon btn-delete" data-id="${p.id}"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
             `;
@@ -347,23 +347,20 @@ const CatalogoModule = (() => {
   };
 
   const updateSummary = (products) => {
-    const total = products.length;
-    const ok = products.filter(
-      (p) => p.stock >= p.minimo && p.stock > 0,
-    ).length;
-    const warning = products.filter(
-      (p) => p.stock > 0 && p.stock < p.minimo,
-    ).length;
-    const danger = products.filter((p) => p.stock === 0).length;
-
     const set = (id, val) => {
       const el = document.getElementById(id);
       if (el) el.textContent = val;
     };
-    set("summary-total", total);
-    set("summary-ok", ok);
-    set("summary-warning", warning);
-    set("summary-danger", danger);
+    set("summary-total", products.length);
+    set(
+      "summary-ok",
+      products.filter((p) => p.stock >= p.minimo && p.stock > 0).length,
+    );
+    set(
+      "summary-warning",
+      products.filter((p) => p.stock > 0 && p.stock < p.minimo).length,
+    );
+    set("summary-danger", products.filter((p) => p.stock === 0).length);
   };
 
   const applyFilters = () => {
@@ -392,6 +389,25 @@ const CatalogoModule = (() => {
     const catFilter = document.getElementById("filter-category");
     const subcatFilter = document.getElementById("filter-subcategory");
 
+    // ⭐ Función para actualizar subcategorías
+    const updateSubcategories = (categoria) => {
+      if (!subcatFilter) return;
+
+      // Limpiar subcategorías
+      subcatFilter.innerHTML =
+        '<option value="">Todas las subcategorías</option>';
+
+      // Si hay categoría seleccionada, agregar sus subcategorías
+      if (categoria && CATEGORIAS[categoria]) {
+        CATEGORIAS[categoria].forEach((sub) => {
+          const option = document.createElement("option");
+          option.value = sub;
+          option.textContent = sub;
+          subcatFilter.appendChild(option);
+        });
+      }
+    };
+
     if (searchInput) {
       searchInput.addEventListener("input", (e) => {
         currentFilters.search = e.target.value;
@@ -401,17 +417,13 @@ const CatalogoModule = (() => {
 
     if (catFilter) {
       catFilter.addEventListener("change", (e) => {
-        currentFilters.categoria = e.target.value;
+        const selectedCat = e.target.value;
+        currentFilters.categoria = selectedCat;
         currentFilters.subcategoria = "";
-        if (subcatFilter) {
-          subcatFilter.innerHTML =
-            '<option value="">Todas las subcategorías</option>';
-          if (e.target.value && CATEGORIAS[e.target.value]) {
-            CATEGORIAS[e.target.value].forEach((sub) => {
-              subcatFilter.innerHTML += `<option value="${sub}">${sub}</option>`;
-            });
-          }
-        }
+
+        // ⭐ Actualizar subcategorías según la categoría
+        updateSubcategories(selectedCat);
+
         applyFilters();
       });
     }
@@ -611,40 +623,8 @@ const CatalogoModule = (() => {
   };
 
   const initNavigation = () => {
-    console.log("🔧 Inicializando navegación del catálogo...");
-
-    document.querySelectorAll(".nav-item[data-route]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const route = btn.dataset.route;
-        console.log(`🖱️ Clic en ruta: "${route}"`);
-
-        document
-          .querySelectorAll(".nav-item")
-          .forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        switch (route) {
-          case "dashboard":
-            console.log("➡️ Navegando a Dashboard...");
-            App.goToDashboard();
-            break;
-          case "catalogo":
-            console.log("➡️ Ya estás en Catálogo");
-            // Ya estás aquí, no hacer nada
-            break;
-          default:
-            const name = btn.querySelector("span")?.textContent || route;
-            alert(`🚧 Módulo "${name}" en desarrollo.`);
-            document
-              .querySelectorAll(".nav-item")
-              .forEach((b) => b.classList.remove("active"));
-            const activeBtn = document.querySelector(
-              '.nav-item[data-route="catalogo"]',
-            );
-            if (activeBtn) activeBtn.classList.add("active");
-        }
-      });
-    });
+    // ⭐ Usar el módulo de navegación centralizado
+    NavModule.init("catalogo");
 
     const logout = document.getElementById("logout-btn");
     if (logout)
@@ -718,3 +698,5 @@ const CatalogoModule = (() => {
 
   return { init };
 })();
+
+console.log("🚀 catalogo.js VERSIÓN FINAL cargado");

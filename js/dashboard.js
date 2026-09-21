@@ -573,33 +573,8 @@ const DashboardModule = (() => {
   };
 
   const initNavigation = () => {
-    document.querySelectorAll(".nav-item[data-route]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const route = btn.dataset.route;
-        document
-          .querySelectorAll(".nav-item")
-          .forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        if (route === "dashboard") App.goToDashboard();
-        else {
-          const name = btn.querySelector("span").textContent;
-          alert(`🚧 Módulo "${name}" en desarrollo.`);
-          document
-            .querySelectorAll(".nav-item")
-            .forEach((b) => b.classList.remove("active"));
-          document
-            .querySelector('.nav-item[data-route="dashboard"]')
-            .classList.add("active");
-        }
-      });
-    });
-
-    const logout = document.getElementById("logout-btn");
-    if (logout)
-      logout.addEventListener("click", () => {
-        if (confirm("¿Cerrar sesión?")) App.logout();
-      });
+    // ⭐ Usar el módulo de navegación centralizado
+    NavModule.init("dashboard");
   };
 
   const init = () => {
