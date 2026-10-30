@@ -1,83 +1,143 @@
 /**
- * Navegación centralizada - Todos los módulos usan esto
+ * Navegación centralizada con Control de Acceso Basado en Roles (RBAC)
  */
 const NavModule = (() => {
-  // Mapa de todas las rutas disponibles
   const routes = {
+    //Principal
     dashboard: () => App.goToDashboard(),
+
+    //Operaciones
     catalogo: () => App.goToCatalogo(),
     inventario: () => App.goToInventario(),
-    // Próximos módulos:
     "consulta-stock": () => App.goToConsultaRapida(),
     movimientos: () => App.goToMovimientos(),
-    historico: null,
-    "consulta-rapida": () => App.goToConsultaRapida(),
-    cortes: null,
-    mermas: null,
-    rotacion: null,
-    "corte-inventario": null,
-    reportes: null,
-    clientes: null,
-    proveedores: null,
+    historico: () => App.goToHistorial(),
+    cortes: () => App.goToCortes(),
+    mermas: () => App.goToMermas(),
+    ventas: () => App.goToVentas(),
+
+    //Analisis y reportes
+    rotacion: () => App.goToRotacion(),
+    "corte-inventario": () => App.goToCorteInventario(),
+    reportes: () => App.goToReportes(),
+
+    //Administración
+    clientes: () => App.goToClientes(),
+    proveedores: () => App.goToProveedores(),
     usuarios: () => App.goToUsuarios(),
-    bitacora: null,
-    cierre: null,
+    bitacora: () => App.goToBitacora(),
+    cierre: () => App.goToCierre(),
   };
 
-  /**
-   * Inicializa la navegación del sidebar
-   * @param {string} activeRoute - Ruta actualmente activa
-   */
+  // PERMISOS POR ROL
+  const PERMISSIONS = {
+    "Super Administrador": [
+      "dashboard",
+      "catalogo",
+      "ventas",
+      "inventario",
+      "consulta-stock",
+      "movimientos",
+      "historico",
+      "cortes",
+      "mermas",
+      "rotacion",
+      "corte-inventario",
+      "reportes",
+      "clientes",
+      "proveedores",
+      "usuarios",
+      "bitacora",
+      "cierre",
+    ],
+    "Encargado de Almacén": [
+      "dashboard",
+      "catalogo",
+      "inventario",
+      "consulta-stock",
+      "movimientos",
+      "historico",
+      "cortes",
+      "mermas",
+      "corte-inventario",
+      "reportes",
+    ],
+    Vendedor: ["dashboard", "catalogo", "ventas", "consulta-stock", "clientes"],
+    "Gerente General": [
+      "dashboard",
+      "consulta-stock",
+      "historico",
+      "rotacion",
+      "corte-inventario",
+      "reportes",
+      "bitacora",
+    ],
+  };
+
   const init = (activeRoute = "") => {
     console.log(`🧭 Inicializando navegación (activa: ${activeRoute})`);
 
-    const navItems = document.querySelectorAll(".nav-item[data-route]");
+    const userRole = sessionStorage.getItem("userRole") || "Invitado";
+    const allowedRoutes = PERMISSIONS[userRole] || [];
 
-    navItems.forEach((btn) => {
-      // Remover listeners previos clonando el nodo
+    // 1. Ocultar TODOS los botones primero
+    document.querySelectorAll(".nav-item[data-route]").forEach((btn) => {
+      btn.style.display = "none";
+    });
+
+    // 2. Mostrar solo los permitidos
+    document.querySelectorAll(".nav-item[data-route]").forEach((btn) => {
+      const route = btn.dataset.route;
+
+      if (allowedRoutes.includes(route)) {
+        btn.style.display = "flex";
+      }
+    });
+
+    // 3. Ocultar secciones que se quedaron vacías (sin botones visibles)
+    document.querySelectorAll(".nav-section").forEach((section) => {
+      const visibleButtons = section.querySelectorAll(
+        '.nav-item[style*="display: flex"]',
+      );
+      if (visibleButtons.length === 0) {
+        section.style.display = "none";
+      } else {
+        section.style.display = "block";
+      }
+    });
+
+    // 4. Lógica de clics
+    document.querySelectorAll(".nav-item[data-route]").forEach((btn) => {
+      const route = btn.dataset.route;
       const newBtn = btn.cloneNode(true);
       btn.parentNode.replaceChild(newBtn, btn);
 
       newBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        const route = newBtn.dataset.route;
-        console.log(`🖱️ Clic en: "${route}"`);
+        if (route === activeRoute) return;
 
-        // Caso especial: si ya estás en esa ruta, no hacer nada
-        if (route === activeRoute) {
-          console.log(`✅ Ya estás en "${route}"`);
-          return;
-        }
-
-        // Actualizar clase active
         document
           .querySelectorAll(".nav-item")
           .forEach((b) => b.classList.remove("active"));
         newBtn.classList.add("active");
 
-        // Ejecutar la función de navegación
         if (routes[route]) {
           routes[route]();
         } else {
-          // Módulos no implementados aún
-          const name = newBtn.querySelector("span")?.textContent || route;
           alert(
-            `🚧 Módulo "${name}" en desarrollo.\n\nSe implementará próximamente.`,
+            `🚧 Módulo "${newBtn.querySelector("span")?.textContent || route}" en desarrollo.`,
           );
-
-          // Restaurar active al botón actual
           document
             .querySelectorAll(".nav-item")
             .forEach((b) => b.classList.remove("active"));
-          const activeBtn = document.querySelector(
-            `.nav-item[data-route="${activeRoute}"]`,
-          );
-          if (activeBtn) activeBtn.classList.add("active");
+          document
+            .querySelector(`.nav-item[data-route="${activeRoute}"]`)
+            ?.classList.add("active");
         }
       });
     });
 
-    // Cerrar sesión
+    // 5. Cerrar sesión
     const logout = document.getElementById("logout-btn");
     if (logout) {
       const newLogout = logout.cloneNode(true);
@@ -87,10 +147,14 @@ const NavModule = (() => {
       });
     }
 
+    // 6. ⭐ MOSTRAR EL MENÚ SUAVEMENTE (Esto quita el fondo en blanco)
+    const sidebarNav = document.querySelector(".sidebar-nav");
+    if (sidebarNav) {
+      sidebarNav.classList.add("nav-ready");
+    }
+
     console.log("✅ Navegación lista.");
   };
 
   return { init };
 })();
-
-console.log("🚀 nav.js cargado");

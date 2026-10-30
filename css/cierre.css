@@ -1,0 +1,188 @@
+/* =========================================
+   CIERRE DIARIO - Estilos Específicos
+   ========================================= */
+
+/* 1. Tarjeta de Estado (Abierto/Cerrado) */
+.dashboard-layout .status-card {
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+  padding: 24px !important;
+  border-radius: 12px !important;
+  margin-bottom: 20px !important;
+  border-left: 6px solid !important;
+  transition: all 0.3s ease !important;
+  background: white !important;
+}
+
+.dashboard-layout .status-icon {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.8rem !important;
+  flex-shrink: 0 !important;
+}
+
+.dashboard-layout .status-info {
+  flex: 1 !important;
+}
+
+.dashboard-layout .status-info h2 {
+  font-size: 1.2rem !important;
+  margin: 0 0 6px 0 !important;
+  font-weight: 800 !important;
+}
+
+.dashboard-layout .status-info p {
+  margin: 0 !important;
+  font-size: 0.85rem !important;
+  color: #7a8699 !important;
+}
+
+.dashboard-layout .status-date {
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  color: #7a8699 !important;
+  text-transform: capitalize !important;
+}
+
+/* Estado Abierto */
+.dashboard-layout .status-open {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7) !important;
+  border-left-color: #008744 !important;
+}
+.dashboard-layout .status-open .status-icon {
+  background: #008744 !important;
+  color: white !important;
+}
+.dashboard-layout .status-open .status-info h2 {
+  color: #065f46 !important;
+}
+
+/* Estado Cerrado */
+.dashboard-layout .status-closed {
+  background: linear-gradient(135deg, #fef2f2, #fee2e2) !important;
+  border-left-color: #e74c3c !important;
+}
+.dashboard-layout .status-closed .status-icon {
+  background: #e74c3c !important;
+  color: white !important;
+}
+.dashboard-layout .status-closed .status-info h2 {
+  color: #991b1b !important;
+}
+
+/* 2. Tarjeta de Acción (Botón de Cierre) */
+.dashboard-layout .action-card {
+  background: white !important;
+  border-radius: 12px !important;
+  padding: 30px !important;
+  border: 2px dashed #e8eef5 !important;
+  text-align: center !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02) !important;
+  margin-bottom: 20px !important;
+}
+
+.dashboard-layout .action-content h3 {
+  font-size: 1.1rem !important;
+  color: #0a2540 !important;
+  margin: 0 0 10px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+.dashboard-layout .action-content p {
+  font-size: 0.9rem !important;
+  color: #7a8699 !important;
+  max-width: 600px !important;
+  margin: 0 auto 20px auto !important;
+  line-height: 1.5 !important;
+}
+
+/* Botón Rojo Grande */
+.dashboard-layout .btn-cierre {
+  background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+  color: white !important;
+  border: none !important;
+  padding: 16px 32px !important;
+  border-radius: 10px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  transition: all 0.3s !important;
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.3) !important;
+}
+
+.dashboard-layout .btn-cierre:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 25px rgba(231, 76, 60, 0.4) !important;
+}
+
+/* Modo Oscuro */
+body.theme-dark .dashboard-layout .action-card {
+  background: #1a2029 !important;
+  border-color: #2a3441 !important;
+}
+body.theme-dark .dashboard-layout .action-content h3 {
+  color: #e8eef5 !important;
+}
+body.theme-dark .dashboard-layout .status-open {
+  background: linear-gradient(135deg, #0f2a1a, #14532d) !important;
+}
+body.theme-dark .dashboard-layout .status-open .status-info h2 {
+  color: #5cd693 !important;
+}
+body.theme-dark .dashboard-layout .status-closed {
+  background: linear-gradient(135deg, #2a0f0f, #3f1414) !important;
+}
+body.theme-dark .dashboard-layout .status-closed .status-info h2 {
+  color: #ff8a80 !important;
+}
+/* Contenedor de acciones de la tarjeta de estado */
+.dashboard-layout .status-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* Botón de Reabrir Jornada */
+.dashboard-layout .btn-reabrir {
+  background: white;
+  color: #e74c3c;
+  border: 2px solid #e74c3c;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-layout .btn-reabrir:hover {
+  background: #e74c3c;
+  color: white;
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+}
+
+body.theme-dark .dashboard-layout .btn-reabrir {
+  background: #1a2029;
+  border-color: #e74c3c;
+  color: #ff8a80;
+}
+body.theme-dark .dashboard-layout .btn-reabrir:hover {
+  background: #e74c3c;
+  color: white;
+}

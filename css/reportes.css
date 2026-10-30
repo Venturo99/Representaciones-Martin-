@@ -1,0 +1,153 @@
+/* =========================================
+   REPORTES - Estilos Específicos
+   ========================================= */
+
+/* Tarjeta de configuración */
+.dashboard-layout .report-config-card {
+  padding: 20px 24px;
+}
+
+.dashboard-layout .report-config-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 16px;
+  align-items: end;
+}
+
+.dashboard-layout .report-config-grid .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dashboard-layout .report-config-grid label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #7a8699;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.dashboard-layout .report-config-grid .filter-input {
+  padding: 10px 14px;
+  border: 2px solid #e8eef5;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: #0a2540;
+  background: #f8fafc;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.dashboard-layout .report-config-grid .filter-input:focus {
+  border-color: #f37021;
+  background: white;
+}
+
+/* Botones de acción del reporte */
+.dashboard-layout .report-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Footer del reporte */
+.dashboard-layout .report-footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.75rem;
+  color: #7a8699;
+  border-top: 1px dashed #e8eef5;
+  margin-top: 10px;
+}
+
+/* =========================================
+   ESTILOS EXCLUSIVOS PARA IMPRESIÓN (PDF)
+   ========================================= */
+@media print {
+  /* Ocultar el sidebar, header, filtros y botones */
+  .sidebar,
+  .top-header,
+  .report-config-card,
+  .report-actions,
+  .report-footer,
+  .toast {
+    display: none !important;
+  }
+
+  /* Ajustar el contenedor principal */
+  .dashboard-layout {
+    background: white !important;
+    display: block !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
+
+  .table-card {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  /* Mostrar el header de impresión */
+  .print-header {
+    display: flex !important;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #333;
+  }
+
+  .print-logo {
+    max-width: 100px;
+  }
+
+  .print-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #000;
+  }
+
+  .print-header p {
+    margin: 5px 0 0 0;
+    color: #666;
+  }
+
+  /* Hacer que la tabla se vea profesional en papel */
+  .data-table th {
+    background: #f0f0f0 !important;
+    color: #000 !important;
+    border-bottom: 2px solid #000 !important;
+  }
+
+  .data-table td {
+    color: #000 !important;
+    border-bottom: 1px solid #ddd !important;
+  }
+
+  .badge,
+  .code-tag,
+  .location-tag {
+    border: 1px solid #999 !important;
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Modo Oscuro */
+body.theme-dark .dashboard-layout .report-config-grid .filter-input {
+  background: #252d38;
+  border-color: #2a3441;
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .report-config-grid .filter-input:focus {
+  background: #1a2029;
+}
+body.theme-dark .dashboard-layout .report-footer {
+  border-color: #2a3441;
+}

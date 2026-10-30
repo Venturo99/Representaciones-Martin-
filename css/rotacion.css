@@ -1,0 +1,125 @@
+/* =========================================
+   ROTACIÓN - Gráficos y Barras de Progreso
+   ========================================= */
+
+/* Gráfico Horizontal (Top 5) */
+.dashboard-layout .horizontal-bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dashboard-layout .chart-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dashboard-layout .chart-label {
+  width: 250px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.dashboard-layout .chart-label .rank {
+  width: 24px;
+  height: 24px;
+  background: rgba(243, 112, 33, 0.1);
+  color: #f37021;
+  font-size: 0.75rem;
+  font-weight: 800;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-layout .chart-label .name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0a2540;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dashboard-layout .chart-bar-wrapper {
+  flex: 1;
+  height: 12px;
+  background: #f0f3f7;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.dashboard-layout .chart-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f37021, #d65a15);
+  border-radius: 6px;
+  transition: width 0.8s ease-out;
+}
+
+.dashboard-layout .chart-value {
+  width: 50px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #0a2540;
+  text-align: right;
+}
+
+/* Tabla: Barras de % de Rotación */
+.dashboard-layout .rotacion-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 150px;
+}
+
+.dashboard-layout .rotacion-bar-bg {
+  flex: 1;
+  height: 8px;
+  background: #f0f3f7;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dashboard-layout .rotacion-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+
+.dashboard-layout .rotacion-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Colores según el nivel de rotación */
+.dashboard-layout .rot-alta {
+  background: #008744;
+  color: #008744;
+}
+.dashboard-layout .rot-media {
+  background: #f39c12;
+  color: #f39c12;
+}
+.dashboard-layout .rot-baja {
+  background: #e74c3c;
+  color: #e74c3c;
+}
+
+/* Modo Oscuro */
+body.theme-dark .dashboard-layout .chart-label .name,
+body.theme-dark .dashboard-layout .chart-value {
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .chart-bar-wrapper,
+body.theme-dark .dashboard-layout .rotacion-bar-bg {
+  background: #2a3441;
+}
+body.theme-dark .dashboard-layout .chart-label .rank {
+  background: rgba(243, 112, 33, 0.15);
+}

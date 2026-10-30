@@ -1,0 +1,114 @@
+/* =========================================
+   PROVEEDORES - Estilos Específicos
+   ========================================= */
+
+/* Alineación de los botones de acción en la tabla */
+.dashboard-layout .actions-wrapper {
+  display: flex !important;
+  gap: 8px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.dashboard-layout .actions-wrapper .btn-icon {
+  flex-shrink: 0;
+}
+
+/* Inputs de los modales */
+.dashboard-layout #prov-form input,
+.dashboard-layout #prov-form select,
+.dashboard-layout #compra-form input,
+.dashboard-layout #compra-form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #e8eef5;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: #0a2540;
+  background: #f8fafc;
+  font-family: inherit;
+  transition: all 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.dashboard-layout #prov-form input:focus,
+.dashboard-layout #prov-form select:focus,
+.dashboard-layout #compra-form input:focus,
+.dashboard-layout #compra-form select:focus {
+  border-color: #f37021;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(243, 112, 33, 0.1);
+}
+
+.dashboard-layout #prov-form .form-grid-2,
+.dashboard-layout #compra-form .form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.dashboard-layout #prov-form .form-field,
+.dashboard-layout #compra-form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.dashboard-layout #prov-form .form-field label,
+.dashboard-layout #compra-form .form-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0a2540;
+}
+
+/* =========================================
+   BOTONES DEL MODAL EXACTAMENTE IGUALES
+   ========================================= */
+.dashboard-layout #prov-form .modal-actions,
+.dashboard-layout #compra-form .modal-actions {
+  display: flex !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  padding: 18px 0 0 0 !important;
+  border-top: 1px dashed #e8eef5;
+  margin-top: 10px;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.dashboard-layout #prov-form .modal-actions button,
+.dashboard-layout #compra-form .modal-actions button {
+  flex: 1 !important; /* Esto los hace medir exactamente 50% y 50% */
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 12px 10px !important;
+  font-size: 0.85rem !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+
+/* Modo Oscuro */
+body.theme-dark .dashboard-layout #prov-form input,
+body.theme-dark .dashboard-layout #prov-form select,
+body.theme-dark .dashboard-layout #compra-form input,
+body.theme-dark .dashboard-layout #compra-form select {
+  background: #252d38;
+  border-color: #2a3441;
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout #prov-form input:focus,
+body.theme-dark .dashboard-layout #prov-form select:focus,
+body.theme-dark .dashboard-layout #compra-form input:focus,
+body.theme-dark .dashboard-layout #compra-form select:focus {
+  background: #1a2029;
+}
+body.theme-dark .dashboard-layout #prov-form .form-field label,
+body.theme-dark .dashboard-layout #compra-form .form-field label {
+  color: #e8eef5;
+}

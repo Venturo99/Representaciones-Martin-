@@ -86,6 +86,57 @@ const App = {
       if (typeof ThemeModule !== "undefined") ThemeModule.init();
     });
   },
+  goToHistorial: () => {
+    console.log("➡️ Navegando al HISTORIAL...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/historial.html", () => {
+      if (typeof HistorialModule !== "undefined") HistorialModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToCortes: () => {
+    console.log("➡️ Navegando a CORTES DE TABLEROS...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/cortes.html", () => {
+      if (typeof CortesModule !== "undefined") CortesModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToMermas: () => {
+    console.log("➡️ Navegando a AJUSTES DE MERMAS...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/mermas.html", () => {
+      if (typeof MermasModule !== "undefined") MermasModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToRotacion: () => {
+    console.log("➡️ Navegando a ROTACIÓN DE PRODUCTOS...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/rotacion.html", () => {
+      if (typeof RotacionModule !== "undefined") RotacionModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToCorteInventario: () => {
+    console.log("➡️ Navegando a CORTES DE INVENTARIO...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/corte-inventario.html", () => {
+      if (typeof CorteInventarioModule !== "undefined")
+        CorteInventarioModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
   goToReportes: () => {
     console.log("➡️ Navegando a REPORTES...");
     document.body.classList.add("dashboard-active");
@@ -96,11 +147,61 @@ const App = {
       if (typeof ThemeModule !== "undefined") ThemeModule.init();
     });
   },
+  goToClientes: () => {
+    console.log("➡️ Navegando a CLIENTES...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/clientes.html", () => {
+      if (typeof ClientesModule !== "undefined") ClientesModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToProveedores: () => {
+    console.log("➡️ Navegando a PROVEEDORES Y COMPRAS...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/proveedores.html", () => {
+      if (typeof ProveedoresModule !== "undefined") ProveedoresModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
   goToUsuarios: () => {
     console.log("➡️ Navegando a USUARIOS...");
     document.body.classList.add("dashboard-active");
     App.loadModule("./modules/usuarios.html", () => {
       if (typeof UsuariosModule !== "undefined") UsuariosModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToBitacora: () => {
+    console.log("➡️ Navegando a BITÁCORA...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/bitacora.html", () => {
+      if (typeof BitacoraModule !== "undefined") BitacoraModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToCierre: () => {
+    console.log("➡️ Navegando a CIERRE DIARIO...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/cierre.html", () => {
+      if (typeof CierreModule !== "undefined") CierreModule.init();
+      if (typeof NotificationsModule !== "undefined")
+        NotificationsModule.init();
+      if (typeof ThemeModule !== "undefined") ThemeModule.init();
+    });
+  },
+  goToVentas: () => {
+    console.log("➡️ Navegando a VENTAS...");
+    document.body.classList.add("dashboard-active");
+    App.loadModule("./modules/ventas.html", () => {
+      if (typeof VentasModule !== "undefined") VentasModule.init();
       if (typeof NotificationsModule !== "undefined")
         NotificationsModule.init();
       if (typeof ThemeModule !== "undefined") ThemeModule.init();

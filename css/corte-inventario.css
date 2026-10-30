@@ -1,0 +1,99 @@
+/* =========================================
+   CORTES DE INVENTARIO - Estilos Específicos
+   ========================================= */
+
+/* Barra de información */
+.dashboard-layout .toma-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(52, 152, 219, 0.1);
+  padding: 10px 16px;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+  color: #0a2540;
+  font-size: 0.85rem;
+  flex: 1;
+}
+.dashboard-layout .toma-info i {
+  color: #3498db;
+  font-size: 1.2rem;
+}
+
+/* Input de conteo en la tabla */
+.dashboard-layout .input-conteo-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard-layout .input-conteo {
+  width: 80px;
+  padding: 8px 10px;
+  border: 2px solid #e8eef5;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0a2540;
+  background: #f8fafc;
+  text-align: right;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.dashboard-layout .input-conteo:focus {
+  border-color: #f37021;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(243, 112, 33, 0.1);
+}
+
+.dashboard-layout .unidad-label {
+  font-size: 0.75rem;
+  color: #7a8699;
+  font-weight: 600;
+}
+
+/* Colores de Diferencia */
+.dashboard-layout .diff-positive {
+  color: #008744; /* Verde para ingresos */
+  background: rgba(0, 135, 68, 0.1);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.dashboard-layout .diff-negative {
+  color: #e74c3c; /* Rojo para pérdidas */
+  background: rgba(231, 76, 60, 0.1);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.dashboard-layout .diff-zero {
+  color: #7a8699;
+  font-weight: 700;
+}
+
+/* Botón de guardar deshabilitado */
+.dashboard-layout #btn-save-corte.btn-disabled {
+  background: #cbd5e1 !important;
+  color: #7a8699 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  opacity: 0.7;
+}
+
+/* Modo Oscuro */
+body.theme-dark .dashboard-layout .toma-info {
+  background: rgba(52, 152, 219, 0.15);
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .input-conteo {
+  background: #252d38;
+  border-color: #2a3441;
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .input-conteo:focus {
+  background: #1a2029;
+}

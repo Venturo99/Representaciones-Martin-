@@ -1,0 +1,88 @@
+/* =========================================
+   BITÁCORA - Estilos Específicos
+   ========================================= */
+
+/* Etiquetas de acción con colores */
+.dashboard-layout .action-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.dashboard-layout .action-login {
+  background: rgba(52, 152, 219, 0.12);
+  color: #2980b9;
+  border: 1px solid rgba(52, 152, 219, 0.2);
+}
+.dashboard-layout .action-create {
+  background: rgba(0, 135, 68, 0.12);
+  color: #008744;
+  border: 1px solid rgba(0, 135, 68, 0.2);
+}
+.dashboard-layout .action-edit {
+  background: rgba(243, 112, 33, 0.12);
+  color: #f37021;
+  border: 1px solid rgba(243, 112, 33, 0.2);
+}
+.dashboard-layout .action-delete {
+  background: rgba(231, 76, 60, 0.12);
+  color: #e74c3c;
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+/* Estilos de texto en la tabla */
+.dashboard-layout .log-date {
+  font-size: 0.8rem;
+  font-family: monospace;
+  color: #7a8699;
+  white-space: nowrap;
+}
+
+.dashboard-layout .log-detail {
+  font-size: 0.8rem;
+  color: #0a2540;
+  max-width: 350px;
+  line-height: 1.4;
+}
+
+.dashboard-layout .log-ip {
+  font-size: 0.75rem;
+  font-family: monospace;
+  color: #7a8699;
+  background: #f4f7fa;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* Reutilizamos estilos de filtros y paginación del historial */
+/* (Asegúrate de tener las clases .filter-card, .filter-grid, .filter-input, .pagination-container, etc. en tu historial.css o dashboard.css) */
+
+/* Modo Oscuro */
+body.theme-dark .dashboard-layout .log-detail {
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .log-ip {
+  background: #252d38;
+  color: #8a95a5;
+}
+body.theme-dark .dashboard-layout .action-login {
+  background: rgba(52, 152, 219, 0.2);
+  color: #7ec8e3;
+}
+body.theme-dark .dashboard-layout .action-create {
+  background: rgba(0, 135, 68, 0.2);
+  color: #5cd693;
+}
+body.theme-dark .dashboard-layout .action-edit {
+  background: rgba(243, 112, 33, 0.2);
+  color: #ff9d66;
+}
+body.theme-dark .dashboard-layout .action-delete {
+  background: rgba(231, 76, 60, 0.2);
+  color: #ff8a80;
+}

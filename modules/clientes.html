@@ -1,0 +1,324 @@
+<div class="dashboard-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/logo.png" alt="Martín" class="sidebar-logo" />
+      <h3 class="sidebar-title">Control de Inventario</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Principal</span>
+        <button class="nav-item" data-route="dashboard">
+          <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Operaciones</span>
+        <button class="nav-item" data-route="catalogo">
+          <i class="fas fa-th-large"></i> <span>Catálogo de Productos</span>
+        </button>
+        <button class="nav-item" data-route="inventario">
+          <i class="fas fa-boxes"></i> <span>Inventario</span>
+        </button>
+        <button class="nav-item" data-route="consulta-stock">
+          <i class="fas fa-search"></i> <span>Consulta Rápida</span>
+        </button>
+        <button class="nav-item" data-route="movimientos">
+          <i class="fas fa-exchange-alt"></i> <span>Entradas y Salidas</span>
+        </button>
+        <button class="nav-item" data-route="historico">
+          <i class="fas fa-history"></i> <span>Historial Movimientos</span>
+        </button>
+        <button class="nav-item" data-route="cortes">
+          <i class="fas fa-cut"></i> <span>Cortes de Tableros</span>
+        </button>
+        <button class="nav-item" data-route="mermas">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>Ajustes de Mermas</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Análisis</span>
+        <button class="nav-item" data-route="rotacion">
+          <i class="fas fa-chart-bar"></i> <span>Rotación Productos</span>
+        </button>
+        <button class="nav-item" data-route="corte-inventario">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Cortes de Inventario</span>
+        </button>
+        <button class="nav-item" data-route="reportes">
+          <i class="fas fa-file-alt"></i> <span>Reportes</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Administración</span>
+        <button class="nav-item active" data-route="clientes">
+          <i class="fas fa-users"></i> <span>Clientes</span>
+        </button>
+        <button class="nav-item" data-route="proveedores">
+          <i class="fas fa-truck"></i> <span>Proveedores y Compras</span>
+        </button>
+        <button class="nav-item" data-route="usuarios">
+          <i class="fas fa-user-shield"></i> <span>Usuarios y Accesos</span>
+        </button>
+        <button class="nav-item" data-route="bitacora">
+          <i class="fas fa-clipboard-list"></i> <span>Bitácora Auditoría</span>
+        </button>
+        <button class="nav-item" data-route="cierre">
+          <i class="fas fa-lock"></i> <span>Cierre Diario</span>
+        </button>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button id="logout-btn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <!-- HEADER -->
+    <header class="top-header">
+      <div class="header-title">
+        <h1>Directorio de Clientes</h1>
+        <p>Gestión de personas naturales y empresas</p>
+      </div>
+      <div class="header-user">
+        <div class="notifications-container">
+          <button id="btn-notifications" class="btn-icon-header">
+            <i class="fas fa-bell"></i><span class="notification-badge">3</span>
+          </button>
+          <div id="notifications-panel" class="notifications-panel hidden">
+            <div class="notifications-header">
+              <h4><i class="fas fa-bell"></i> Alertas de Stock</h4>
+              <span class="notif-count">3 nuevas</span>
+            </div>
+            <div class="notifications-list"></div>
+          </div>
+        </div>
+        <button id="theme-toggle" class="btn-icon-header">
+          <i class="fas fa-moon"></i>
+        </button>
+        <div class="user-info">
+          <span class="user-name" id="user-name-display">Cargando...</span>
+          <span class="user-role" id="user-role-display">...</span>
+        </div>
+        <div class="user-avatar" id="user-avatar-display">U</div>
+      </div>
+    </header>
+
+    <!-- KPIs DE CLIENTES -->
+    <section class="mov-kpis">
+      <div class="mov-kpi mov-kpi-total">
+        <div class="mov-kpi-icon"><i class="fas fa-users"></i></div>
+        <div class="mov-kpi-info">
+          <h3>Total Clientes</h3>
+          <p class="mov-kpi-value" id="kpi-total-clientes">0</p>
+          <span class="mov-kpi-label">registrados en el sistema</span>
+        </div>
+      </div>
+      <div class="mov-kpi mov-kpi-entrada">
+        <div class="mov-kpi-icon"><i class="fas fa-building"></i></div>
+        <div class="mov-kpi-info">
+          <h3>Empresas (RUC)</h3>
+          <p class="mov-kpi-value" id="kpi-total-ruc">0</p>
+          <span class="mov-kpi-label">clientes corporativos</span>
+        </div>
+      </div>
+      <div class="mov-kpi mov-kpi-ajuste">
+        <div class="mov-kpi-icon"><i class="fas fa-user"></i></div>
+        <div class="mov-kpi-info">
+          <h3>Personas (DNI)</h3>
+          <p class="mov-kpi-value" id="kpi-total-dni">0</p>
+          <span class="mov-kpi-label">clientes naturales</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BARRA DE HERRAMIENTAS -->
+    <section class="toolbar-card">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Buscar por nombre, documento o teléfono..."
+          autocomplete="off"
+        />
+      </div>
+      <div class="toolbar-actions">
+        <select id="filter-doc" class="filter-select">
+          <option value="">Todos los documentos</option>
+          <option value="RUC">Solo Empresas (RUC)</option>
+          <option value="DNI">Solo Personas (DNI)</option>
+        </select>
+        <button id="btn-new-client" class="btn-add">
+          <i class="fas fa-plus"></i> Nuevo Cliente
+        </button>
+      </div>
+    </section>
+
+    <!-- TABLA DE CLIENTES -->
+    <section class="table-card">
+      <div class="table-header-actions">
+        <h3><i class="fas fa-address-book"></i> Lista de Clientes</h3>
+        <span class="results-count" id="results-count">0 resultados</span>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table" id="clientes-table">
+          <thead>
+            <tr>
+              <th>Documento</th>
+              <th>Nombre / Razón Social</th>
+              <th>Teléfono</th>
+              <th>Correo</th>
+              <th>Dirección</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="clientes-tbody"></tbody>
+        </table>
+      </div>
+      <div id="empty-state" class="empty-state hidden">
+        <i class="fas fa-users-slash"></i>
+        <p>No se encontraron clientes</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: CREAR/EDITAR CLIENTE -->
+  <div id="client-modal" class="modal-overlay hidden">
+    <div class="modal-content modal-medium">
+      <div class="modal-header modal-header-gradient-mov">
+        <h3 id="modal-title">Registrar Nuevo Cliente</h3>
+        <button class="modal-close" id="close-client-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <form id="client-form">
+        <input type="hidden" id="client-id" />
+        <div class="mov-form-body">
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label>Tipo de Documento *</label>
+              <select id="client-doc-type" class="motivo-select" required>
+                <option value="DNI">DNI (Persona Natural)</option>
+                <option value="RUC">RUC (Empresa)</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Número de Documento *</label>
+              <input
+                type="text"
+                id="client-doc-num"
+                placeholder="Ingrese el número"
+                required
+                maxlength="11"
+                inputmode="numeric"
+                pattern="[0-9]+"
+                title="Solo se permiten números"
+              />
+              <span class="error-message" id="doc-error"></span>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label id="label-name">Nombre Completo *</label>
+            <input
+              type="text"
+              id="client-name"
+              placeholder="Ej: Juan Pérez / Maderas SAC"
+              required
+            />
+            <span class="error-message" id="name-error"></span>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label>Teléfono / Celular</label>
+              <input
+                type="text"
+                id="client-phone"
+                placeholder="Ej: 987654321"
+              />
+            </div>
+            <div class="form-field">
+              <label>Correo Electrónico</label>
+              <input
+                type="email"
+                id="client-email"
+                placeholder="Ej: correo@ejemplo.com"
+              />
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Dirección</label>
+            <input
+              type="text"
+              id="client-address"
+              placeholder="Ej: Av. Los Álamos 123, Lima"
+            />
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancel-client">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-save"></i> Guardar Cliente
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ELIMINAR CLIENTE -->
+  <div id="delete-modal" class="modal-overlay hidden">
+    <div class="modal-content modal-small">
+      <div class="modal-header modal-header-danger">
+        <h3>Eliminar Cliente</h3>
+        <button class="modal-close" id="close-delete-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div
+        class="detail-mov-body"
+        style="text-align: center; padding: 30px 20px"
+      >
+        <i
+          class="fas fa-exclamation-triangle"
+          style="font-size: 3rem; color: #e74c3c; margin-bottom: 15px"
+        ></i>
+        <h2 style="color: #0a2540; margin-bottom: 10px; font-size: 1.2rem">
+          ¿Estás seguro?
+        </h2>
+        <p style="color: #7a8699; font-size: 0.9rem">
+          Estás a punto de eliminar a
+          <strong id="delete-client-name" style="color: #e74c3c"></strong>. Esta
+          acción no se puede deshacer.
+        </p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="cancel-delete">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn-primary btn-danger-confirm"
+          id="confirm-delete"
+        >
+          <i class="fas fa-trash"></i> Sí, eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-message">Operación exitosa</span>
+  </div>
+</div>

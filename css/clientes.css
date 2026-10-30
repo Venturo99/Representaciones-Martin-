@@ -1,0 +1,137 @@
+/* =========================================
+   CLIENTES - Estilos Específicos
+   ========================================= */
+
+/* Etiquetas de RUC y DNI en la tabla */
+.dashboard-layout .doc-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dashboard-layout .tag-ruc {
+  background: rgba(52, 152, 219, 0.15);
+  color: #2980b9;
+  border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+.dashboard-layout .tag-dni {
+  background: rgba(0, 135, 68, 0.15);
+  color: #008744;
+  border: 1px solid rgba(0, 135, 68, 0.3);
+}
+
+/* Texto de dirección truncado si es muy largo */
+.dashboard-layout .address-text {
+  display: block;
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.8rem;
+  color: #7a8699;
+}
+
+/* Inputs del modal */
+.dashboard-layout #client-form .motivo-select,
+.dashboard-layout #client-form input[type="text"],
+.dashboard-layout #client-form input[type="email"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #e8eef5;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: #0a2540;
+  background: #f8fafc;
+  font-family: inherit;
+  transition: all 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.dashboard-layout #client-form .motivo-select:focus,
+.dashboard-layout #client-form input:focus {
+  border-color: #f37021;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(243, 112, 33, 0.1);
+}
+
+/* Grid de 2 columnas */
+.dashboard-layout #client-form .form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.dashboard-layout #client-form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.dashboard-layout #client-form .form-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0a2540;
+}
+
+/* Botones exactamente iguales (Grid) */
+.dashboard-layout #client-form .modal-actions,
+.dashboard-layout #delete-modal .modal-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  padding: 18px 0 0 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  border-top: 1px dashed #e8eef5;
+  margin-top: 10px;
+}
+
+.dashboard-layout #client-form .modal-actions button,
+.dashboard-layout #delete-modal .modal-actions button {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 12px 10px !important;
+  font-size: 0.85rem !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+
+/* Modo Oscuro */
+body.theme-dark .dashboard-layout #client-form .motivo-select,
+body.theme-dark .dashboard-layout #client-form input {
+  background: #252d38;
+  border-color: #2a3441;
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout #client-form .motivo-select:focus,
+body.theme-dark .dashboard-layout #client-form input:focus {
+  background: #1a2029;
+}
+body.theme-dark .dashboard-layout #client-form .form-field label {
+  color: #e8eef5;
+}
+
+/* =========================================
+   ALINEACIÓN DE BOTONES EN LA TABLA
+   ========================================= */
+.dashboard-layout .actions-wrapper {
+  display: flex !important;
+  gap: 8px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
+.dashboard-layout .actions-wrapper .btn-icon {
+  flex-shrink: 0;
+}

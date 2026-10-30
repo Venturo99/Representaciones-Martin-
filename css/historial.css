@@ -1,0 +1,244 @@
+/* =========================================
+   HISTORIAL - Estilos Generales y Filtros
+   ========================================= */
+
+.dashboard-layout .filter-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e8eef5;
+  margin-bottom: 18px;
+  box-sizing: border-box; /* ⭐ Evita que se salga del contenedor */
+}
+
+.dashboard-layout .filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  align-items: end;
+}
+
+.dashboard-layout .filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0; /* ⭐ Fundamental para que los inputs no rompan el grid */
+}
+
+.dashboard-layout .filter-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #7a8699;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Estilo unificado para inputs y selects */
+.dashboard-layout .filter-input {
+  width: 100%;
+  box-sizing: border-box; /* ⭐ Clave para que el padding no lo haga más grande */
+  padding: 10px 12px;
+  border: 2px solid #e8eef5;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: #0a2540;
+  background: #f8fafc;
+  font-family: inherit;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.dashboard-layout .filter-input:focus {
+  border-color: #f37021;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(243, 112, 33, 0.1);
+}
+
+/* Buscador con ícono corregido */
+.dashboard-layout .filter-search {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dashboard-layout .filter-search i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7a8699;
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.dashboard-layout .filter-search input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px 10px 34px;
+  border: 2px solid #e8eef5;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: #0a2540;
+  background: #f8fafc;
+  font-family: inherit;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.dashboard-layout .filter-search input:focus {
+  border-color: #f37021;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(243, 112, 33, 0.1);
+}
+
+/* Botones de acción */
+.dashboard-layout .filter-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dashboard-layout .btn-secondary,
+.dashboard-layout .btn-export-csv {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 10px;
+  border-radius: 10px;
+  font-size: 0.78rem; /* Letra un poco más pequeña para que quepa */
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.dashboard-layout .btn-secondary {
+  background: #f4f7fa;
+  color: #0a2540;
+  border: 2px solid #e8eef5;
+}
+
+.dashboard-layout .btn-secondary:hover {
+  background: #eef2f7;
+  border-color: #cbd5e1;
+}
+
+.dashboard-layout .btn-export-csv {
+  background: linear-gradient(135deg, #008744, #005a2b);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 135, 68, 0.2);
+}
+
+.dashboard-layout .btn-export-csv:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 135, 68, 0.3);
+}
+
+/* =========================================
+   PAGINACIÓN
+   ========================================= */
+.dashboard-layout .pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-top: 1px solid #e8eef5;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.dashboard-layout .pagination-info {
+  font-size: 0.75rem;
+  color: #7a8699;
+  font-weight: 500;
+}
+
+.dashboard-layout .pagination-controls {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.dashboard-layout .page-btn {
+  min-width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid #e8eef5;
+  background: white;
+  color: #0a2540;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.dashboard-layout .page-btn:hover:not(:disabled) {
+  background: #f0fdf4;
+  border-color: #008744;
+  color: #008744;
+}
+.dashboard-layout .page-btn.active {
+  background: linear-gradient(135deg, #f37021, #d65a15);
+  color: white;
+  border-color: #d65a15;
+  box-shadow: 0 2px 6px rgba(243, 112, 33, 0.3);
+}
+.dashboard-layout .page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dashboard-layout .page-dots {
+  color: #7a8699;
+  font-weight: bold;
+  padding: 0 4px;
+}
+
+/* =========================================
+   MODO OSCURO (Unificado)
+   ========================================= */
+body.theme-dark .dashboard-layout .filter-card {
+  background: #1a2029;
+  border-color: #2a3441;
+}
+body.theme-dark .dashboard-layout .filter-input,
+body.theme-dark .dashboard-layout .filter-search input {
+  background: #252d38;
+  border-color: #2a3441;
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .filter-input:focus,
+body.theme-dark .dashboard-layout .filter-search input:focus {
+  background: #1a2029;
+}
+body.theme-dark .dashboard-layout .btn-secondary {
+  background: #252d38;
+  color: #e8eef5;
+  border-color: #2a3441;
+}
+body.theme-dark .dashboard-layout .btn-secondary:hover {
+  background: #2a3441;
+}
+body.theme-dark .dashboard-layout .pagination-container {
+  border-color: #2a3441;
+}
+body.theme-dark .dashboard-layout .page-btn {
+  background: #1a2029;
+  border-color: #2a3441;
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .page-btn:hover:not(:disabled) {
+  background: #252d38;
+}

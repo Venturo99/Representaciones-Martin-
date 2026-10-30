@@ -1,0 +1,172 @@
+/* =========================================
+   AJUSTES DE MERMAS - Estilos Específicos
+   ========================================= */
+
+/* 1. EL CONTENEDOR DEL MODAL */
+.dashboard-layout #merma-modal .modal-content {
+  padding: 20px !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+
+/* 2. CABECERA (Usa la clase estándar de movimientos, pero nos aseguramos que se vea bien) */
+.dashboard-layout #merma-modal .modal-header-gradient-mov {
+  background: linear-gradient(135deg, #f37021 0%, #d65a15 100%) !important;
+  color: white;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px !important;
+  border-bottom: none !important;
+}
+
+.dashboard-layout #merma-modal .modal-header-gradient-mov h3 {
+  color: white !important;
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* 3. BOTÓN DE CERRAR (X) */
+.dashboard-layout #merma-modal .modal-close {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 8px !important;
+  border: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-size: 1.1rem !important;
+  cursor: pointer;
+  transition: all 0.2s !important;
+  padding: 0 !important;
+}
+
+.dashboard-layout #merma-modal .modal-close:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+.dashboard-layout #merma-modal .modal-close i {
+  color: white !important;
+  background: transparent !important;
+}
+
+/* 4. AJUSTAR EL CUERPO DEL FORMULARIO */
+.dashboard-layout #merma-modal .mov-form-body {
+  padding: 20px 0 0 0 !important;
+}
+
+/* 5. ESTILOS DE LOS INPUTS (Borde naranja al enfocar) */
+.dashboard-layout #merma-form .motivo-select,
+.dashboard-layout #merma-form input[type="number"],
+.dashboard-layout #merma-form .motivo-textarea,
+.dashboard-layout #merma-form .custom-select-trigger {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #e8eef5;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: #0a2540;
+  background: #f8fafc;
+  font-family: inherit;
+  transition: all 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.dashboard-layout #merma-form .motivo-select:focus,
+.dashboard-layout #merma-form input[type="number"]:focus,
+.dashboard-layout #merma-form .motivo-textarea:focus {
+  border-color: #f37021; /* Naranja en lugar de rojo */
+  background: white;
+  box-shadow: 0 0 0 4px rgba(243, 112, 33, 0.1);
+}
+
+.dashboard-layout #merma-form .motivo-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+/* 6. GRID DE 2 COLUMNAS (Motivo y Cantidad) */
+.dashboard-layout #merma-form .form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.dashboard-layout #merma-form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dashboard-layout #merma-form .form-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0a2540;
+}
+
+/* 7. BOTONES DEL MODAL EXACTAMENTE IGUALES (50% y 50%) */
+.dashboard-layout #merma-form .modal-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  padding: 18px 0 0 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  border-top: 1px dashed #e8eef5;
+  margin-top: 10px;
+}
+
+.dashboard-layout #merma-form .modal-actions button {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 12px 10px !important;
+  font-size: 0.85rem !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+
+/* 8. CANTIDAD PERDIDA EN LA TABLA (Aquí sí mantenemos un tono para indicar pérdida) */
+.dashboard-layout .cantidad-perdida {
+  color: #e74c3c;
+  font-size: 1.05rem;
+  font-weight: 800;
+  background: rgba(231, 76, 60, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* =========================================
+   MODO OSCURO
+   ========================================= */
+body.theme-dark .dashboard-layout .cantidad-perdida {
+  background: rgba(231, 76, 60, 0.15);
+}
+
+body.theme-dark .dashboard-layout #merma-form .motivo-select,
+body.theme-dark .dashboard-layout #merma-form input[type="number"],
+body.theme-dark .dashboard-layout #merma-form .motivo-textarea,
+body.theme-dark .dashboard-layout #merma-form .custom-select-trigger {
+  background: #252d38;
+  border-color: #2a3441;
+  color: #e8eef5;
+}
+
+body.theme-dark .dashboard-layout #merma-form .motivo-select:focus,
+body.theme-dark .dashboard-layout #merma-form input[type="number"]:focus,
+body.theme-dark .dashboard-layout #merma-form .motivo-textarea:focus {
+  background: #1a2029;
+}
+
+body.theme-dark .dashboard-layout #merma-form .form-field label {
+  color: #e8eef5;
+}

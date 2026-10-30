@@ -4,7 +4,6 @@
     <div class="sidebar-header">
       <img src="../assets/logo.png" alt="Martín" class="sidebar-logo" />
       <h3 class="sidebar-title">Control de Inventario</h3>
-      <p class="sidebar-subtitle">Representaciones Martín S.A.C.</p>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section">
@@ -164,10 +163,11 @@
           <option value="ajuste">⚖️ Ajustes</option>
         </select>
         <select id="filter-date" class="filter-select">
-          <option value="all">Todas las fechas</option>
-          <option value="today" selected>Hoy</option>
+          <option value="all" selected>Todas las fechas</option>
+          <option value="today">Hoy</option>
           <option value="week">Última semana</option>
           <option value="month">Último mes</option>
+          <option value="year">Este año</option>
         </select>
         <button id="btn-new-movement" class="btn-add">
           <i class="fas fa-plus"></i> Nuevo Movimiento
@@ -222,26 +222,37 @@
 
       <form id="movimiento-form">
         <div class="mov-form-body">
-          <!-- 1. SELECCIONAR PRODUCTO -->
+          <!-- 1. SELECCIONAR PRODUCTO (Buscador Premium) -->
           <div class="mov-step">
             <span class="mov-step-number">1</span>
             <div class="mov-step-content">
               <label class="mov-step-title">Seleccionar Producto *</label>
-              <div class="product-selector">
-                <i class="fas fa-search product-selector-icon"></i>
-                <input
-                  type="text"
-                  id="product-search"
-                  placeholder="Buscar por código o nombre..."
-                  autocomplete="off"
-                />
+
+              <div class="custom-select-wrapper" id="custom-product-select">
+                <div class="custom-select-trigger" id="select-trigger">
+                  <span class="custom-select-text" id="select-text"
+                    >Seleccione un producto...</span
+                  >
+                  <i class="fas fa-chevron-down custom-select-arrow"></i>
+                </div>
+
+                <div class="custom-select-options hidden" id="select-options">
+                  <div class="custom-select-search">
+                    <i class="fas fa-search"></i>
+                    <input
+                      type="text"
+                      id="select-search-input"
+                      placeholder="Buscar por código o nombre..."
+                      autocomplete="off"
+                    />
+                  </div>
+                  <div class="custom-select-list" id="select-list">
+                    <!-- Opciones generadas por JS -->
+                  </div>
+                </div>
               </div>
-              <div id="product-results" class="product-results hidden">
-                <!-- Resultados de búsqueda -->
-              </div>
-              <div id="selected-product" class="selected-product hidden">
-                <!-- Producto seleccionado -->
-              </div>
+
+              <div id="selected-product" class="selected-product hidden"></div>
               <span class="error-message" id="producto-error"></span>
             </div>
           </div>
@@ -304,7 +315,7 @@
             </div>
           </div>
 
-          <!-- 4. MOTIVO / OBSERVACIÓN (OBLIGATORIO) -->
+          <!-- 4. MOTIVO / OBSERVACIÓN -->
           <div class="mov-step">
             <span class="mov-step-number">4</span>
             <div class="mov-step-content">
@@ -365,7 +376,12 @@
           <button type="button" class="btn-secondary" id="cancel-movimiento">
             <i class="fas fa-times"></i> Cancelar
           </button>
-          <button type="submit" class="btn-primary" id="btn-save-movement">
+          <button
+            type="submit"
+            class="btn-primary"
+            id="btn-save-movement"
+            disabled
+          >
             <i class="fas fa-save"></i> Registrar Movimiento
           </button>
         </div>
@@ -382,9 +398,7 @@
           <i class="fas fa-times"></i>
         </button>
       </div>
-      <div class="detail-mov-body" id="detail-mov-body">
-        <!-- Contenido generado por JS -->
-      </div>
+      <div class="detail-mov-body" id="detail-mov-body"></div>
     </div>
   </div>
 

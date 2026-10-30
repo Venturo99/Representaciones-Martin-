@@ -307,7 +307,7 @@ const MovimientosModule = (() => {
   ];
 
   let nextId = MOVIMIENTOS.length + 1;
-  let currentFilters = { search: "", type: "", date: "today" };
+  let currentFilters = { search: "", type: "", date: "all" };
   let selectedProduct = null;
 
   // ============================================
@@ -344,6 +344,12 @@ const MovimientosModule = (() => {
     );
   };
 
+  const isThisYear = (dateStr) => {
+    const d = new Date(dateStr);
+    const now = new Date();
+    return d.getFullYear() === now.getFullYear();
+  };
+
   const showToast = (message, type = "success") => {
     const toast = document.getElementById("toast");
     const toastMsg = document.getElementById("toast-message");
@@ -360,21 +366,20 @@ const MovimientosModule = (() => {
   const filterMovimientos = () => {
     let filtered = [...MOVIMIENTOS];
 
-    // Filtro por tipo
     if (currentFilters.type) {
       filtered = filtered.filter((m) => m.tipo === currentFilters.type);
     }
 
-    // Filtro por fecha
     if (currentFilters.date === "today") {
       filtered = filtered.filter((m) => isToday(m.fecha));
     } else if (currentFilters.date === "week") {
       filtered = filtered.filter((m) => isThisWeek(m.fecha));
     } else if (currentFilters.date === "month") {
       filtered = filtered.filter((m) => isThisMonth(m.fecha));
+    } else if (currentFilters.date === "year") {
+      filtered = filtered.filter((m) => isThisYear(m.fecha));
     }
 
-    // Búsqueda
     if (currentFilters.search) {
       const q = currentFilters.search.toLowerCase().trim();
       filtered = filtered.filter(
@@ -441,8 +446,13 @@ const MovimientosModule = (() => {
         return `
                 <tr>
                     <td>
-                        <strong>${date}</strong>
-                        <br><small class="text-muted">${time}</small>
+                        <div class="date-cell">
+                            <i class="fas fa-calendar-day"></i>
+                            <div class="date-cell-info">
+                                <strong>${date}</strong>
+                                <span class="date-time"><i class="fas fa-clock"></i> ${time}</span>
+                            </div>
+                        </div>
                     </td>
                     <td><span class="code-tag">${m.codigo}</span></td>
                     <td>${m.producto}</td>
@@ -475,7 +485,6 @@ const MovimientosModule = (() => {
       })
       .join("");
 
-    // Eventos
     tbody.querySelectorAll(".btn-detail-mov").forEach((btn) => {
       btn.addEventListener("click", () =>
         openDetailModal(parseInt(btn.dataset.id)),
@@ -485,7 +494,6 @@ const MovimientosModule = (() => {
 
   const updateKPIs = () => {
     const hoy = MOVIMIENTOS.filter((m) => isToday(m.fecha));
-
     const entradas = hoy
       .filter((m) => m.tipo === "entrada")
       .reduce((sum, m) => sum + m.cantidad, 0);
@@ -501,101 +509,6 @@ const MovimientosModule = (() => {
     document.getElementById("kpi-salidas").textContent = salidas;
     document.getElementById("kpi-ajustes").textContent = ajustes;
     document.getElementById("kpi-total").textContent = total;
-  };
-
-  // ============================================
-  // BÚSQUEDA DE PRODUCTOS
-  // ============================================
-  const searchProducts = (query) => {
-    const q = query.toLowerCase().trim();
-    if (!q) return [];
-    return PRODUCTS.filter(
-      (p) =>
-        p.codigo.toLowerCase().includes(q) ||
-        p.nombre.toLowerCase().includes(q),
-    ).slice(0, 8);
-  };
-
-  const renderProductResults = (products) => {
-    const resultsContainer = document.getElementById("product-results");
-    if (!resultsContainer) return;
-
-    if (products.length === 0) {
-      resultsContainer.classList.add("hidden");
-      return;
-    }
-
-    resultsContainer.classList.remove("hidden");
-    resultsContainer.innerHTML = products
-      .map(
-        (p) => `
-            <div class="product-result-item" data-id="${p.id}">
-                <div class="product-result-icon">
-                    <i class="fas fa-box"></i>
-                </div>
-                <div class="product-result-info">
-                    <strong>${p.nombre}</strong>
-                    <small>${p.codigo} · ${p.categoria}</small>
-                </div>
-                <div class="product-result-stock">
-                    <strong>${p.stock}</strong>
-                    <small>${p.unidad}</small>
-                </div>
-            </div>
-        `,
-      )
-      .join("");
-
-    resultsContainer
-      .querySelectorAll(".product-result-item")
-      .forEach((item) => {
-        item.addEventListener("click", () => {
-          const id = parseInt(item.dataset.id);
-          selectProduct(id);
-        });
-      });
-  };
-
-  const selectProduct = (id) => {
-    const product = PRODUCTS.find((p) => p.id === id);
-    if (!product) return;
-
-    selectedProduct = product;
-
-    // Ocultar búsqueda y mostrar producto seleccionado
-    document.getElementById("product-results").classList.add("hidden");
-    document.getElementById("product-search").value = "";
-
-    const selectedDiv = document.getElementById("selected-product");
-    selectedDiv.classList.remove("hidden");
-    selectedDiv.innerHTML = `
-            <div class="selected-product-card">
-                <div class="selected-product-info">
-                    <span class="selected-product-code">${product.codigo}</span>
-                    <strong>${product.nombre}</strong>
-                    <small>${product.categoria}</small>
-                </div>
-                <div class="selected-product-stock">
-                    <span>Stock actual</span>
-                    <strong>${product.stock} ${product.unidad}</strong>
-                </div>
-                <button type="button" class="btn-change-product" id="btn-change-product">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        `;
-
-    document
-      .getElementById("btn-change-product")
-      .addEventListener("click", () => {
-        selectedProduct = null;
-        selectedDiv.classList.add("hidden");
-        document.getElementById("product-search").focus();
-        updatePreview();
-      });
-
-    // Actualizar preview y validación
-    updatePreview();
   };
 
   // ============================================
@@ -616,31 +529,30 @@ const MovimientosModule = (() => {
     if (!selectedProduct) {
       if (preview) preview.textContent = "0";
       if (warning) warning.classList.add("hidden");
-      if (saveBtn) saveBtn.disabled = false;
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.classList.add("btn-disabled");
+      }
       return;
     }
 
     let nuevoStock = selectedProduct.stock;
 
-    // ⚠️ VALIDACIÓN RN-03: STOCK INSUFICIENTE
     if (tipo === "salida") {
       if (cantidad > selectedProduct.stock) {
-        // Mostrar warning ROJO
         if (warning) {
           warning.classList.remove("hidden");
           warningMsg.textContent = `No puedes despachar ${cantidad} ${selectedProduct.unidad}. Stock disponible: ${selectedProduct.stock} ${selectedProduct.unidad}.`;
         }
-        if (cantidadError) {
+        if (cantidadError)
           cantidadError.textContent = `Stock insuficiente. Máximo: ${selectedProduct.stock}`;
-        }
-        // ⚠️ BLOQUEAR BOTÓN DE GUARDADO
+
         if (saveBtn) {
           saveBtn.disabled = true;
           saveBtn.classList.add("btn-disabled");
         }
-        nuevoStock = selectedProduct.stock - cantidad; // Muestra el cálculo negativo
+        nuevoStock = selectedProduct.stock - cantidad;
       } else {
-        // Stock OK
         if (warning) warning.classList.add("hidden");
         if (cantidadError) cantidadError.textContent = "";
         if (saveBtn) {
@@ -658,7 +570,6 @@ const MovimientosModule = (() => {
       }
       nuevoStock = selectedProduct.stock + cantidad;
     } else {
-      // Ajuste
       if (warning) warning.classList.add("hidden");
       if (cantidadError) cantidadError.textContent = "";
       if (saveBtn) {
@@ -668,7 +579,6 @@ const MovimientosModule = (() => {
       nuevoStock = cantidad;
     }
 
-    // Actualizar preview
     if (preview) {
       preview.textContent = `${nuevoStock} ${selectedProduct.unidad}`;
       preview.className = "mov-preview-value";
@@ -685,14 +595,19 @@ const MovimientosModule = (() => {
   // ============================================
   const openMovimientoModal = () => {
     selectedProduct = null;
-
-    // Reset form
     document.getElementById("movimiento-form").reset();
-    document.getElementById("product-search").value = "";
-    document.getElementById("product-results").classList.add("hidden");
+
+    // Reset Buscador
+    const selectText = document.getElementById("select-text");
+    if (selectText) {
+      selectText.textContent = "Seleccione un producto...";
+      selectText.classList.remove("selected");
+    }
     document.getElementById("selected-product").classList.add("hidden");
+    document.getElementById("custom-product-select").classList.remove("open");
+    document.getElementById("select-options").classList.add("hidden");
+
     document.getElementById("stock-warning").classList.add("hidden");
-    document.getElementById("mov-cantidad").value = "";
     document
       .querySelectorAll(".error-message")
       .forEach((el) => (el.textContent = ""));
@@ -700,13 +615,11 @@ const MovimientosModule = (() => {
       true;
 
     const saveBtn = document.getElementById("btn-save-movement");
-    saveBtn.disabled = false;
-    saveBtn.classList.remove("btn-disabled");
+    saveBtn.disabled = true;
+    saveBtn.classList.add("btn-disabled");
 
     updatePreview();
     document.getElementById("movimiento-modal").classList.remove("hidden");
-
-    setTimeout(() => document.getElementById("product-search").focus(), 200);
   };
 
   // ============================================
@@ -714,13 +627,9 @@ const MovimientosModule = (() => {
   // ============================================
   const handleMovimientoSubmit = (e) => {
     e.preventDefault();
-
-    // Limpiar errores
     document
       .querySelectorAll("#movimiento-form .error-message")
       .forEach((el) => (el.textContent = ""));
-
-    // Validaciones
     let isValid = true;
 
     if (!selectedProduct) {
@@ -757,24 +666,19 @@ const MovimientosModule = (() => {
 
     const tipo = document.querySelector('input[name="mov-tipo"]:checked').value;
 
-    // ⚠️ VALIDACIÓN FINAL RN-03
     if (tipo === "salida" && cantidad > selectedProduct.stock) {
       document.getElementById("cantidad-error").textContent =
         `Stock insuficiente. Máximo: ${selectedProduct.stock}`;
       return;
     }
 
-    // Aplicar movimiento
     const stockAntes = selectedProduct.stock;
     let stockDespues = stockAntes;
-
     if (tipo === "entrada") stockDespues += cantidad;
     else if (tipo === "salida") stockDespues -= cantidad;
     else if (tipo === "ajuste") stockDespues = cantidad;
-
     selectedProduct.stock = stockDespues;
 
-    // Registrar movimiento
     const userName = sessionStorage.getItem("userName") || "Usuario";
     const now = new Date();
     const fechaStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
@@ -795,7 +699,6 @@ const MovimientosModule = (() => {
     });
 
     document.getElementById("movimiento-modal").classList.add("hidden");
-
     const tipoLabel =
       tipo === "entrada" ? "Entrada" : tipo === "salida" ? "Salida" : "Ajuste";
     showToast(
@@ -813,7 +716,6 @@ const MovimientosModule = (() => {
   const openDetailModal = (id) => {
     const mov = MOVIMIENTOS.find((m) => m.id === id);
     if (!mov) return;
-
     const { date, time } = formatDate(mov.fecha);
     const isEntrada = mov.tipo === "entrada";
     const isSalida = mov.tipo === "salida";
@@ -837,7 +739,6 @@ const MovimientosModule = (() => {
                     <span class="detail-mov-date">${date} a las ${time}</span>
                 </div>
             </div>
-            
             <div class="detail-mov-grid">
                 <div class="detail-mov-field">
                     <span class="detail-mov-label">Código</span>
@@ -864,7 +765,6 @@ const MovimientosModule = (() => {
                     <span class="detail-mov-value">${mov.observaciones || "Sin observaciones"}</span>
                 </div>
             </div>
-
             <div class="detail-mov-stock-flow">
                 <div class="stock-flow-item">
                     <span class="stock-flow-label">Stock Antes</span>
@@ -877,7 +777,6 @@ const MovimientosModule = (() => {
                 </div>
             </div>
         `;
-
     document.getElementById("detail-modal").classList.remove("hidden");
   };
 
@@ -912,57 +811,49 @@ const MovimientosModule = (() => {
     const typeFilter = document.getElementById("filter-type");
     const dateFilter = document.getElementById("filter-date");
 
-    if (searchInput) {
+    if (searchInput)
       searchInput.addEventListener("input", (e) => {
         currentFilters.search = e.target.value;
         renderTable();
       });
-    }
-    if (typeFilter) {
+    if (typeFilter)
       typeFilter.addEventListener("change", (e) => {
         currentFilters.type = e.target.value;
         renderTable();
       });
-    }
-    if (dateFilter) {
+    if (dateFilter)
       dateFilter.addEventListener("change", (e) => {
         currentFilters.date = e.target.value;
         renderTable();
       });
-    }
 
     const btnExport = document.getElementById("btn-export");
-    if (btnExport) {
-      btnExport.addEventListener("click", () => {
-        showToast("📄 Reporte exportado correctamente", "success");
-      });
-    }
+    if (btnExport)
+      btnExport.addEventListener("click", () =>
+        showToast("📄 Reporte exportado correctamente", "success"),
+      );
 
     const btnNew = document.getElementById("btn-new-movement");
-    if (btnNew) {
-      btnNew.addEventListener("click", openMovimientoModal);
-    }
+    if (btnNew) btnNew.addEventListener("click", openMovimientoModal);
   };
 
   const initModal = () => {
-    // Cerrar modales
     document
       .getElementById("close-movimiento-modal")
-      ?.addEventListener("click", () => {
-        document.getElementById("movimiento-modal").classList.add("hidden");
-      });
+      ?.addEventListener("click", () =>
+        document.getElementById("movimiento-modal").classList.add("hidden"),
+      );
     document
       .getElementById("cancel-movimiento")
-      ?.addEventListener("click", () => {
-        document.getElementById("movimiento-modal").classList.add("hidden");
-      });
+      ?.addEventListener("click", () =>
+        document.getElementById("movimiento-modal").classList.add("hidden"),
+      );
     document
       .getElementById("close-detail-modal")
-      ?.addEventListener("click", () => {
-        document.getElementById("detail-modal").classList.add("hidden");
-      });
+      ?.addEventListener("click", () =>
+        document.getElementById("detail-modal").classList.add("hidden"),
+      );
 
-    // Cerrar al hacer clic fuera
     window.addEventListener("click", (e) => {
       ["movimiento-modal", "detail-modal"].forEach((id) => {
         const modal = document.getElementById(id);
@@ -970,33 +861,109 @@ const MovimientosModule = (() => {
       });
     });
 
-    // Búsqueda de productos
-    const productSearch = document.getElementById("product-search");
-    if (productSearch) {
-      productSearch.addEventListener("input", (e) => {
-        const results = searchProducts(e.target.value);
-        renderProductResults(results);
-      });
+    // ==========================================
+    // LÓGICA DEL BUSCADOR PERSONALIZADO
+    // ==========================================
+    const wrapper = document.getElementById("custom-product-select");
+    const trigger = document.getElementById("select-trigger");
+    const optionsBox = document.getElementById("select-options");
+    const searchInput = document.getElementById("select-search-input");
+    const listContainer = document.getElementById("select-list");
+    const selectText = document.getElementById("select-text");
 
-      productSearch.addEventListener("blur", () => {
-        setTimeout(() => {
-          document.getElementById("product-results")?.classList.add("hidden");
-        }, 200);
+    const renderOptions = (query = "") => {
+      listContainer.innerHTML = "";
+      const q = query.toLowerCase().trim();
+
+      const filtered = PRODUCTS.filter(
+        (p) =>
+          p.codigo.toLowerCase().includes(q) ||
+          p.nombre.toLowerCase().includes(q),
+      ).sort((a, b) => a.nombre.localeCompare(b.nombre));
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML =
+          '<div class="no-results-msg">No se encontraron productos</div>';
+        return;
+      }
+
+      filtered.forEach((p) => {
+        const div = document.createElement("div");
+        div.className = `custom-select-option ${selectedProduct?.id === p.id ? "selected" : ""}`;
+        div.innerHTML = `
+                <div class="option-info">
+                    <strong>${p.nombre}</strong>
+                    <small>${p.codigo}</small>
+                </div>
+                <div class="option-stock">Stock: ${p.stock}</div>
+            `;
+        div.addEventListener("click", () => {
+          selectedProduct = p;
+          selectText.textContent = `${p.codigo} - ${p.nombre}`;
+          selectText.classList.add("selected");
+          wrapper.classList.remove("open");
+          optionsBox.classList.add("hidden");
+
+          document
+            .getElementById("selected-product")
+            .classList.remove("hidden");
+          document.getElementById("selected-product").innerHTML = `
+                    <div class="selected-product-card">
+                        <div class="selected-product-info">
+                            <span class="selected-product-code">${p.codigo}</span>
+                            <strong>${p.nombre}</strong>
+                            <small>${p.categoria}</small>
+                        </div>
+                        <div class="selected-product-stock">
+                            <span>Stock actual</span>
+                            <strong>${p.stock} ${p.unidad}</strong>
+                        </div>
+                    </div>
+                `;
+          updatePreview();
+        });
+        listContainer.appendChild(div);
+      });
+    };
+
+    if (trigger) {
+      trigger.addEventListener("click", () => {
+        const isOpen = wrapper.classList.contains("open");
+        if (isOpen) {
+          wrapper.classList.remove("open");
+          optionsBox.classList.add("hidden");
+        } else {
+          wrapper.classList.add("open");
+          optionsBox.classList.remove("hidden");
+          searchInput.value = "";
+          renderOptions();
+          setTimeout(() => searchInput.focus(), 100);
+        }
       });
     }
 
-    // Tipo de movimiento
-    document.querySelectorAll('input[name="mov-tipo"]').forEach((radio) => {
-      radio.addEventListener("change", updatePreview);
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        renderOptions(e.target.value);
+      });
+    }
+
+    document.addEventListener("click", (e) => {
+      if (wrapper && !wrapper.contains(e.target)) {
+        wrapper.classList.remove("open");
+        optionsBox.classList.add("hidden");
+      }
     });
 
-    // Cantidad
-    const cantidadInput = document.getElementById("mov-cantidad");
-    if (cantidadInput) {
-      cantidadInput.addEventListener("input", updatePreview);
-    }
+    // ==========================================
 
-    // Botones +/-
+    document
+      .querySelectorAll('input[name="mov-tipo"]')
+      .forEach((radio) => radio.addEventListener("change", updatePreview));
+
+    const cantidadInput = document.getElementById("mov-cantidad");
+    if (cantidadInput) cantidadInput.addEventListener("input", updatePreview);
+
     document.getElementById("qty-minus")?.addEventListener("click", () => {
       const input = document.getElementById("mov-cantidad");
       const val = parseInt(input.value) || 0;
@@ -1012,7 +979,6 @@ const MovimientosModule = (() => {
       updatePreview();
     });
 
-    // Submit del form
     document
       .getElementById("movimiento-form")
       ?.addEventListener("submit", handleMovimientoSubmit);
@@ -1020,21 +986,15 @@ const MovimientosModule = (() => {
 
   const init = () => {
     console.log("📥 Inicializando Entradas y Salidas...");
-
     loadUserInfo();
     renderTable();
     updateKPIs();
     initFilters();
     initModal();
 
-    if (typeof NavModule !== "undefined") {
-      NavModule.init("movimientos");
-    }
+    if (typeof NavModule !== "undefined") NavModule.init("movimientos");
 
-    console.log(
-      "✅ Entradas y Salidas cargado. Total movimientos:",
-      MOVIMIENTOS.length,
-    );
+    console.log("✅ Entradas y Salidas cargado.");
   };
 
   return { init };

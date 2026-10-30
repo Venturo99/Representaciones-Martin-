@@ -1,0 +1,133 @@
+/* =========================================
+   USUARIOS - Estilos Específicos
+   ========================================= */
+
+/* Fila de usuario con avatar */
+.dashboard-layout .user-cell-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-layout .user-avatar-small {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-layout .user-info-text strong {
+  font-size: 0.85rem;
+  color: #0a2540;
+  display: block;
+}
+
+/* Etiqueta de Rol */
+.dashboard-layout .role-tag {
+  display: inline-block;
+  background: rgba(243, 112, 33, 0.1);
+  color: #f37021;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: 1px solid rgba(243, 112, 33, 0.2);
+  text-transform: capitalize;
+}
+
+/* Alineación de botones */
+.dashboard-layout .actions-wrapper {
+  display: flex !important;
+  gap: 8px !important;
+  align-items: center !important;
+}
+
+/* Inputs del modal */
+.dashboard-layout #user-form input,
+.dashboard-layout #user-form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #e8eef5;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  color: #0a2540;
+  background: #f8fafc;
+  font-family: inherit;
+  transition: all 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.dashboard-layout #user-form input:focus,
+.dashboard-layout #user-form select:focus {
+  border-color: #f37021;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(243, 112, 33, 0.1);
+}
+
+.dashboard-layout #user-form .form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.dashboard-layout #user-form .form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.dashboard-layout #user-form .form-field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #0a2540;
+}
+
+/* Botones simétricos */
+.dashboard-layout #user-form .modal-actions,
+.dashboard-layout #delete-modal .modal-actions {
+  display: flex !important;
+  gap: 12px !important;
+  padding: 18px 0 0 0 !important;
+  border-top: 1px dashed #e8eef5;
+  margin-top: 10px;
+}
+
+.dashboard-layout #user-form .modal-actions button,
+.dashboard-layout #delete-modal .modal-actions button {
+  flex: 1 !important;
+  width: 100% !important;
+  padding: 12px 10px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-size: 0.85rem !important;
+  box-sizing: border-box !important;
+}
+
+/* Modo Oscuro */
+body.theme-dark .dashboard-layout .user-info-text strong {
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout #user-form input,
+body.theme-dark .dashboard-layout #user-form select {
+  background: #252d38;
+  border-color: #2a3441;
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout #user-form input:focus,
+body.theme-dark .dashboard-layout #user-form select:focus {
+  background: #1a2029;
+}
+body.theme-dark .dashboard-layout #user-form .form-field label {
+  color: #e8eef5;
+}

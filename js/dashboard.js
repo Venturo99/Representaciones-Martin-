@@ -1,10 +1,7 @@
 /**
- * Módulo del Dashboard - FASE 1 FINAL
+ * Módulo del Dashboard - FASE FINAL PRO
  */
 const DashboardModule = (() => {
-  // ============================================
-  // DATOS POR PERÍODO - TODO CAMBIA SEGÚN FILTRO
-  // ============================================
   const DATA_BY_PERIOD = {
     diario: {
       kpis: {
@@ -16,7 +13,7 @@ const DashboardModule = (() => {
       },
       movements: [45, 62, 38, 71, 55, 80, 67],
       movementLabels: ["06h", "09h", "12h", "15h", "18h", "21h", "23h"],
-      chartTitle: "Movimientos por Hora (Hoy)",
+      chartTitle: "Movimientos por Hora",
       salesTrend: [
         { mes: "06h", valor: 25 },
         { mes: "09h", valor: 48 },
@@ -28,9 +25,9 @@ const DashboardModule = (() => {
       categorias: [
         { name: "Tableros MDF", value: 42, color: "#f37021" },
         { name: "Melaminas", value: 25, color: "#008744" },
-        { name: "Revestimientos", value: 15, color: "#3498db" },
-        { name: "Accesorios", value: 10, color: "#9b59b6" },
-        { name: "Ferretería", value: 8, color: "#e74c3c" },
+        { name: "Revestimientos", value: 15, color: "#2c3e50" },
+        { name: "Accesorios", value: 10, color: "#e67e22" },
+        { name: "Ferretería", value: 8, color: "#95a5a6" },
       ],
       topProducts: [
         { nombre: "Melamina Blanca 18mm", ventas: 45 },
@@ -109,9 +106,9 @@ const DashboardModule = (() => {
       categorias: [
         { name: "Tableros MDF", value: 35, color: "#f37021" },
         { name: "Melaminas", value: 28, color: "#008744" },
-        { name: "Revestimientos", value: 18, color: "#3498db" },
-        { name: "Accesorios", value: 12, color: "#9b59b6" },
-        { name: "Ferretería", value: 7, color: "#e74c3c" },
+        { name: "Revestimientos", value: 18, color: "#2c3e50" },
+        { name: "Accesorios", value: 12, color: "#e67e22" },
+        { name: "Ferretería", value: 7, color: "#95a5a6" },
       ],
       topProducts: [
         { nombre: "Melamina Blanca 18mm", ventas: 485 },
@@ -198,9 +195,9 @@ const DashboardModule = (() => {
       categorias: [
         { name: "Tableros MDF", value: 30, color: "#f37021" },
         { name: "Melaminas", value: 32, color: "#008744" },
-        { name: "Revestimientos", value: 20, color: "#3498db" },
-        { name: "Accesorios", value: 11, color: "#9b59b6" },
-        { name: "Ferretería", value: 7, color: "#e74c3c" },
+        { name: "Revestimientos", value: 20, color: "#2c3e50" },
+        { name: "Accesorios", value: 11, color: "#e67e22" },
+        { name: "Ferretería", value: 7, color: "#95a5a6" },
       ],
       topProducts: [
         { nombre: "Melamina Blanca 18mm", ventas: 1245 },
@@ -279,9 +276,9 @@ const DashboardModule = (() => {
       categorias: [
         { name: "Tableros MDF", value: 28, color: "#f37021" },
         { name: "Melaminas", value: 35, color: "#008744" },
-        { name: "Revestimientos", value: 22, color: "#3498db" },
-        { name: "Accesorios", value: 9, color: "#9b59b6" },
-        { name: "Ferretería", value: 6, color: "#e74c3c" },
+        { name: "Revestimientos", value: 22, color: "#2c3e50" },
+        { name: "Accesorios", value: 9, color: "#e67e22" },
+        { name: "Ferretería", value: 6, color: "#95a5a6" },
       ],
       topProducts: [
         { nombre: "Melamina Blanca 18mm", ventas: 14850 },
@@ -340,6 +337,18 @@ const DashboardModule = (() => {
     },
   };
 
+  const CRITICAL_STOCK = [
+    { codigo: "MAD-AGL-001", nombre: "Aglomerado 18mm", stock: 8, minimo: 30 },
+    { codigo: "MAD-OSB-001", nombre: "OSB 11mm", stock: 0, minimo: 25 },
+    { codigo: "MAD-HDF-001", nombre: "HDF 3mm", stock: 12, minimo: 40 },
+    {
+      codigo: "FER-SOP-001",
+      nombre: "Soporte Estante 20cm",
+      stock: 18,
+      minimo: 50,
+    },
+  ];
+
   let currentPeriod = "semanal";
 
   const animateValue = (element, start, end, duration) => {
@@ -377,6 +386,16 @@ const DashboardModule = (() => {
       avatarEl.textContent = avatar;
       avatarEl.style.background = `linear-gradient(135deg, ${color}, #005a2b)`;
     }
+
+    const now = new Date();
+    const dateEl = document.getElementById("current-date");
+    if (dateEl)
+      dateEl.textContent = now.toLocaleDateString("es-PE", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
   };
 
   const loadMetrics = () => {
@@ -416,21 +435,45 @@ const DashboardModule = (() => {
   const renderBarChart = () => {
     const container = document.getElementById("bar-chart");
     if (!container) return;
+
     const data = DATA_BY_PERIOD[currentPeriod];
     const max = Math.max(...data.movements);
-    container.innerHTML = data.movements
+    const maxIndex = data.movements.indexOf(max);
+    const average =
+      data.movements.reduce((a, b) => a + b, 0) / data.movements.length;
+    const averagePercent = (average / max) * 100;
+
+    // ⭐ RESTRICCIÓN: Si la línea está muy arriba (> 80%),
+    // fijamos la etiqueta un poco más abajo para que no tape el menú.
+    let labelStyle = "";
+    if (averagePercent > 80) {
+      labelStyle = "top: 20px; transform: none;";
+    } else {
+      labelStyle = `bottom: ${averagePercent}%; transform: translateY(-50%);`;
+    }
+
+    let html = `
+      <div class="average-line" style="bottom: ${averagePercent}%"></div>
+      <div class="average-label" style="${labelStyle}">
+        Prom: ${Math.round(average)}
+      </div>
+    `;
+
+    html += data.movements
       .map((value, i) => {
         const h = (value / max) * 100;
+        const isHighlight = i === maxIndex ? "bar-highlight" : "";
         return `<div class="bar-wrapper" title="${data.movementLabels[i]}: ${value} movimientos">
                 <div class="bar-value">${value}</div>
-                <div class="bar" style="height: ${h}%"></div>
+                <div class="bar ${isHighlight}" style="height: ${h}%"></div>
                 <div class="bar-label">${data.movementLabels[i]}</div>
             </div>`;
       })
       .join("");
+
+    container.innerHTML = html;
   };
 
-  // ⭐ LA DONA AHORA CAMBIA CON EL FILTRO
   const renderPieChart = () => {
     const pie = document.getElementById("pie-chart");
     const legend = document.getElementById("pie-legend");
@@ -443,16 +486,17 @@ const DashboardModule = (() => {
       cum += c.value;
       return `${c.color} ${start}% ${cum}%`;
     });
+
     pie.style.background = `conic-gradient(${parts.join(", ")})`;
     legend.innerHTML = cats
       .map(
         (c) => `
-            <div class="legend-item">
-                <span class="legend-color" style="background:${c.color}"></span>
-                <span class="legend-label">${c.name}</span>
-                <span class="legend-value">${c.value}%</span>
-            </div>
-        `,
+      <div class="legend-item" title="${c.name}: ${c.value}%">
+        <span class="legend-color" style="background:${c.color}"></span>
+        <span class="legend-label">${c.name}</span>
+        <span class="legend-value">${c.value}%</span>
+      </div>
+    `,
       )
       .join("");
   };
@@ -543,6 +587,25 @@ const DashboardModule = (() => {
       .join("");
   };
 
+  const renderCriticalStock = () => {
+    const tb = document.getElementById("critical-stock-tbody");
+    if (!tb) return;
+    tb.innerHTML = CRITICAL_STOCK.map((p) => {
+      const isZero = p.stock === 0;
+      const badgeClass = isZero ? "badge-danger" : "badge-warning";
+      const label = isZero ? "Sin Stock" : "Stock Bajo";
+      return `
+        <tr>
+          <td><span class="code-tag">${p.codigo}</span></td>
+          <td><strong>${p.nombre}</strong></td>
+          <td class="${isZero ? "text-danger" : "text-warning"}"><strong>${p.stock}</strong> unid.</td>
+          <td>${p.minimo} unid.</td>
+          <td><span class="badge ${badgeClass}">${label}</span></td>
+        </tr>
+      `;
+    }).join("");
+  };
+
   const updateChartTitle = () => {
     const title = document.querySelector(".chart-card h3");
     if (title) {
@@ -551,11 +614,10 @@ const DashboardModule = (() => {
     }
   };
 
-  // ⭐ ACTUALIZA TODO, INCLUYENDO LA DONA
   const refreshAll = () => {
     loadMetrics();
     renderBarChart();
-    renderPieChart(); // ⭐ AHORA SÍ - LA DONA CAMBIA
+    renderPieChart();
     renderLineChart();
     renderTopProducts();
     renderMovimientos();
@@ -567,22 +629,20 @@ const DashboardModule = (() => {
     if (!filter) return;
     filter.addEventListener("change", (e) => {
       currentPeriod = e.target.value;
-      console.log(`🔄 Cambiando a: ${currentPeriod}`);
       refreshAll();
     });
   };
 
-  const initNavigation = () => {
-    // ⭐ Usar el módulo de navegación centralizado
-    NavModule.init("dashboard");
-  };
-
   const init = () => {
-    console.log("📊 Inicializando Dashboard...");
+    console.log("📊 Inicializando Dashboard PRO...");
     loadUserInfo();
     refreshAll();
+    renderCriticalStock();
     initFilters();
-    initNavigation();
+
+    if (typeof NavModule !== "undefined") {
+      NavModule.init("dashboard");
+    }
     console.log("✅ Dashboard cargado.");
   };
 

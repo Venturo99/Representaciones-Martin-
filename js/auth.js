@@ -10,6 +10,7 @@ const AuthModule = (() => {
       name: "Carlos Mendoza",
       avatar: "CM",
       color: "#f37021",
+      status: "Activo",
     },
     {
       email: "almacen@martin.com",
@@ -18,6 +19,7 @@ const AuthModule = (() => {
       name: "Luis Ramírez",
       avatar: "LR",
       color: "#008744",
+      status: "Activo",
     },
     {
       email: "vendedor@martin.com",
@@ -26,6 +28,7 @@ const AuthModule = (() => {
       name: "María Torres",
       avatar: "MT",
       color: "#3498db",
+      status: "Activo",
     },
     {
       email: "gerente@martin.com",
@@ -34,6 +37,7 @@ const AuthModule = (() => {
       name: "Ana Gutiérrez",
       avatar: "AG",
       color: "#9b59b6",
+      status: "Activo",
     },
   ];
 
@@ -125,6 +129,18 @@ const AuthModule = (() => {
     );
 
     if (user) {
+      // ⭐ VALIDACIÓN DE ESTADO (NUEVO)
+      if (user.status === "Inactivo") {
+        console.log("❌ Usuario inactivo.");
+        showMessage(
+          "Su cuenta está inactiva. Contacte al administrador.",
+          "error",
+        );
+        generateCaptcha();
+        captchaInput.value = "";
+        return;
+      }
+
       console.log("✅ Usuario encontrado:", user.name);
       showMessage(`Bienvenido, ${user.name}. Redirigiendo...`, "success");
 

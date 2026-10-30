@@ -1,42 +1,26 @@
 /* =========================================
    DASHBOARD - Representaciones Martín
    ========================================= */
-/* Solo afecta cuando el dashboard está activo */
 body.dashboard-active {
   overflow: hidden;
 }
-
 body.dashboard-active #app-container {
   width: 100%;
   height: 100vh;
   overflow: hidden;
 }
 
-/*html,
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-}
-
-#app-container {
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-}*/
-
 .dashboard-layout {
   display: flex;
   width: 100%;
   height: 100vh;
   background: #eef2f7;
-  font-family: "Segoe UI", Tahoma, sans-serif;
+  font-family: "Inter", "Segoe UI", Tahoma, sans-serif;
   font-size: 14px;
   overflow: hidden;
 }
 
-/* ============== SIDEBAR SIN SCROLLBAR VISIBLE ============== */
+/* ============== SIDEBAR ============== */
 .dashboard-layout .sidebar {
   width: 240px;
   background: linear-gradient(180deg, #00733a 0%, #005a2b 100%);
@@ -47,7 +31,6 @@ body {
   overflow-y: auto;
   flex-shrink: 0;
   scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 .dashboard-layout .sidebar::-webkit-scrollbar {
   display: none;
@@ -72,17 +55,11 @@ body {
   margin-top: 8px;
   margin-bottom: 2px;
 }
-.dashboard-layout .sidebar-subtitle {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.6rem;
-  font-weight: 500;
-}
 .dashboard-layout .sidebar-nav {
   flex: 1;
   padding: 8px 10px;
   overflow-y: auto;
   scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 .dashboard-layout .sidebar-nav::-webkit-scrollbar {
   display: none;
@@ -98,7 +75,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.7px;
   color: rgba(255, 255, 255, 0.5);
-  font-weight: 700;
+  font-weight: 800;
 }
 .dashboard-layout .nav-item {
   display: flex;
@@ -116,6 +93,7 @@ body {
   text-align: left;
   transition: all 0.2s ease;
   margin-bottom: 1px;
+  position: relative;
 }
 .dashboard-layout .nav-item i {
   width: 16px;
@@ -130,6 +108,16 @@ body {
   background: linear-gradient(135deg, #f37021, #d65a15);
   color: white;
   box-shadow: 0 3px 10px rgba(243, 112, 33, 0.4);
+}
+.dashboard-layout .nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10%;
+  height: 80%;
+  width: 4px;
+  background: white;
+  border-radius: 0 4px 4px 0;
 }
 .dashboard-layout .sidebar-footer {
   padding: 10px;
@@ -156,10 +144,10 @@ body {
   border-color: #e74c3c;
 }
 
-/* ============== MAIN CONTENT CON SCROLL ============== */
+/* ============== MAIN CONTENT ============== */
 .dashboard-layout .main-content {
   flex: 1;
-  padding: 18px 24px;
+  padding: 20px 24px;
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
@@ -171,7 +159,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   padding: 14px 20px;
   background: white;
   border-radius: 10px;
@@ -180,14 +168,56 @@ body {
   flex-wrap: wrap;
 }
 .dashboard-layout .header-title h1 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   color: #0a2540;
   margin-bottom: 2px;
-  font-weight: 700;
+  font-weight: 800;
 }
 .dashboard-layout .header-title p {
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   color: #7a8699;
+}
+
+.dashboard-layout .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.dashboard-layout .global-search {
+  position: relative;
+}
+.dashboard-layout .global-search i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7a8699;
+}
+.dashboard-layout .global-search input {
+  padding: 9px 12px 9px 36px;
+  border-radius: 8px;
+  border: 1px solid #e8eef5;
+  background: #f8fafc;
+  font-size: 0.82rem;
+  width: 250px;
+  outline: none;
+  transition: all 0.2s;
+}
+.dashboard-layout .global-search input:focus {
+  border-color: #f37021;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(243, 112, 33, 0.1);
+}
+.dashboard-layout .header-filter {
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid #e8eef5;
+  background: white;
+  font-size: 0.82rem;
+  outline: none;
+  font-weight: 500;
+  color: #0a2540;
+  cursor: pointer;
 }
 .dashboard-layout .header-user {
   display: flex;
@@ -358,23 +388,26 @@ body {
 
 /* ============== KPIs ============== */
 .dashboard-layout .metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 14px;
-  margin-bottom: 18px;
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  width: 100% !important;
+  margin-bottom: 20px;
 }
 .dashboard-layout .metric-card {
   background: white;
   border-radius: 10px;
-  padding: 16px;
+  padding: 20px;
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  justify-content: space-between;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   border: 1px solid #e8eef5;
   transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
+  min-height: 140px;
+  min-width: 0 !important;
 }
 .dashboard-layout .metric-card::before {
   content: "";
@@ -403,14 +436,21 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
+
+.dashboard-layout .metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
 .dashboard-layout .metric-icon {
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
   flex-shrink: 0;
 }
 .dashboard-layout .metric-primary .metric-icon {
@@ -433,14 +473,39 @@ body {
   background: rgba(243, 156, 18, 0.12);
   color: #f39c12;
 }
+
+.dashboard-layout .trend {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 20px;
+}
+.dashboard-layout .trend.up {
+  color: #008744;
+  background: rgba(0, 135, 68, 0.1);
+}
+.dashboard-layout .trend.down {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
+}
+.dashboard-layout .kpi-link {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #e74c3c;
+  text-decoration: none;
+}
+.dashboard-layout .kpi-link:hover {
+  text-decoration: underline;
+}
+
 .dashboard-layout .metric-info {
   flex: 1;
   min-width: 0;
 }
 .dashboard-layout .metric-info h3 {
-  font-size: 0.66rem;
+  font-size: 0.72rem;
   color: #7a8699;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   margin-bottom: 4px;
   white-space: nowrap;
@@ -448,14 +513,14 @@ body {
   text-overflow: ellipsis;
 }
 .dashboard-layout .metric-value {
-  font-size: 1.55rem;
+  font-size: 1.65rem;
   font-weight: 800;
   color: #0a2540;
   line-height: 1;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 .dashboard-layout .metric-label {
-  font-size: 0.66rem;
+  font-size: 0.7rem;
   color: #7a8699;
 }
 
@@ -463,24 +528,22 @@ body {
 .dashboard-layout .charts-grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: stretch;
 }
 .dashboard-layout .chart-card {
   background: white;
   border-radius: 10px;
-  padding: 18px;
+  padding: 20px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   border: 1px solid #e8eef5;
-}
-.dashboard-layout .chart-header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
+  flex-direction: column;
 }
+
 .dashboard-layout .chart-card h3 {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: #0a2540;
   display: flex;
   align-items: center;
@@ -500,19 +563,41 @@ body {
   background: white;
   cursor: pointer;
   font-weight: 600;
+  outline: none;
 }
 .dashboard-layout .chart-filter:focus {
-  outline: none;
   border-color: #f37021;
 }
 
+/* Gráfico de Barras */
 .dashboard-layout .chart-container {
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
   height: 200px;
-  padding-top: 15px;
+  padding: 10px 10px 0 10px;
+  position: relative;
+  border-left: 1px solid #e8eef5;
+  border-bottom: 1px solid #e8eef5;
+  flex: 1;
 }
+.dashboard-layout .chart-container::before {
+  content: "";
+  position: absolute;
+  top: 25%;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed #e8eef5;
+}
+.dashboard-layout .chart-container::after {
+  content: "";
+  position: absolute;
+  top: 75%;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed #e8eef5;
+}
+
 .dashboard-layout .bar-wrapper {
   display: flex;
   flex-direction: column;
@@ -522,14 +607,23 @@ body {
   height: 100%;
   justify-content: flex-end;
   cursor: pointer;
+  z-index: 10;
 }
 .dashboard-layout .bar {
   width: 55%;
   max-width: 38px;
-  background: linear-gradient(180deg, #f37021, #d65a15);
+  background: #fcae7c; /* Color naranja suave unificado */
   border-radius: 6px 6px 0 0;
   transition: all 0.3s;
   min-height: 8px;
+}
+.dashboard-layout .bar-highlight {
+  background: linear-gradient(
+    180deg,
+    #f37021,
+    #d65a15
+  ) !important; /* Solo la más alta destaca */
+  box-shadow: 0 0 15px rgba(243, 112, 33, 0.4);
 }
 .dashboard-layout .bar-wrapper:hover .bar {
   background: linear-gradient(180deg, #008744, #005a2b);
@@ -544,16 +638,62 @@ body {
   color: #7a8699;
   font-weight: 500;
 }
+/* Asegura que el menú superior siempre esté por encima de todo */
+.dashboard-layout .chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 50; /* ⭐ El menú siempre estará arriba */
+}
 
+/* Línea de promedio */
+.dashboard-layout .average-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 2px dashed #94a3b8;
+  z-index: 5;
+}
+
+/* Etiqueta del promedio */
+.dashboard-layout .average-label {
+  position: absolute;
+  right: 15px; /* Fija a la derecha */
+  background: #0f172a;
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 12px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 15; /* ⭐ Por encima de las barras, pero debajo del menú */
+}
+
+/* Modo Oscuro para la etiqueta */
+body.theme-dark .dashboard-layout .average-line {
+  border-top-color: #475569;
+}
+body.theme-dark .dashboard-layout .average-label {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* ============== GRÁFICO CIRCULAR ============== */
 .dashboard-layout .pie-chart-container {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  height: 100%;
   gap: 20px;
-  padding: 8px 0;
+  flex: 1;
 }
 .dashboard-layout .pie-chart {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   flex-shrink: 0;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -563,8 +703,8 @@ body {
 .dashboard-layout .pie-chart::after {
   content: "";
   position: absolute;
-  width: 75px;
-  height: 75px;
+  width: 80px;
+  height: 80px;
   background: white;
   border-radius: 50%;
   top: 50%;
@@ -572,10 +712,10 @@ body {
   transform: translate(-50%, -50%);
 }
 .dashboard-layout .pie-legend {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
 }
 .dashboard-layout .legend-item {
   display: flex;
@@ -599,20 +739,23 @@ body {
   color: #7a8699;
 }
 
+/* ============== LÍNEA Y TOP PRODUCTOS ============== */
 .dashboard-layout .line-chart {
   width: 100%;
-  height: 180px;
+  flex: 1;
+  min-height: 180px;
 }
 .dashboard-layout .line-svg {
   width: 100%;
   height: 100%;
   display: block;
 }
-
 .dashboard-layout .top-products-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
+  flex: 1;
+  justify-content: center;
 }
 .dashboard-layout .top-product-item {
   display: flex;
@@ -663,23 +806,23 @@ body {
   flex-shrink: 0;
 }
 
-/* ============== TABLA ============== */
+/* ============== TABLAS ============== */
 .dashboard-layout .table-card {
   background: white;
   border-radius: 10px;
-  padding: 18px;
+  padding: 20px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   border: 1px solid #e8eef5;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 .dashboard-layout .table-header-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 .dashboard-layout .table-header-actions h3 {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: #0a2540;
   display: flex;
   align-items: center;
@@ -701,13 +844,17 @@ body {
   align-items: center;
   gap: 5px;
 }
+.dashboard-layout .btn-link:hover {
+  text-decoration: underline;
+}
+
 .dashboard-layout .data-table {
   width: 100%;
   border-collapse: collapse;
 }
 .dashboard-layout .data-table thead th {
   text-align: left;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   color: #7a8699;
   padding: 10px 8px;
@@ -715,8 +862,8 @@ body {
   font-weight: 700;
 }
 .dashboard-layout .data-table tbody td {
-  padding: 11px 8px;
-  font-size: 0.8rem;
+  padding: 12px 8px;
+  font-size: 0.82rem;
   color: #0a2540;
   border-bottom: 1px solid #f4f7fa;
 }
@@ -726,11 +873,12 @@ body {
 .dashboard-layout .data-table tbody tr:last-child td {
   border-bottom: none;
 }
+
 .dashboard-layout .code-tag {
   background: #f0f3f7;
   padding: 3px 8px;
   border-radius: 4px;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: #0a2540;
   font-family: "Courier New", monospace;
@@ -740,14 +888,14 @@ body {
   color: #0a2540;
   padding: 3px 10px;
   border-radius: 5px;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 600;
 }
 .dashboard-layout .badge {
   display: inline-block;
-  padding: 3px 10px;
+  padding: 4px 10px;
   border-radius: 12px;
-  font-size: 0.66rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -769,11 +917,14 @@ body {
 .dashboard-layout .text-danger {
   color: #e74c3c;
 }
+.dashboard-layout .text-warning {
+  color: #f37021;
+}
 .dashboard-layout .hidden {
   display: none !important;
 }
 
-/* ============== SCROLLBAR PERSONALIZADA (solo contenido principal) ============== */
+/* ============== SCROLLBAR ============== */
 .dashboard-layout .main-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -800,6 +951,7 @@ body.theme-dark .dashboard-layout .table-card {
   background: #1a2029;
   border-color: #2a3441;
 }
+
 body.theme-dark .dashboard-layout .header-title h1,
 body.theme-dark .dashboard-layout .metric-value,
 body.theme-dark .dashboard-layout .user-name,
@@ -813,6 +965,7 @@ body.theme-dark .dashboard-layout .legend-label,
 body.theme-dark .dashboard-layout .bar-value {
   color: #e8eef5;
 }
+
 body.theme-dark .dashboard-layout .header-title p,
 body.theme-dark .dashboard-layout .metric-info h3,
 body.theme-dark .dashboard-layout .metric-label,
@@ -820,7 +973,10 @@ body.theme-dark .dashboard-layout .data-table thead th,
 body.theme-dark .dashboard-layout .bar-label {
   color: #8a95a5;
 }
-body.theme-dark .dashboard-layout .btn-icon-header {
+
+body.theme-dark .dashboard-layout .btn-icon-header,
+body.theme-dark .dashboard-layout .header-filter,
+body.theme-dark .dashboard-layout .global-search input {
   background: #1a2029;
   border-color: #2a3441;
   color: #e8eef5;
@@ -873,10 +1029,25 @@ body.theme-dark .dashboard-layout .main-content::-webkit-scrollbar-thumb {
   background: #2a3441;
 }
 
+/* Modo Oscuro: Barras y Línea Promedio */
+body.theme-dark .dashboard-layout .bar {
+  background: #7c4a2c;
+} /* Marrón oscuro para todas */
+body.theme-dark .dashboard-layout .bar-highlight {
+  background: linear-gradient(180deg, #f37021, #d65a15) !important;
+}
+body.theme-dark .dashboard-layout .average-line {
+  border-top-color: #475569;
+}
+body.theme-dark .dashboard-layout .average-label {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
 /* ============== RESPONSIVIDAD ============== */
 @media (max-width: 1400px) {
   .dashboard-layout .metrics-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 }
 @media (max-width: 1200px) {
@@ -886,7 +1057,10 @@ body.theme-dark .dashboard-layout .main-content::-webkit-scrollbar-thumb {
 }
 @media (max-width: 900px) {
   .dashboard-layout .metrics-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .dashboard-layout .header-actions {
+    flex-wrap: wrap;
   }
 }
 @media (max-width: 768px) {
@@ -897,7 +1071,6 @@ body.theme-dark .dashboard-layout .main-content::-webkit-scrollbar-thumb {
     max-width: 35px;
   }
   .dashboard-layout .sidebar-title,
-  .dashboard-layout .sidebar-subtitle,
   .dashboard-layout .nav-section-title,
   .dashboard-layout .nav-item span,
   .dashboard-layout .logout-btn span {
@@ -908,201 +1081,22 @@ body.theme-dark .dashboard-layout .main-content::-webkit-scrollbar-thumb {
     padding: 10px;
   }
   .dashboard-layout .metrics-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+  }
+  .dashboard-layout .global-search {
+    display: none;
   }
 }
-/* =========================================
-   INVENTARIO - QUICK ACTIONS (agregado aquí para asegurar carga)
-   ========================================= */
 
-.dashboard-layout .quick-actions-bar {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-  align-items: center;
+/* ============== MEJORAS EXTRA ============== */
+.dashboard-layout .nav-section-title {
+  text-shadow: none !important;
+  -webkit-font-smoothing: antialiased !important;
 }
-
-.dashboard-layout .quick-actions-bar .quick-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: #ffffff;
-  border: 2px solid #e8eef5;
-  border-radius: 10px;
-  font-size: 0.83rem;
-  font-weight: 600;
-  color: #0a2540;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  font-family: inherit;
-  line-height: 1;
-  min-height: 40px;
+.dashboard-layout .sidebar-nav {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 }
-
-.dashboard-layout .quick-actions-bar .quick-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-}
-
-/* Ver Todos */
-.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all {
-  color: #0a2540;
-  background: #ffffff;
-  border-color: #e8eef5;
-}
-.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all.active {
-  background: linear-gradient(135deg, #f37021, #d65a15);
-  color: #ffffff;
-  border-color: #d65a15;
-  box-shadow: 0 6px 18px rgba(243, 112, 33, 0.35);
-}
-.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all.active i,
-.dashboard-layout .quick-actions-bar .quick-btn#btn-show-all.active span {
-  color: #ffffff;
-}
-
-/* Stock Crítico */
-.dashboard-layout .quick-actions-bar .quick-btn.quick-danger {
-  color: #e74c3c;
-  border-color: #ffd5d0;
-  background: #fff5f4;
-}
-.dashboard-layout .quick-actions-bar .quick-btn.quick-danger i {
-  color: #e74c3c;
-}
-.dashboard-layout .quick-actions-bar .quick-btn.quick-danger.active {
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  color: #ffffff;
-  border-color: #c0392b;
-  box-shadow: 0 6px 18px rgba(231, 76, 60, 0.35);
-}
-.dashboard-layout .quick-actions-bar .quick-btn.quick-danger.active i,
-.dashboard-layout .quick-actions-bar .quick-btn.quick-danger.active span {
-  color: #ffffff;
-}
-
-/* Por Reabastecer */
-.dashboard-layout .quick-actions-bar .quick-btn.quick-warning {
-  color: #f37021;
-  border-color: #ffe0cc;
-  background: #fff9f5;
-}
-.dashboard-layout .quick-actions-bar .quick-btn.quick-warning i {
-  color: #f37021;
-}
-.dashboard-layout .quick-actions-bar .quick-btn.quick-warning.active {
-  background: linear-gradient(135deg, #f37021, #d65a15);
-  color: #ffffff;
-  border-color: #d65a15;
-  box-shadow: 0 6px 18px rgba(243, 112, 33, 0.35);
-}
-.dashboard-layout .quick-actions-bar .quick-btn.quick-warning.active i,
-.dashboard-layout .quick-actions-bar .quick-btn.quick-warning.active span {
-  color: #ffffff;
-}
-
-/* Disponibles */
-.dashboard-layout .quick-actions-bar .quick-btn.quick-success {
-  color: #008744;
-  border-color: #c8e6d4;
-  background: #f4faf6;
-}
-.dashboard-layout .quick-actions-bar .quick-btn.quick-success i {
-  color: #008744;
-}
-.dashboard-layout .quick-actions-bar .quick-btn.quick-success.active {
-  background: linear-gradient(135deg, #008744, #005a2b);
-  color: #ffffff;
-  border-color: #005a2b;
-  box-shadow: 0 6px 18px rgba(0, 135, 68, 0.35);
-}
-.dashboard-layout .quick-actions-bar .quick-btn.quick-success.active i,
-.dashboard-layout .quick-actions-bar .quick-btn.quick-success.active span {
-  color: #ffffff;
-}
-
-/* Badge del contador */
-.dashboard-layout .quick-actions-bar .quick-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 22px;
-  height: 20px;
-  padding: 0 6px;
-  border-radius: 10px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: #ffffff;
-  margin-left: 4px;
-  line-height: 1;
-}
-.dashboard-layout
-  .quick-actions-bar
-  .quick-btn.quick-danger:not(.active)
-  .quick-badge {
-  background: #e74c3c;
-}
-.dashboard-layout
-  .quick-actions-bar
-  .quick-btn.quick-warning:not(.active)
-  .quick-badge {
-  background: #f37021;
-}
-.dashboard-layout
-  .quick-actions-bar
-  .quick-btn.quick-success:not(.active)
-  .quick-badge {
-  background: #008744;
-}
-.dashboard-layout .quick-actions-bar .quick-btn.active .quick-badge {
-  background: rgba(255, 255, 255, 0.35);
-}
-
-/* Botones de la tabla */
-.dashboard-layout .btn-movimiento {
-  background: rgba(52, 152, 219, 0.12);
-  color: #3498db;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  font-size: 0.85rem;
-  margin-right: 4px;
-}
-.dashboard-layout .btn-movimiento:hover {
-  background: #3498db;
-  color: white;
-  transform: scale(1.1);
-}
-
-/* Filtro de stock */
-.dashboard-layout .filter-stock {
-  border: 2px solid #f37021;
-  background: rgba(243, 112, 33, 0.03);
-  font-weight: 600;
-}
-.dashboard-layout .filter-stock:hover {
-  background: rgba(243, 112, 33, 0.1);
-}
-/* =========================================
-   COLUMNA DE ACCIONES - INVENTARIO
-   ========================================= */
-.dashboard-layout .actions-cell {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  justify-content: flex-start;
-  white-space: nowrap;
-}
-
-.dashboard-layout .actions-cell .btn-icon {
-  flex-shrink: 0;
+.dashboard-layout .sidebar-nav.nav-ready {
+  opacity: 1;
 }

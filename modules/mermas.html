@@ -1,0 +1,322 @@
+<div class="dashboard-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/logo.png" alt="Martín" class="sidebar-logo" />
+      <h3 class="sidebar-title">Control de Inventario</h3>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-title">Principal</span>
+        <button class="nav-item" data-route="dashboard">
+          <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Operaciones</span>
+        <button class="nav-item" data-route="catalogo">
+          <i class="fas fa-th-large"></i> <span>Catálogo de Productos</span>
+        </button>
+        <button class="nav-item" data-route="inventario">
+          <i class="fas fa-boxes"></i> <span>Inventario</span>
+        </button>
+        <button class="nav-item" data-route="consulta-stock">
+          <i class="fas fa-search"></i> <span>Consulta Rápida</span>
+        </button>
+        <button class="nav-item" data-route="movimientos">
+          <i class="fas fa-exchange-alt"></i> <span>Entradas y Salidas</span>
+        </button>
+        <button class="nav-item" data-route="historico">
+          <i class="fas fa-history"></i> <span>Historial Movimientos</span>
+        </button>
+        <button class="nav-item" data-route="cortes">
+          <i class="fas fa-cut"></i> <span>Cortes de Tableros</span>
+        </button>
+        <button class="nav-item active" data-route="mermas">
+          <i class="fas fa-exclamation-circle"></i>
+          <span>Ajustes de Mermas</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Análisis</span>
+        <button class="nav-item" data-route="rotacion">
+          <i class="fas fa-chart-bar"></i> <span>Rotación Productos</span>
+        </button>
+        <button class="nav-item" data-route="corte-inventario">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Cortes de Inventario</span>
+        </button>
+        <button class="nav-item" data-route="reportes">
+          <i class="fas fa-file-alt"></i> <span>Reportes</span>
+        </button>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-title">Administración</span>
+        <button class="nav-item" data-route="clientes">
+          <i class="fas fa-users"></i> <span>Clientes</span>
+        </button>
+        <button class="nav-item" data-route="proveedores">
+          <i class="fas fa-truck"></i> <span>Proveedores y Compras</span>
+        </button>
+        <button class="nav-item" data-route="usuarios">
+          <i class="fas fa-user-shield"></i> <span>Usuarios y Accesos</span>
+        </button>
+        <button class="nav-item" data-route="bitacora">
+          <i class="fas fa-clipboard-list"></i> <span>Bitácora Auditoría</span>
+        </button>
+        <button class="nav-item" data-route="cierre">
+          <i class="fas fa-lock"></i> <span>Cierre Diario</span>
+        </button>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button id="logout-btn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <!-- HEADER -->
+    <header class="top-header">
+      <div class="header-title">
+        <h1>Registro de Mermas</h1>
+        <p>Control de productos dañados, perdidos o vencidos</p>
+      </div>
+      <div class="header-user">
+        <div class="notifications-container">
+          <button id="btn-notifications" class="btn-icon-header">
+            <i class="fas fa-bell"></i><span class="notification-badge">3</span>
+          </button>
+          <div id="notifications-panel" class="notifications-panel hidden">
+            <div class="notifications-header">
+              <h4><i class="fas fa-bell"></i> Alertas de Stock</h4>
+              <span class="notif-count">3 nuevas</span>
+            </div>
+            <div class="notifications-list"></div>
+          </div>
+        </div>
+        <button id="theme-toggle" class="btn-icon-header">
+          <i class="fas fa-moon"></i>
+        </button>
+        <div class="user-info">
+          <span class="user-name" id="user-name-display">Cargando...</span>
+          <span class="user-role" id="user-role-display">...</span>
+        </div>
+        <div class="user-avatar" id="user-avatar-display">U</div>
+      </div>
+    </header>
+
+    <!-- KPIs DE MERMAS -->
+    <section class="mov-kpis">
+      <div class="mov-kpi mov-kpi-total">
+        <div class="mov-kpi-icon"><i class="fas fa-clipboard-list"></i></div>
+        <div class="mov-kpi-info">
+          <h3>Mermas Hoy</h3>
+          <p class="mov-kpi-value" id="kpi-mermas-hoy">0</p>
+          <span class="mov-kpi-label">registros realizados</span>
+        </div>
+      </div>
+      <div class="mov-kpi mov-kpi-salida">
+        <div class="mov-kpi-icon"><i class="fas fa-box-open"></i></div>
+        <div class="mov-kpi-info">
+          <h3>Unidades Perdidas</h3>
+          <p class="mov-kpi-value" id="kpi-unidades-hoy">0</p>
+          <span class="mov-kpi-label">productos descartados</span>
+        </div>
+      </div>
+      <div class="mov-kpi mov-kpi-ajuste">
+        <div class="mov-kpi-icon"><i class="fas fa-hand-holding-usd"></i></div>
+        <div class="mov-kpi-info">
+          <h3>Pérdida Estimada</h3>
+          <p class="mov-kpi-value" id="kpi-costo-hoy">S/ 0</p>
+          <span class="mov-kpi-label">valor en soles</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BARRA DE HERRAMIENTAS -->
+    <section class="toolbar-card">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Buscar por producto o motivo..."
+          autocomplete="off"
+        />
+      </div>
+      <div class="toolbar-actions">
+        <select id="filter-date" class="filter-select">
+          <option value="all" selected>Todas las fechas</option>
+          <option value="today">Hoy</option>
+          <option value="week">Última semana</option>
+          <option value="month">Último mes</option>
+        </select>
+        <button id="btn-new-merma" class="btn-add">
+          <i class="fas fa-plus"></i> Registrar Merma
+        </button>
+      </div>
+    </section>
+
+    <!-- TABLA DE MERMAS -->
+    <section class="table-card">
+      <div class="table-header-actions">
+        <h3>Historial de Mermas</h3>
+        <span class="results-count" id="results-count">0 resultados</span>
+      </div>
+      <div class="table-scroll">
+        <table class="data-table" id="mermas-table">
+          <thead>
+            <tr>
+              <th>Fecha/Hora</th>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Motivo</th>
+              <th>Observaciones</th>
+              <th>Usuario</th>
+            </tr>
+          </thead>
+          <tbody id="mermas-tbody"></tbody>
+        </table>
+      </div>
+      <div id="empty-state" class="empty-state hidden">
+        <i class="fas fa-check-circle"></i>
+        <p>No hay mermas registradas</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL: REGISTRAR MERMA -->
+  <div id="merma-modal" class="modal-overlay hidden">
+    <div class="modal-content modal-medium">
+      <!-- ⭐ CAMBIAMOS LA CLASE PARA USAR LA NARANJA ESTÁNDAR -->
+      <div class="modal-header modal-header-gradient-mov">
+        <!-- ⭐ SIN ÍCONO, SOLO EL TEXTO -->
+        <h3>Registrar Merma</h3>
+        <button class="modal-close" id="close-merma-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <form id="merma-form">
+        <div class="mov-form-body">
+          <!-- 1. SELECCIONAR PRODUCTO -->
+          <div class="mov-step">
+            <span class="mov-step-number">1</span>
+            <div class="mov-step-content">
+              <label class="mov-step-title">Producto a descartar *</label>
+              <div class="custom-select-wrapper" id="custom-product-select">
+                <div class="custom-select-trigger" id="select-trigger">
+                  <span class="custom-select-text" id="select-text"
+                    >Seleccione un producto...</span
+                  >
+                  <i class="fas fa-chevron-down custom-select-arrow"></i>
+                </div>
+                <div class="custom-select-options hidden" id="select-options">
+                  <div class="custom-select-search">
+                    <i class="fas fa-search"></i>
+                    <input
+                      type="text"
+                      id="select-search-input"
+                      placeholder="Buscar por código o nombre..."
+                      autocomplete="off"
+                    />
+                  </div>
+                  <div class="custom-select-list" id="select-list"></div>
+                </div>
+              </div>
+              <div id="selected-product" class="selected-product hidden"></div>
+              <span class="error-message" id="producto-error"></span>
+            </div>
+          </div>
+
+          <!-- 2. MOTIVO Y CANTIDAD -->
+          <div class="mov-step">
+            <span class="mov-step-number">2</span>
+            <div class="mov-step-content">
+              <label class="mov-step-title">Detalles de la Merma *</label>
+              <div class="form-grid-2">
+                <div class="form-field">
+                  <label>Motivo</label>
+                  <select id="merma-motivo" class="motivo-select" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="Producto dañado / roto">
+                      Producto dañado / roto
+                    </option>
+                    <option value="Producto vencido">Producto vencido</option>
+                    <option value="Pérdida / robo">Pérdida / robo</option>
+                    <option value="Error de despacho">Error de despacho</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label>Cantidad</label>
+                  <input
+                    type="number"
+                    id="merma-cantidad"
+                    min="1"
+                    placeholder="0"
+                    required
+                  />
+                </div>
+              </div>
+              <span class="error-message" id="motivo-error"></span>
+            </div>
+          </div>
+
+          <!-- 3. OBSERVACIONES -->
+          <div class="mov-step">
+            <span class="mov-step-number">3</span>
+            <div class="mov-step-content">
+              <label class="mov-step-title"
+                >Observaciones *
+                <span class="required-badge">OBLIGATORIO</span></label
+              >
+              <textarea
+                id="merma-observaciones"
+                class="motivo-textarea"
+                placeholder="Escribe el detalle de lo ocurrido. Ejemplo: Tablero quebrado al descargar, caja de pisos mojada, etc."
+                rows="2"
+                required
+              ></textarea>
+              <span class="error-message" id="observaciones-error"></span>
+            </div>
+          </div>
+
+          <!-- VALIDACIÓN DE STOCK -->
+          <div id="stock-warning" class="stock-warning hidden">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="stock-warning-content">
+              <strong>⚠️ Stock Insuficiente</strong>
+              <p id="stock-warning-message">
+                No hay suficientes unidades en stock.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancel-merma">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+          <!-- ⭐ CAMBIAMOS LA CLASE PARA QUE SEA NARANJA ESTÁNDAR -->
+          <button
+            type="submit"
+            class="btn-primary"
+            id="btn-save-merma"
+            disabled
+          >
+            <i class="fas fa-save"></i> Confirmar Merma
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast hidden">
+    <i class="fas fa-check-circle"></i>
+    <span id="toast-message">Operación exitosa</span>
+  </div>
+</div>

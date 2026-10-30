@@ -1,0 +1,107 @@
+/* =========================================
+   CORTES DE TABLEROS - Estilos Específicos
+   ========================================= */
+
+/* Medidas en la tabla */
+.dashboard-layout .medida-badge {
+  display: inline-block;
+  background: rgba(243, 112, 33, 0.1);
+  color: #f37021;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid rgba(243, 112, 33, 0.2);
+  font-family: "Courier New", monospace;
+}
+
+/* Inputs con iconos para medidas */
+.dashboard-layout .medidas-grid {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-layout .input-icon-group {
+  position: relative;
+  flex: 1;
+}
+
+.dashboard-layout .input-icon-group i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7a8699;
+  font-size: 0.9rem;
+}
+
+.dashboard-layout .input-icon-group input {
+  width: 100%;
+  padding: 12px 14px 12px 38px;
+  border: 2px solid #e8eef5;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #0a2540;
+  background: #f8fafc;
+  font-family: inherit;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.dashboard-layout .input-icon-group input:focus {
+  border-color: #f37021;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(243, 112, 33, 0.1);
+}
+
+.dashboard-layout .x-separator {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #7a8699;
+}
+
+/* Grid de 2 columnas para formulario */
+.dashboard-layout .form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Modo Oscuro */
+body.theme-dark .dashboard-layout .medida-badge {
+  background: rgba(243, 112, 33, 0.15);
+  border-color: rgba(243, 112, 33, 0.3);
+}
+body.theme-dark .dashboard-layout .input-icon-group input {
+  background: #252d38;
+  border-color: #2a3441;
+  color: #e8eef5;
+}
+body.theme-dark .dashboard-layout .input-icon-group input:focus {
+  background: #1a2029;
+}
+
+/* =========================================
+   BOTONES DEL MODAL CORTES (EXACTAMENTE IGUALES)
+   ========================================= */
+.dashboard-layout #corte-form .modal-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important; /* Divide el espacio en 2 columnas exactas */
+  gap: 12px !important;
+  padding: 18px 22px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.dashboard-layout #corte-form .modal-actions button {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 12px 10px !important;
+  font-size: 0.85rem !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
