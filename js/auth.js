@@ -72,93 +72,49 @@ const AuthModule = (() => {
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("🔵 Formulario enviado.");
-    clearErrors();
-
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const captchaInput = document.getElementById("captcha-input");
-
-    let isValid = true;
-
-    if (!emailInput.value.trim()) {
-      document.getElementById("email-error").textContent =
-        "El correo es obligatorio.";
-      isValid = false;
-    } else if (!validateEmail(emailInput.value.trim())) {
-      document.getElementById("email-error").textContent =
-        "Ingrese un correo válido.";
-      isValid = false;
-    }
-
-    if (!passwordInput.value) {
-      document.getElementById("password-error").textContent =
-        "La contraseña es obligatoria.";
-      isValid = false;
-    } else if (passwordInput.value.length < 6) {
-      document.getElementById("password-error").textContent =
-        "Mínimo 6 caracteres.";
-      isValid = false;
-    }
-
-    if (!captchaInput.value.trim()) {
-      document.getElementById("captcha-error").textContent =
-        "Ingrese el código.";
-      isValid = false;
-    } else if (captchaInput.value.toUpperCase() !== currentCaptcha) {
-      document.getElementById("captcha-error").textContent =
-        "El código es incorrecto.";
-      isValid = false;
-      generateCaptcha();
-      captchaInput.value = "";
-    }
-
-    if (!isValid) {
-      console.log("❌ Validación fallida.");
-      return;
-    }
-
-    console.log("✅ Validación exitosa.");
+    if (!validateForm()) return;
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
-    const user = USERS_DB.find(
-      (u) => u.email === email && u.password === password,
-    );
 
-    if (user) {
-      // ⭐ VALIDACIÓN DE ESTADO (NUEVO)
-      if (user.status === "Inactivo") {
-        console.log("❌ Usuario inactivo.");
+    showMessage("Verificando credenciales...", "success");
+
+    try {
+      // ⭐ Hacemos la petición a nuestra API
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
         showMessage(
-          "Su cuenta está inactiva. Contacte al administrador.",
-          "error",
+          `Bienvenido, ${data.user.nombre}. Redirigiendo...`,
+          "success",
         );
+
+        // Guardamos los datos en la sesión
+        sessionStorage.setItem("userEmail", data.user.email);
+        sessionStorage.setItem("userRole", data.user.rol);
+        sessionStorage.setItem("userName", data.user.nombre);
+        sessionStorage.setItem("userAvatar", data.user.avatar || "U");
+        sessionStorage.setItem("userColor", data.user.color || "#f37021");
+
+        setTimeout(() => {
+          App.goToDashboard();
+        }, 1000);
+      } else {
+        showMessage(data.message || "Credenciales incorrectas", "error");
         generateCaptcha();
         captchaInput.value = "";
-        return;
       }
-
-      console.log("✅ Usuario encontrado:", user.name);
-      showMessage(`Bienvenido, ${user.name}. Redirigiendo...`, "success");
-
-      sessionStorage.setItem("userEmail", user.email);
-      sessionStorage.setItem("userRole", user.role);
-      sessionStorage.setItem("userName", user.name);
-      sessionStorage.setItem("userAvatar", user.avatar);
-      sessionStorage.setItem("userColor", user.color);
-
-      setTimeout(() => {
-        console.log("➡️ Cambiando al dashboard...");
-        App.goToDashboard();
-      }, 1000);
-    } else {
-      console.log("❌ Credenciales incorrectas.");
-      showMessage("Credenciales incorrectas.", "error");
-      generateCaptcha();
-      captchaInput.value = "";
+    } catch (error) {
+      console.error("Error de conexión:", error);
+      showMessage("Error al conectar con el servidor.", "error");
     }
   };
 

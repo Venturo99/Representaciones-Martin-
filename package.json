@@ -1,0 +1,25 @@
+{
+  "name": "representaciones-martin-",
+  "version": "1.0.0",
+  "description": "Bienvenido al Sistema de Gestión de Inventarios. A continuación, se detallan las credenciales de acceso para probar los diferentes roles y permisos del sistema.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Venturo99/Representaciones-Martin-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Venturo99/Representaciones-Martin-/issues"
+  },
+  "homepage": "https://github.com/Venturo99/Representaciones-Martin-#readme",
+  "dependencies": {
+    "dotenv": "^18.0.10",
+    "mysql2": "^3.24.6"
+  }
+}
