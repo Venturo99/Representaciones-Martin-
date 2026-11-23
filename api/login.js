@@ -1,53 +1,48 @@
-const db = require("./db");
+const db = require("./_db");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 module.exports = async (req, res) => {
-  // 1. Configurar CORS para que tu HTML pueda conectarse
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  // 2. Manejar la petición preflight
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
-  // 3. Solo permitir POST
   if (req.method !== "POST") {
-    return res
-      .status(405)
-      .json({ success: false, message: "Método no permitido" });
+    return res.status(405).json({ error: "Método no permitido" });
   }
 
-  const { email, password } = req.body;
+  const { email, password } = req.body || {};
+  if (!email || !password) {
+    return res.status(400).json({ error: "Faltan datos" });
+  }
 
   try {
-    // 4. Buscar al usuario en MySQL
-    // NOTA: En producción real, las contraseñas deben estar encriptadas (bcrypt).
-    // Por ahora usamos texto plano porque así las guardamos en nuestro script SQL.
     const [rows] = await db.query(
-      'SELECT id, nombre, email, rol, avatar, color FROM usuarios WHERE email = ? AND password = ? AND estado = "Activo"',
-      [email, password],
+      "SELECT id, nombre, email, password, rol, avatar, color, estado FROM usuarios WHERE email = ?",
+      [email],
     );
+    const user = rows[0];
+    const ok =
+      user &&
+      user.estado === "Activo" &&
+      (await bcrypt.compare(password, user.password));
 
-    if (rows.length === 0) {
-      return res.status(401).json({
-        success: false,
-        message: "Credenciales incorrectas o cuenta inactiva",
-      });
+    if (!ok) {
+      return res.status(401).json({ error: "Correo o contraseña incorrectos" });
     }
 
-    const user = rows[0];
+    await db.query(
+      "INSERT INTO bitacora (usuario_id, modulo, accion, detalle) VALUES (?, 'Login', 'Ingreso', ?)",
+      [user.id, `Inicio de sesión de ${user.email}`],
+    );
 
-    // 5. Devolver el éxito
-    return res.status(200).json({
-      success: true,
-      message: "Login exitoso",
-      user: user,
-    });
-  } catch (error) {
-    console.error("Error en el login:", error);
-    return res
-      .status(500)
-      .json({ success: false, message: "Error interno del servidor" });
+    const token = jwt.sign(
+      { id: user.id, rol: user.rol },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "8h",
+      },
+    );
+    delete user.password;
+    res.json({ token, usuario: user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Error del servidor" });
   }
 };
